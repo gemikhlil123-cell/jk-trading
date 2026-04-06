@@ -1,0 +1,239 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Role {
+  MENTOR
+  STUDENT
+}
+
+enum SubscriptionTier {
+  BASIC
+  PRO
+}
+
+enum TradeDirection {
+  LONG
+  SHORT
+}
+
+enum Symbol {
+  NQ
+  ES
+  BTC
+  XAU
+  GC
+  CL
+  EURUSD
+  OTHER
+}
+
+enum Killzone {
+  ASIA
+  LONDON
+  NY_AM
+  NY_PM
+  OFF_HOURS
+}
+
+enum CyclePhase {
+  CYCLE_1
+  CYCLE_2
+  CYCLE_3
+  OFF_CYCLE
+}
+
+enum AlertType {
+  MENTOR_COMMENT
+  SYSTEM
+  BILLING
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model User {
+  id                   String           @id @default(cuid())
+  email                String           @unique
+  passwordHash         String?
+  name                 String?
+  image                String?
+  role                 Role             @default(STUDENT)
+  subscriptionTier     SubscriptionTier @default(BASIC)
+  stripeCustomerId     String?          @unique
+  stripeSubscriptionId String?          @unique
+  isActive           Boolean   @default(true)
+  trialEndsAt        DateTime?
+  subscriptionStatus String    @default("trial")
+
+  mentorId String?
+  mentor   User?   @relation("MentorStudents", fields: [mentorId], references: [id])
+  students User[]  @relation("MentorStudents")
+
+  accounts         Account[]
+  sessions         Session[]
+  trades           Trade[]
+  mentorComments   MentorComment[] @relation("MentorComments")
+  studentComments  MentorComment[] @relation("StudentComments")
+  alerts           Alert[]
+  backtestSessions BacktestSession[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Trade {
+  id            String         @id @default(cuid())
+  userId        String
+  symbol        Symbol
+  direction     TradeDirection
+  entryPrice    Decimal        @db.Decimal(12, 5)
+  exitPrice     Decimal?       @db.Decimal(12, 5)
+  entryTime     DateTime
+  exitTime      DateTime?
+  pnl           Decimal?       @db.Decimal(12, 2)
+  rrAchieved    Decimal?       @db.Decimal(6, 2)
+  rrPlanned     Decimal?       @db.Decimal(6, 2)
+  isBacktest    Boolean        @default(false)
+  screenshotUrl String?
+  notes         String?        @db.Text
+  chartImages   String?        @db.Text   // JSON: { daily?: string, h4?: string, h1?: string, m15?: string } base64 or URLs
+  selfRating     Int?
+  emotionalState String?
+
+  killzone   Killzone?
+  cyclePhase CyclePhase?
+
+  backtestSessionId String?
+  backtestSession   BacktestSession? @relation(fields: [backtestSessionId], references: [id])
+
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entryReasons TradeEntryReason[]
+  comments     MentorComment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, entryTime])
+  @@index([userId, isBacktest])
+  @@map("trades")
+}
+
+model EntryReason {
+  id       String @id @default(cuid())
+  category String
+  name     String @unique
+
+  tradeReasons TradeEntryReason[]
+
+  @@map("entry_reasons")
+}
+
+model TradeEntryReason {
+  tradeId       String
+  entryReasonId String
+
+  trade       Trade       @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+  entryReason EntryReason @relation(fields: [entryReasonId], references: [id])
+
+  @@id([tradeId, entryReasonId])
+  @@map("trade_entry_reasons")
+}
+
+model MentorComment {
+  id        String @id @default(cuid())
+  tradeId   String
+  mentorId  String
+  studentId String
+  body      String @db.Text
+
+  trade   Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+  mentor  User  @relation("MentorComments", fields: [mentorId], references: [id])
+  student User  @relation("StudentComments", fields: [studentId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("mentor_comments")
+}
+
+model Alert {
+  id      String    @id @default(cuid())
+  userId  String
+  type    AlertType
+  message String
+  isRead  Boolean   @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, isRead])
+  @@map("alerts")
+}
+
+model BacktestSession {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  symbol      Symbol
+  startDate   DateTime
+  endDate     DateTime
+  totalTrades Int      @default(0)
+  winRate     Decimal? @db.Decimal(5, 2)
+  avgRR       Decimal? @db.Decimal(6, 2)
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trades Trade[]
+
+  createdAt DateTime @default(now())
+
+  @@map("backtest_sessions")
+}

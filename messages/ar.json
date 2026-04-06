@@ -1,0 +1,140 @@
+{
+  "app": {
+    "name": "JK Trading Journal",
+    "tagline": "سجّل، حلّل، تحسّن"
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "trades": "الصفقات",
+    "weeklyReview": "المراجعة الأسبوعية",
+    "newTrade": "صفقة جديدة",
+    "backtest": "الباكتيست",
+    "admin": "لوحة المدرب",
+    "logout": "تسجيل الخروج",
+    "settings": "الإعدادات"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name": "الاسم",
+    "loginButton": "دخول",
+    "registerButton": "إنشاء حساب",
+    "haveAccount": "لديك حساب؟",
+    "noAccount": "ليس لديك حساب؟",
+    "loginError": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "equityCurve": "منحنى رأس المال",
+    "recentTrades": "آخر الصفقات",
+    "totalPnl": "إجمالي الربح/الخسارة",
+    "winRate": "معدل الفوز",
+    "totalTrades": "عدد الصفقات",
+    "avgRR": "متوسط RR"
+  },
+  "trades": {
+    "title": "الصفقات",
+    "newTrade": "صفقة جديدة",
+    "symbol": "الرمز",
+    "direction": "الاتجاه",
+    "long": "شراء",
+    "short": "بيع",
+    "entryPrice": "سعر الدخول",
+    "exitPrice": "سعر الخروج",
+    "entryTime": "وقت الدخول",
+    "exitTime": "وقت الخروج",
+    "pnl": "الربح / الخسارة",
+    "rrAchieved": "RR المحقق",
+    "rrPlanned": "RR المخطط",
+    "killzone": "الجلسة",
+    "cyclePhase": "مرحلة الدورة",
+    "entryReasons": "أسباب الدخول",
+    "screenshot": "لقطة الشاشة",
+    "notes": "ملاحظات",
+    "save": "حفظ الصفقة",
+    "isBacktest": "باكتيست",
+    "noTrades": "لا توجد صفقات بعد"
+  },
+  "killzones": {
+    "ASIA": "آسيا",
+    "LONDON": "لندن",
+    "NY_AM": "نيويورك صباح",
+    "NY_PM": "نيويورك مساء",
+    "OFF_HOURS": "خارج الجلسات"
+  },
+  "cyclePhases": {
+    "CYCLE_1": "الدورة الأولى",
+    "CYCLE_2": "الدورة الثانية",
+    "CYCLE_3": "الدورة الثالثة",
+    "OFF_CYCLE": "خارج الدورة"
+  },
+  "symbols": {
+    "NQ": "ناسداك (NQ)",
+    "ES": "S&P 500 (ES)",
+    "BTC": "بيتكوين (BTC)",
+    "XAU": "ذهب (XAU)",
+    "GC": "ذهب آجل (GC)",
+    "CL": "نفط (CL)",
+    "EURUSD": "يورو/دولار",
+    "OTHER": "أخرى"
+  },
+  "entryReasons": {
+    "title": "أسباب الدخول",
+    "selectPlaceholder": "اختر أسباب الدخول (إلزامي)",
+    "required": "يجب اختيار سبب دخول واحد على الأقل",
+    "categories": {
+      "SMT": "SMT",
+      "PSP": "PSP",
+      "Price Action": "حركة السعر",
+      "FVG/IFVG": "FVG / IFVG",
+      "CISD": "CISD"
+    }
+  },
+  "weeklyReview": {
+    "title": "المراجعة الأسبوعية",
+    "subtitle": "تحليل أسباب الدخول للأسبوع الحالي",
+    "keepList": "قائمة الاحتفاظ",
+    "removeList": "قائمة الإزالة",
+    "neutralList": "محايد",
+    "keepDescription": "هذه هي قواعدك الذهبية — ادخل فقط عند توافرها",
+    "removeDescription": "هذه إشارات خطر — توقف عن الدخول بناءً على هذه الأسباب",
+    "winRate": "معدل الفوز",
+    "lossRate": "معدل الخسارة",
+    "appearances": "مرات الظهور",
+    "wins": "فوز",
+    "losses": "خسارة",
+    "vsLastWeek": "مقارنة بالأسبوع الماضي",
+    "currentWeek": "الأسبوع الحالي",
+    "lastWeek": "الأسبوع الماضي",
+    "noData": "لا توجد صفقات كافية هذا الأسبوع",
+    "insufficient": "بيانات غير كافية (أقل من 3 صفقات)"
+  },
+  "admin": {
+    "title": "لوحة المدرب",
+    "students": "الطلاب",
+    "viewStudent": "عرض صفقات الطالب",
+    "comment": "إضافة تعليق",
+    "commentPlaceholder": "اكتب تعليقك هنا...",
+    "submitComment": "إرسال",
+    "alerts": "التنبيهات",
+    "noStudents": "لا يوجد طلاب بعد"
+  },
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "success": "تم بنجاح",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "filter": "تصفية",
+    "search": "بحث",
+    "week": "أسبوع",
+    "month": "شهر",
+    "all": "الكل"
+  }
+}

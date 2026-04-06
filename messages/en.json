@@ -1,0 +1,140 @@
+{
+  "app": {
+    "name": "JK Trading Journal",
+    "tagline": "Log, Analyze, Improve"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "trades": "Trades",
+    "weeklyReview": "Weekly Review",
+    "newTrade": "New Trade",
+    "backtest": "Backtest",
+    "admin": "Mentor Panel",
+    "logout": "Logout",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "loginButton": "Sign In",
+    "registerButton": "Create Account",
+    "haveAccount": "Have an account?",
+    "noAccount": "Don't have an account?",
+    "loginError": "Invalid email or password"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "equityCurve": "Equity Curve",
+    "recentTrades": "Recent Trades",
+    "totalPnl": "Total PnL",
+    "winRate": "Win Rate",
+    "totalTrades": "Total Trades",
+    "avgRR": "Avg RR"
+  },
+  "trades": {
+    "title": "Trades",
+    "newTrade": "New Trade",
+    "symbol": "Symbol",
+    "direction": "Direction",
+    "long": "Long",
+    "short": "Short",
+    "entryPrice": "Entry Price",
+    "exitPrice": "Exit Price",
+    "entryTime": "Entry Time",
+    "exitTime": "Exit Time",
+    "pnl": "PnL",
+    "rrAchieved": "RR Achieved",
+    "rrPlanned": "RR Planned",
+    "killzone": "Session",
+    "cyclePhase": "Cycle Phase",
+    "entryReasons": "Entry Reasons",
+    "screenshot": "Screenshot",
+    "notes": "Notes",
+    "save": "Save Trade",
+    "isBacktest": "Backtest",
+    "noTrades": "No trades yet"
+  },
+  "killzones": {
+    "ASIA": "Asia",
+    "LONDON": "London",
+    "NY_AM": "NY Morning",
+    "NY_PM": "NY Afternoon",
+    "OFF_HOURS": "Off Hours"
+  },
+  "cyclePhases": {
+    "CYCLE_1": "Cycle 1",
+    "CYCLE_2": "Cycle 2",
+    "CYCLE_3": "Cycle 3",
+    "OFF_CYCLE": "Off Cycle"
+  },
+  "symbols": {
+    "NQ": "Nasdaq (NQ)",
+    "ES": "S&P 500 (ES)",
+    "BTC": "Bitcoin (BTC)",
+    "XAU": "Gold (XAU)",
+    "GC": "Gold Futures (GC)",
+    "CL": "Crude Oil (CL)",
+    "EURUSD": "EUR/USD",
+    "OTHER": "Other"
+  },
+  "entryReasons": {
+    "title": "Entry Reasons",
+    "selectPlaceholder": "Select entry reasons (required)",
+    "required": "At least one entry reason is required",
+    "categories": {
+      "SMT": "SMT",
+      "PSP": "PSP",
+      "Price Action": "Price Action",
+      "FVG/IFVG": "FVG / IFVG",
+      "CISD": "CISD"
+    }
+  },
+  "weeklyReview": {
+    "title": "Weekly Review",
+    "subtitle": "Entry reason analysis for the current week",
+    "keepList": "Keep List",
+    "removeList": "Remove List",
+    "neutralList": "Neutral",
+    "keepDescription": "These are your Golden Rules — only enter when these are present",
+    "removeDescription": "These are Red Flags — stop entering based on these reasons",
+    "winRate": "Win Rate",
+    "lossRate": "Loss Rate",
+    "appearances": "Appearances",
+    "wins": "Wins",
+    "losses": "Losses",
+    "vsLastWeek": "vs Last Week",
+    "currentWeek": "This Week",
+    "lastWeek": "Last Week",
+    "noData": "Not enough trades this week",
+    "insufficient": "Insufficient data (fewer than 3 trades)"
+  },
+  "admin": {
+    "title": "Mentor Dashboard",
+    "students": "Students",
+    "viewStudent": "View Student Trades",
+    "comment": "Add Comment",
+    "commentPlaceholder": "Write your comment here...",
+    "submitComment": "Submit",
+    "alerts": "Alerts",
+    "noStudents": "No students yet"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "filter": "Filter",
+    "search": "Search",
+    "week": "Week",
+    "month": "Month",
+    "all": "All"
+  }
+}
