@@ -60,6 +60,33 @@ export async function GET() {
   return NextResponse.json(result)
 }
 
+// DELETE /api/admin — delete user (SUPER ADMIN only)
+export async function DELETE(req: Request) {
+  const session = await auth()
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  // Only the super admin can delete users
+  const superAdminEmail = 'gemikhlil123@gmail.com'
+  const currentUser = await prisma.user.findUnique({
+    where: { id: session.user!.id as string },
+    select: { role: true, email: true },
+  })
+  if (currentUser?.role !== 'MENTOR' || currentUser?.email !== superAdminEmail) {
+    return NextResponse.json({ error: 'Forbidden — Super Admin only' }, { status: 403 })
+  }
+
+  const { userId } = await req.json()
+  if (!userId) return NextResponse.json({ error: 'userId required' }, { status: 400 })
+
+  // Prevent deleting yourself
+  if (userId === session.user!.id) {
+    return NextResponse.json({ error: 'لا يمكنك حذف حسابك' }, { status: 400 })
+  }
+
+  await prisma.user.delete({ where: { id: userId } })
+  return NextResponse.json({ success: true })
+}
+
 // PATCH /api/admin — update user (activate/deactivate/change subscription)
 const patchSchema = z.object({
   userId: z.string(),

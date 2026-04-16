@@ -83,7 +83,7 @@ export function DailyChecklist() {
           className="absolute top-0 right-3 text-[90px] leading-none font-serif text-[#D4AF37] select-none pointer-events-none"
           style={{ opacity: 0.06 }}
         >
-          "
+          &ldquo;
         </div>
         <p className="text-[#8899BB] text-[13px] leading-8 italic whitespace-pre-line relative z-10">
           {OATH}

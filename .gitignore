@@ -40,3 +40,7 @@ next-env.d.ts
 
 # secrets
 .env
+.netlify
+
+# local tooling
+.claude/

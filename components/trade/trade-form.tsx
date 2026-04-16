@@ -36,8 +36,6 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
 
   const [symbol, setSymbol]         = useState(sessionSymbol ?? 'NQ')
   const [direction, setDirection]   = useState<'LONG' | 'SHORT'>('LONG')
-  const [entryPrice, setEntryPrice] = useState('')
-  const [exitPrice, setExitPrice]   = useState('')
   const [sl, setSl]                 = useState('')
   const [target, setTarget]         = useState('')
   const [entryTime, setEntryTime]   = useState('')
@@ -74,7 +72,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
   }
 
   function resetForm() {
-    setEntryPrice(''); setExitPrice(''); setSl(''); setTarget('')
+    setSl(''); setTarget('')
     setPnl(''); setRrAchieved(''); setRrPlanned('')
     setResult(null); setNotes('')
     setTrueOpens({ TWO: null, TDO: null, Session: null })
@@ -85,7 +83,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!entryPrice || !entryTime) { setError('أدخل سعر الدخول والوقت'); return }
+    if (!entryTime) { setError('أدخل وقت الدخول'); return }
     if (entryReasonIds.length === 0) { setError('يجب اختيار سبب دخول واحد على الأقل'); return }
 
     setLoading(true); setError('')
@@ -97,8 +95,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
         body: JSON.stringify({
           symbol,
           direction,
-          entryPrice: parseFloat(entryPrice),
-          exitPrice: exitPrice ? parseFloat(exitPrice) : undefined,
+          entryPrice: 0,
           entryTime: new Date(entryTime).toISOString(),
           exitTime: exitTime ? new Date(exitTime).toISOString() : undefined,
           pnl: pnl ? parseFloat(pnl) : undefined,
@@ -132,7 +129,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
   const lc = 'block text-[11px] font-bold text-[#D4AF37] tracking-wide mb-1.5'
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-1 pb-2">
+    <form onSubmit={handleSubmit} noValidate className="space-y-1 pb-2">
       <div className="card-gold p-3 flex items-center gap-2 mt-3">
         <span className="text-lg">💡</span>
         <p className="text-[#8899BB] text-xs">تأكد من مراجعة التحيز قبل الدخول</p>
@@ -172,12 +169,10 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
         </div>
       </div>
 
-      <div className="sec-title">الأسعار</div>
+      <div className="sec-title">النقاط</div>
       <div className="grid grid-cols-2 gap-2">
-        <div><label className={lc}>سعر الدخول *</label><input type="number" step="any" placeholder="21000" value={entryPrice} onChange={e => setEntryPrice(e.target.value)} className={ic} /></div>
-        <div><label className={lc}>سعر الخروج</label><input type="number" step="any" placeholder="21200" value={exitPrice} onChange={e => setExitPrice(e.target.value)} className={ic} /></div>
-        <div><label className={lc}>Stop Loss</label><input type="number" step="any" placeholder="20800" value={sl} onChange={e => setSl(e.target.value)} className={ic} /></div>
-        <div><label className={lc}>Target</label><input type="number" step="any" placeholder="21500" value={target} onChange={e => setTarget(e.target.value)} className={ic} /></div>
+        <div><label className={lc}>Stop Loss (نقاط)</label><input type="number" step="any" placeholder="50" value={sl} onChange={e => setSl(e.target.value)} className={ic} /></div>
+        <div><label className={lc}>Target (نقاط)</label><input type="number" step="any" placeholder="100" value={target} onChange={e => setTarget(e.target.value)} className={ic} /></div>
       </div>
 
       <div className="sec-title">التوقيت</div>
@@ -186,9 +181,9 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
         <div><label className={lc}>وقت الخروج</label><input type="datetime-local" value={exitTime} onChange={e => setExitTime(e.target.value)} className={ic} /></div>
       </div>
 
-      <div className="sec-title">النتائج المالية</div>
+      <div className="sec-title">النتائج</div>
       <div className="grid grid-cols-3 gap-2">
-        <div><label className={lc}>النتيجة $</label><input type="number" step="any" placeholder="+250" value={pnl} onChange={e => setPnl(e.target.value)} className={ic} /></div>
+        <div><label className={lc}>النتيجة (نقاط)</label><input type="number" step="any" placeholder="+25" value={pnl} onChange={e => setPnl(e.target.value)} className={ic} /></div>
         <div><label className={lc}>RR المحقق</label><input type="number" step="0.1" placeholder="2.5" value={rrAchieved} onChange={e => setRrAchieved(e.target.value)} className={ic} /></div>
         <div><label className={lc}>RR المخطط</label><input type="number" step="0.1" placeholder="3.0" value={rrPlanned} onChange={e => setRrPlanned(e.target.value)} className={ic} /></div>
       </div>

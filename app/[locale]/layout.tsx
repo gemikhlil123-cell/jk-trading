@@ -1,17 +1,10 @@
 import type { Metadata } from 'next'
-import { Cairo } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { Providers } from '@/components/providers'
 import '../globals.css'
-
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
-  variable: '--font-cairo',
-  weight: ['300', '400', '500', '600', '700', '800'],
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'JK Trading Journal',
@@ -35,10 +28,12 @@ export default async function LocaleLayout({
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
 
   return (
-    <html lang={locale} dir={dir} className={cairo.variable}>
+    <html lang={locale} dir={dir}>
       <body className="antialiased bg-[#0A192F] text-[#F5F5DC] min-h-screen">
         <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
+          <Providers>
+            {children}
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

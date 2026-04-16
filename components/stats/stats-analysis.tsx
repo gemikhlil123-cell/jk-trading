@@ -15,7 +15,6 @@ export function StatsAnalysis({ trades }: Props) {
   if (trades.length < 3) return null
 
   const wins = trades.filter(t => t.pnl > 0)
-  const losses = trades.filter(t => t.pnl <= 0)
   const winRate = (wins.length / trades.length) * 100
   const avgRR = trades.reduce((s, t) => s + (t.rrAchieved ?? 0), 0) / trades.length
 

@@ -64,7 +64,11 @@ export default async function TradesPage({
           const rr = trade.rrAchieved ? Number(trade.rrAchieved) : null
 
           return (
-            <div key={trade.id} className="card-dark p-4">
+            <Link
+              key={trade.id}
+              href={`/${locale}/trades/${trade.id}`}
+              className="card-dark p-4 block hover:border-[rgba(212,175,55,0.4)] transition-colors"
+            >
               {/* Header */}
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -72,7 +76,7 @@ export default async function TradesPage({
                   <span className="text-[#C8D8EE] font-bold">{trade.symbol}</span>
                   {pnl !== null && (
                     <span className={`text-sm font-black ${isWin ? 'text-[#1DB954]' : 'text-[#E74C3C]'}`}>
-                      {isWin ? '+' : ''}${pnl.toFixed(0)}
+                      {isWin ? '+' : ''}{pnl.toFixed(0)} نقطة
                     </span>
                   )}
                 </div>
@@ -119,18 +123,15 @@ export default async function TradesPage({
                 )}
               </div>
 
-              {/* Prices */}
+              {/* Time */}
               <div className="flex gap-4 text-[10px] text-[#4A5A7A]">
-                <span>دخول: <span className="text-[#8899BB] font-mono">{Number(trade.entryPrice).toFixed(2)}</span></span>
-                {trade.exitPrice && (
-                  <span>خروج: <span className="text-[#8899BB] font-mono">{Number(trade.exitPrice).toFixed(2)}</span></span>
-                )}
+                <span>الوقت: <span className="text-[#8899BB] font-mono">{trade.entryTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })}</span></span>
               </div>
 
               {trade.notes && (
-                <p className="text-[#4A5A7A] text-xs mt-2 leading-relaxed line-clamp-2">{trade.notes}</p>
+                <p className="text-[#4A5A7A] text-xs mt-2 leading-relaxed line-clamp-2">{trade.notes.replace(/__meta:.*$/s, '').trim()}</p>
               )}
-            </div>
+            </Link>
           )
         })}
       </div>

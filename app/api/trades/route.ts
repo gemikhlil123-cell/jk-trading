@@ -7,8 +7,8 @@ import { z } from 'zod'
 const createTradeSchema = z.object({
   symbol: z.enum(['NQ', 'ES', 'BTC', 'XAU', 'GC', 'CL', 'EURUSD', 'OTHER']),
   direction: z.enum(['LONG', 'SHORT']),
-  entryPrice: z.number().positive(),
-  exitPrice: z.number().positive().optional(),
+  entryPrice: z.number().default(0),
+  exitPrice: z.number().optional(),
   entryTime: z.string().datetime(),
   exitTime: z.string().datetime().optional(),
   pnl: z.number().optional(),

@@ -37,12 +37,13 @@ export function LoginForm() {
     >
       {/* Logo */}
       <div className="text-center mb-7">
-        <div
-          className="w-20 h-20 rounded-2xl mx-auto mb-3.5 flex items-center justify-center"
-          style={{ background: 'linear-gradient(135deg, #A07D1C, #D4AF37)', border: '2px solid rgba(212,175,55,0.3)' }}
-        >
-          <span className="text-[#080C14] font-black text-2xl">JK</span>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="JK Trading"
+          className="w-24 h-24 rounded-2xl mx-auto mb-3.5 object-contain"
+          style={{ filter: 'drop-shadow(0 0 16px rgba(201,168,76,0.5))', border: '1px solid rgba(201,168,76,0.2)' }}
+        />
         <h1 className="text-[22px] font-black text-[#D4AF37] tracking-widest">JK TRADING</h1>
         <p className="text-[#4A5A7A] text-xs mt-1">سجّل، حلّل، تحسّن</p>
       </div>
