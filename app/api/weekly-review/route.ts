@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { getWeeklyAnalysis } from '@/lib/analysis'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: Request) {
   const session = await auth()
   if (!session?.user?.id) {
