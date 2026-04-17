@@ -5,6 +5,8 @@ import { generateMindsetTips, getChecklistFor } from '@/lib/mindset'
 import { MindsetView } from '@/components/analytics/mindset-view'
 import { AnalyticsSubnav } from '@/components/analytics/analytics-subnav'
 
+export const dynamic = 'force-dynamic'
+
 export default async function MindsetPage({
   params,
 }: {

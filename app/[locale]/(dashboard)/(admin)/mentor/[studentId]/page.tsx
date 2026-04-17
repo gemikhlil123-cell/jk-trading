@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { getDeepAnalysis } from '@/lib/deep-analysis'
 import { MentorCommentForm } from '@/components/mentor/mentor-comment-form'
 
+export const dynamic = 'force-dynamic'
+
 export default async function MentorStudentPage({
   params,
 }: {

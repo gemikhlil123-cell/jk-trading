@@ -4,6 +4,8 @@ import { getDeepAnalysis } from '@/lib/deep-analysis'
 import { DeepAnalyticsView } from '@/components/analytics/deep-analytics-view'
 import { AnalyticsSubnav } from '@/components/analytics/analytics-subnav'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AnalyticsPage({
   params,
 }: {
