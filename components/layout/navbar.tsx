@@ -1,6 +1,8 @@
 'use client'
 
-import { Bell, User } from 'lucide-react'
+import { User } from 'lucide-react'
+import { NotificationBell } from './notification-bell'
+import { ThemeToggle } from './theme-toggle'
 
 interface NavbarProps {
   userName?: string | null
@@ -20,10 +22,8 @@ export function Navbar({ userName, role }: NavbarProps) {
       </div>
 
       <div className="flex items-center gap-3">
-        <button className="relative p-1.5 rounded-lg text-[#F5F5DC]/50 hover:text-[#F5F5DC] hover:bg-[#F5F5DC]/5 transition-colors">
-          <Bell size={18} />
-          <span className="absolute top-0.5 end-0.5 w-2 h-2 bg-red-400 rounded-full" />
-        </button>
+        <ThemeToggle />
+        <NotificationBell />
 
         <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-[#F5F5DC]/5 border border-[#1D3461]">
           <div className="w-6 h-6 rounded-full bg-[#F5F5DC]/20 flex items-center justify-center">

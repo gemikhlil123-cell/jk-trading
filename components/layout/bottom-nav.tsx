@@ -47,6 +47,16 @@ export function BottomNav({ locale, role }: BottomNavProps) {
       ),
     },
     {
+      href: `/${locale}/analytics`,
+      label: 'التحليل',
+      icon: (active: boolean) => (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>
+          <path d="M3 3v18h18"/>
+          <path d="M7 14l4-4 4 4 5-5"/>
+        </svg>
+      ),
+    },
+    {
       href: `/${locale}/bias`,
       label: 'التحيز',
       icon: (active: boolean) => (
@@ -70,10 +80,10 @@ export function BottomNav({ locale, role }: BottomNavProps) {
     },
   ]
 
-  // Add admin tab for mentors
+  // Add mentor tab for mentors
   if (role === 'MENTOR') {
     tabs.push({
-      href: `/${locale}/admin`,
+      href: `/${locale}/mentor`,
       label: 'المدرب',
       icon: (active: boolean) => (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>
@@ -94,8 +104,10 @@ export function BottomNav({ locale, role }: BottomNavProps) {
             (tab.href.includes('/checklist') && pathname.includes('/checklist')) ||
             (tab.href.includes('/trades/new') && pathname.includes('/trades/new')) ||
             (tab.href.includes('/dashboard') && pathname.includes('/dashboard')) ||
+            (tab.href.includes('/analytics') && (pathname.includes('/analytics') || pathname.includes('/strategy') || pathname.includes('/mindset'))) ||
             (tab.href.includes('/bias') && pathname.includes('/bias')) ||
             (tab.href.includes('/backtest') && pathname.includes('/backtest')) ||
+            (tab.href.includes('/mentor') && pathname.includes('/mentor')) ||
             (tab.href.includes('/admin') && pathname.includes('/admin'))
 
           return (

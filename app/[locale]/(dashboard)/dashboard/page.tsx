@@ -10,6 +10,7 @@ import { AdvancedStats } from '@/components/stats/advanced-stats'
 import { TradovateCSV } from '@/components/stats/tradovate-csv'
 import { PerformanceRadar } from '@/components/stats/performance-radar'
 import { TradingCalendar } from '@/components/stats/trading-calendar'
+import { SessionAlert } from '@/components/analytics/session-alert'
 
 const PERIOD_LABELS: Record<string, string> = {
   day: 'اليوم', week: 'الأسبوع', month: 'الشهر', all: 'الكل',
@@ -136,6 +137,9 @@ export default async function DashboardPage({
 
   return (
     <div style={{ padding: '0 16px 24px', direction: 'rtl', fontFamily: 'Cairo, sans-serif' }}>
+      {/* Session Alert — live session performance */}
+      <SessionAlert userId={session.user.id as string} />
+
       {/* Lucid Challenge */}
       <LucidChallenge currentPnl={allTimePnl} target={3000} />
 

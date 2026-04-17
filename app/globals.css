@@ -57,6 +57,29 @@
     z-index: 0;
   }
 
+  /* ─── Light theme overrides ─── */
+  html[data-theme="light"], html[data-theme="light"] body { background-color: #F8F4E8 !important; }
+  html[data-theme="light"] body { color: #2A1F10; }
+  html[data-theme="light"] body::before {
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(160,125,28,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(160,125,28,0.05) 0%, transparent 60%);
+  }
+  html[data-theme="light"] .card-dark,
+  html[data-theme="light"] .card-gold,
+  html[data-theme="light"] .card-navy {
+    background: #FFFFFF;
+    border-color: rgba(160,125,28,0.25);
+    color: #2A1F10;
+  }
+  html[data-theme="light"] .form-input-dark {
+    background: #FFFFFF;
+    color: #2A1F10;
+    border-color: rgba(160,125,28,0.25);
+  }
+  html[data-theme="light"] .sec-title { color: #7D5A1C; }
+  html[data-theme="light"] ::-webkit-scrollbar-track { background: #EDE4CD; }
+
   ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-track { background: #0D1520; }
   ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.25); border-radius: 2px; }
