@@ -49,14 +49,35 @@ export function AdvancedStats({ trades }: Props) {
         wins: d.wins,
         losses: d.losses,
         winRate: total > 0 ? (d.wins / total) * 100 : 0,
+        totalPnl: d.pnlSum,
         avgPnl: total > 0 ? d.pnlSum / total : 0,
       }
     })
     .filter((r) => r.total >= 3)
-    .sort((a, b) => b.winRate - a.winRate)
 
-  const topReasons = reasonStats.slice(0, 5)
-  const worstReasons = reasonStats.slice(-3).reverse()
+  // Best reasons: repeat ≥3 times AND winRate ≥ 60% AND positive PnL
+  // Ranked by a quality score that combines win rate, sample size, and avg PnL
+  const topReasons = reasonStats
+    .filter((r) => r.winRate >= 60 && r.avgPnl > 0)
+    .map((r) => ({ ...r, score: (r.winRate / 100) * Math.min(r.total, 10) * Math.max(r.avgPnl, 1) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+
+  const topNames = new Set(topReasons.map((r) => r.name))
+
+  // Worst reasons: repeat ≥3 times AND (winRate ≤ 45% OR negative total PnL)
+  // Must not overlap with top — sorted by most-harmful first
+  const worstReasons = reasonStats
+    .filter((r) => !topNames.has(r.name) && (r.winRate <= 45 || r.totalPnl < 0))
+    .map((r) => ({ ...r, harm: (1 - r.winRate / 100) * r.total + Math.max(-r.totalPnl, 0) / 50 }))
+    .sort((a, b) => b.harm - a.harm)
+    .slice(0, 3)
+
+  // Neutral reasons (between 45% and 60% winRate) — need more data
+  const neutralReasons = reasonStats
+    .filter((r) => !topNames.has(r.name) && !worstReasons.find((w) => w.name === r.name))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 3)
 
   // ─── Section 2: Killzones ─────────────────────────────────────────────────
   const kzMap: Record<string, { wins: number; total: number; pnlSum: number }> = {}
@@ -171,7 +192,7 @@ export function AdvancedStats({ trades }: Props) {
             {worstReasons.length > 0 && (
               <>
                 <p style={{ fontSize: 10, fontWeight: 700, color: '#E74C3C', marginTop: 12, marginBottom: 8, letterSpacing: '0.06em' }}>
-                  ⚠ تجنب هذه
+                  ⚠ تجنب هذه — أسباب خاسرة
                 </p>
                 <div className="space-y-1.5">
                   {worstReasons.map((r) => (
@@ -198,6 +219,44 @@ export function AdvancedStats({ trades }: Props) {
                   ))}
                 </div>
               </>
+            )}
+
+            {neutralReasons.length > 0 && (
+              <>
+                <p style={{ fontSize: 10, fontWeight: 700, color: '#C9A84C', marginTop: 12, marginBottom: 8, letterSpacing: '0.06em' }}>
+                  🔍 تحتاج بيانات أكثر
+                </p>
+                <div className="space-y-1.5">
+                  {neutralReasons.map((r) => (
+                    <div
+                      key={r.name}
+                      style={{
+                        background: 'rgba(212,175,55,0.05)',
+                        border: '1px solid rgba(212,175,55,0.18)',
+                        borderRadius: 8,
+                        padding: '7px 10px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: 8,
+                      }}
+                    >
+                      <span style={{ fontSize: 11, fontWeight: 700, color: '#C8D8EE', flex: 1 }}>{r.name}</span>
+                      <span style={{ fontSize: 10, color: '#C9A84C', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
+                      <span style={{ fontSize: 10, color: '#8899BB' }}>{r.total} صفقة</span>
+                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#1DB954' : '#E74C3C', fontWeight: 700 }}>
+                        {fmt(r.avgPnl)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {topReasons.length === 0 && worstReasons.length === 0 && (
+              <p style={{ fontSize: 11, color: '#8899BB', textAlign: 'center', padding: '8px 0' }}>
+                كل أسبابك في المنطقة المتوسطة — تحتاج بيانات أكثر لتصنيف واضح
+              </p>
             )}
           </div>
         </>

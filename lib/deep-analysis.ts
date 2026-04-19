@@ -187,13 +187,32 @@ export async function getDeepAnalysis(
     category: data.category,
   }))
 
+  // Winning reasons: min sample, winRate >= 60%, AND positive total PnL
+  // Score = winRate × sample_weight × positive_pnl_weight (all 3 matter)
   const winningReasons = reasonRows
-    .filter((r) => r.trades >= MIN_SAMPLE && r.winRate >= 0.55)
-    .sort((a, b) => b.winRate * b.trades - a.winRate * a.trades)
+    .filter((r) => r.trades >= MIN_SAMPLE && r.winRate >= 0.6 && r.totalPnl > 0)
+    .sort((a, b) => {
+      const scoreA = a.winRate * Math.min(a.trades, 10) * Math.max(a.avgPnl, 1)
+      const scoreB = b.winRate * Math.min(b.trades, 10) * Math.max(b.avgPnl, 1)
+      return scoreB - scoreA
+    })
 
+  const winningReasonNames = new Set(winningReasons.map((r) => r.key))
+
+  // Losing reasons: must NOT be in winning list, AND (winRate <= 45% OR negative PnL)
+  // Score by how much damage — weight by (1-winRate) × trades × loss magnitude
   const losingReasons = reasonRows
-    .filter((r) => r.trades >= MIN_SAMPLE && r.winRate <= 0.45)
-    .sort((a, b) => (1 - a.winRate) * a.trades - (1 - b.winRate) * b.trades)
+    .filter(
+      (r) =>
+        !winningReasonNames.has(r.key) &&
+        r.trades >= MIN_SAMPLE &&
+        (r.winRate <= 0.45 || r.totalPnl < 0)
+    )
+    .sort((a, b) => {
+      const harmA = (1 - a.winRate) * a.trades + Math.max(-a.totalPnl, 0) / 100
+      const harmB = (1 - b.winRate) * b.trades + Math.max(-b.totalPnl, 0) / 100
+      return harmB - harmA
+    })
 
   // Killzone breakdown
   const killzoneGroups = new Map<string, { pnl: number; isWin: boolean }[]>()
