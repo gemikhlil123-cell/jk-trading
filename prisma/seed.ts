@@ -11,10 +11,17 @@ const entryReasons = [
   { category: 'SMT', name: 'Between Days' },
   { category: 'SMT', name: 'Between Weeks' },
   { category: 'SMT', name: '90m Cycle' },
+  { category: 'SMT', name: 'SMT Fill Weekly' },
+  { category: 'SMT', name: 'SMT Fill Daily' },
+  { category: 'SMT', name: 'SMT Fill 6h' },
+  { category: 'SMT', name: 'SMT Fill 4h' },
   { category: 'SMT', name: 'SMT Fill 1h' },
   { category: 'SMT', name: 'SMT Fill 15m' },
   { category: 'SMT', name: 'SMT Fill 5m' },
   { category: 'SMT', name: 'Double SMT' },
+  // TDO + AMO
+  { category: 'TDO/AMO', name: 'Above TDO + AMO' },
+  { category: 'TDO/AMO', name: 'Below TDO + AMO' },
   // PSP
   { category: 'PSP', name: 'PSP 6h' },
   { category: 'PSP', name: 'PSP 4h' },

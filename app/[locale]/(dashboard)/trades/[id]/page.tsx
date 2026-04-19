@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { TradeDetailView } from '@/components/trade/trade-detail-view'
+import { detectSentimentsInText } from '@/lib/notes-analysis'
 
 export default async function TradeDetailPage({
   params,
@@ -13,8 +14,18 @@ export default async function TradeDetailPage({
   const session = await auth()
   if (!session?.user?.id) redirect(`/${locale}/login`)
 
+  // Mentors can view any student's trade; students only see their own
+  const me = await prisma.user.findUnique({
+    where: { id: session.user.id as string },
+    select: { role: true },
+  })
+  const whereClause =
+    me?.role === 'MENTOR'
+      ? { id }
+      : { id, userId: session.user.id as string }
+
   const trade = await prisma.trade.findFirst({
-    where: { id, userId: session.user.id },
+    where: whereClause,
     include: {
       entryReasons: { include: { entryReason: true } },
       comments: { include: { mentor: { select: { name: true } } } },
@@ -53,6 +64,7 @@ export default async function TradeDetailPage({
       mentorName: c.mentor?.name ?? null,
       createdAt: c.createdAt.toISOString(),
     })),
+    sentiments: trade.notes ? detectSentimentsInText(trade.notes) : [],
   }
 
   return (

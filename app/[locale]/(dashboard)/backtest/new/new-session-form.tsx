@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { jerusalemWallToUTC } from '@/lib/timezone'
 
 const symbols = ['NQ', 'ES', 'BTC', 'XAU', 'GC', 'CL', 'EURUSD', 'OTHER']
 const symbolLabels: Record<string, string> = {
@@ -32,7 +33,7 @@ export function NewSessionForm({ locale }: Props) {
       setError('يرجى ملء جميع الحقول المطلوبة')
       return
     }
-    if (new Date(startDate) >= new Date(endDate)) {
+    if (new Date(startDate) > new Date(endDate)) {
       setError('تاريخ البداية يجب أن يكون قبل تاريخ النهاية')
       return
     }
@@ -47,8 +48,9 @@ export function NewSessionForm({ locale }: Props) {
         body: JSON.stringify({
           name,
           symbol,
-          startDate: new Date(startDate).toISOString(),
-          endDate: new Date(endDate).toISOString(),
+          // Treat date-only input as Jerusalem midnight (start) / end-of-day (end)
+          startDate: jerusalemWallToUTC(`${startDate}T00:00`).toISOString(),
+          endDate: jerusalemWallToUTC(`${endDate}T23:59`).toISOString(),
         }),
       })
 

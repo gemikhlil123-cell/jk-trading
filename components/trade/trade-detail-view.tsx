@@ -23,6 +23,7 @@ interface TradeData {
   isBacktest: boolean
   entryReasons: { id: string; name: string; category: string }[]
   comments: { id: string; body: string; mentorName: string | null; createdAt: string }[]
+  sentiments?: { key: string; label: string; tone: 'positive' | 'negative' | 'neutral'; count: number }[]
 }
 
 const KILLZONE_AR: Record<string, string> = {
@@ -144,14 +145,14 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
           <div className="flex justify-between">
             <span className="text-[#4A5A7A]">الدخول</span>
             <span className="text-[#C8D8EE] font-mono">
-              {new Date(trade.entryTime).toLocaleString('en-GB', { hour12: false })}
+              {new Date(trade.entryTime).toLocaleString('en-GB', { hour12: false, timeZone: 'Asia/Jerusalem' })}
             </span>
           </div>
           {trade.exitTime && (
             <div className="flex justify-between">
               <span className="text-[#4A5A7A]">الخروج</span>
               <span className="text-[#C8D8EE] font-mono">
-                {new Date(trade.exitTime).toLocaleString('en-GB', { hour12: false })}
+                {new Date(trade.exitTime).toLocaleString('en-GB', { hour12: false, timeZone: 'Asia/Jerusalem' })}
               </span>
             </div>
           )}
@@ -289,6 +290,34 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
         <div className="card-dark p-4">
           <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">📝 الملاحظات</p>
           <p className="text-[#C8D8EE] text-xs leading-relaxed whitespace-pre-wrap">{cleanNotes}</p>
+          {trade.sentiments && trade.sentiments.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[rgba(212,175,55,0.08)]">
+              <span className="text-[10px] text-[#4A5A7A] self-center">مشاعر مكتشفة:</span>
+              {trade.sentiments.map((s) => (
+                <span
+                  key={s.key}
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-full border"
+                  style={{
+                    background:
+                      s.tone === 'negative'
+                        ? 'rgba(231,76,60,0.12)'
+                        : s.tone === 'positive'
+                        ? 'rgba(29,185,84,0.12)'
+                        : 'rgba(136,153,187,0.12)',
+                    borderColor:
+                      s.tone === 'negative'
+                        ? 'rgba(231,76,60,0.35)'
+                        : s.tone === 'positive'
+                        ? 'rgba(29,185,84,0.35)'
+                        : 'rgba(136,153,187,0.35)',
+                    color: s.tone === 'negative' ? '#E74C3C' : s.tone === 'positive' ? '#1DB954' : '#8899BB',
+                  }}
+                >
+                  {s.label} · {s.count}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

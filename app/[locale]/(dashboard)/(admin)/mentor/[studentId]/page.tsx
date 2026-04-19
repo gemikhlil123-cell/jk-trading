@@ -4,15 +4,23 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getDeepAnalysis } from '@/lib/deep-analysis'
 import { MentorCommentForm } from '@/components/mentor/mentor-comment-form'
+import { formatJerusalemDate, formatJerusalemTime } from '@/lib/timezone'
+import { StudentTradeChartImages } from '@/components/mentor/student-trade-chart-images'
 
 export const dynamic = 'force-dynamic'
 
+const PAGE_SIZE = 20
+
 export default async function MentorStudentPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; studentId: string }>
+  searchParams: Promise<{ page?: string }>
 }) {
   const { locale, studentId } = await params
+  const { page: pageStr } = await searchParams
+  const page = Math.max(1, parseInt(pageStr || '1'))
   const session = await auth()
   if (!session?.user?.id) redirect(`/${locale}/login`)
 
@@ -27,6 +35,11 @@ export default async function MentorStudentPage({
 
   const analysis = await getDeepAnalysis(studentId, { isBacktest: false })
 
+  const totalTrades = await prisma.trade.count({
+    where: { userId: studentId, isBacktest: false },
+  })
+  const totalPages = Math.max(1, Math.ceil(totalTrades / PAGE_SIZE))
+
   const trades = await prisma.trade.findMany({
     where: { userId: studentId, isBacktest: false },
     include: {
@@ -37,7 +50,8 @@ export default async function MentorStudentPage({
       },
     },
     orderBy: { entryTime: 'desc' },
-    take: 30,
+    take: PAGE_SIZE,
+    skip: (page - 1) * PAGE_SIZE,
   })
 
   return (
@@ -99,9 +113,14 @@ export default async function MentorStudentPage({
         ))}
       </div>
 
-      <h2 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37', marginBottom: 10 }}>
-        أحدث صفقات الطالب
-      </h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+        <h2 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37' }}>
+          جميع صفقات الطالب ({totalTrades})
+        </h2>
+        <span style={{ fontSize: 11, color: '#4A5A7A' }}>
+          صفحة {page} / {totalPages}
+        </span>
+      </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {trades.length === 0 && (
@@ -121,6 +140,7 @@ export default async function MentorStudentPage({
         )}
         {trades.map(t => {
           const pnl = t.pnl !== null ? Number(t.pnl) : null
+          const cleanNotes = t.notes ? t.notes.replace(/__meta:.*$/s, '').trim() : ''
           return (
             <div
               key={t.id}
@@ -147,7 +167,7 @@ export default async function MentorStudentPage({
                   </span>
                   <span style={{ color: '#C8D8EE', fontWeight: 700, fontSize: 13 }}>{t.symbol}</span>
                   <span style={{ color: '#4A5A7A', fontSize: 11 }}>
-                    {t.entryTime.toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' })}
+                    {formatJerusalemDate(t.entryTime)} · {formatJerusalemTime(t.entryTime)}
                   </span>
                 </div>
                 {pnl !== null && (
@@ -182,7 +202,12 @@ export default async function MentorStudentPage({
                 </div>
               )}
 
-              {t.notes && (
+              {/* Chart images — gallery */}
+              {t.chartImages && (
+                <StudentTradeChartImages raw={t.chartImages} />
+              )}
+
+              {cleanNotes && (
                 <div
                   style={{
                     fontSize: 11,
@@ -191,9 +216,10 @@ export default async function MentorStudentPage({
                     padding: 8,
                     background: 'rgba(0,0,0,0.2)',
                     borderRadius: 8,
+                    whiteSpace: 'pre-wrap',
                   }}
                 >
-                  {t.notes}
+                  {cleanNotes}
                 </div>
               )}
 
@@ -212,8 +238,7 @@ export default async function MentorStudentPage({
                       }}
                     >
                       <div style={{ fontSize: 10, color: '#D4AF37', fontWeight: 700, marginBottom: 4 }}>
-                        {c.mentor.name ?? c.mentor.email} ·{' '}
-                        {new Date(c.createdAt).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' })}
+                        {c.mentor.name ?? c.mentor.email} · {formatJerusalemDate(c.createdAt)}
                       </div>
                       <div style={{ color: '#C8D8EE', fontSize: 12 }}>{c.body}</div>
                     </div>
@@ -221,11 +246,71 @@ export default async function MentorStudentPage({
                 </div>
               )}
 
-              <MentorCommentForm tradeId={t.id} />
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 6 }}>
+                <Link
+                  href={`/${locale}/trades/${t.id}`}
+                  style={{
+                    fontSize: 11,
+                    color: '#D4AF37',
+                    textDecoration: 'none',
+                    padding: '6px 10px',
+                    background: 'rgba(212,175,55,0.08)',
+                    border: '1px solid rgba(212,175,55,0.2)',
+                    borderRadius: 8,
+                    fontWeight: 700,
+                  }}
+                >
+                  عرض التفاصيل الكاملة →
+                </Link>
+              </div>
+
+              <div style={{ marginTop: 8 }}>
+                <MentorCommentForm tradeId={t.id} />
+              </div>
             </div>
           )
         })}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 20 }}>
+          {page > 1 && (
+            <Link
+              href={`/${locale}/mentor/${studentId}?page=${page - 1}`}
+              style={{
+                padding: '8px 14px',
+                background: 'rgba(212,175,55,0.1)',
+                border: '1px solid rgba(212,175,55,0.25)',
+                borderRadius: 10,
+                color: '#D4AF37',
+                fontSize: 12,
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              ← السابق
+            </Link>
+          )}
+          {page < totalPages && (
+            <Link
+              href={`/${locale}/mentor/${studentId}?page=${page + 1}`}
+              style={{
+                padding: '8px 14px',
+                background: 'rgba(212,175,55,0.1)',
+                border: '1px solid rgba(212,175,55,0.25)',
+                borderRadius: 10,
+                color: '#D4AF37',
+                fontSize: 12,
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              التالي →
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   )
 }

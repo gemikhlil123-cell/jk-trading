@@ -42,10 +42,10 @@ export function BacktestTradeRow({ trade }: Props) {
   return (
     <tr className="border-b border-[#1D3461]/50 hover:bg-[#112240]/50 transition-colors">
       <td className="px-4 py-3 text-[#F5F5DC]/70 text-xs">
-        {new Date(trade.entryTime).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' })}
+        {new Date(trade.entryTime).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric', timeZone: 'Asia/Jerusalem' })}
         <br />
         <span className="text-[#F5F5DC]/40">
-          {new Date(trade.entryTime).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })}
+          {new Date(trade.entryTime).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
         </span>
       </td>
 

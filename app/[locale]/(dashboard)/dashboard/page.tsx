@@ -435,7 +435,7 @@ export default async function DashboardPage({
                       {trade.symbol}
                     </span>
                     <span style={{ color: '#4A5A7A', fontSize: 11 }}>
-                      {trade.entryTime.toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' })}
+                      {trade.entryTime.toLocaleDateString('ar-SA', { month: 'short', day: 'numeric', timeZone: 'Asia/Jerusalem' })}
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

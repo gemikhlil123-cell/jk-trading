@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowRight, Plus, TrendingUp, TrendingDown, Target, Activity, BarChart2 } from 'lucide-react'
 import { TradeForm } from '@/components/trade/trade-form'
 import { BacktestTradeRow } from './backtest-trade-row'
+import { formatJerusalemDate } from '@/lib/timezone'
 
 export default async function BacktestSessionPage({
   params,
@@ -52,10 +53,7 @@ export default async function BacktestSessionPage({
         <div>
           <h1 className="text-2xl font-bold text-[#C8D8EE]">{bs.name}</h1>
           <p className="text-[#C8D8EE]/50 text-sm mt-0.5">
-            {bs.symbol} ·{' '}
-            {new Date(bs.startDate).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' })}
-            {' — '}
-            {new Date(bs.endDate).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' })}
+            {bs.symbol} · {formatJerusalemDate(bs.startDate)} — {formatJerusalemDate(bs.endDate)}
           </p>
         </div>
       </div>

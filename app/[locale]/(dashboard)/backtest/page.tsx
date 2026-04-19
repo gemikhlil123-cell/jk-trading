@@ -4,6 +4,9 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Plus, FlaskConical, ChevronLeft } from 'lucide-react'
 import { DeleteSessionButton } from './delete-session-button'
+import { formatJerusalemDate } from '@/lib/timezone'
+
+export const dynamic = 'force-dynamic'
 
 export default async function BacktestPage({
   params,
@@ -88,11 +91,7 @@ export default async function BacktestPage({
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-[#C8D8EE]/40">
-                  <span>
-                    {new Date(s.startDate).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' })}
-                    {' — '}
-                    {new Date(s.endDate).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </span>
+                  <span>{formatJerusalemDate(s.startDate)} — {formatJerusalemDate(s.endDate)}</span>
                 </div>
 
                 <Link

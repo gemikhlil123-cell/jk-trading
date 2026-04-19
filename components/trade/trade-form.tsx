@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useLocale } from 'next-intl'
 import { EntryReasonSelect, type EntryReason } from './entry-reason-select'
 import { ChartImages } from './chart-images'
+import { jerusalemWallToUTC, utcToJerusalemWall } from '@/lib/timezone'
 
 const SYMBOLS = ['NQ', 'ES', 'BTC', 'XAU', 'GC', 'CL', 'EURUSD', 'OTHER']
 const SYM_LABELS: Record<string, string> = {
@@ -58,9 +59,8 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
 
   useEffect(() => {
     fetch('/api/entry-reasons').then(r => r.json()).then(setReasons)
-    const now = new Date()
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
-    setEntryTime(now.toISOString().slice(0, 16))
+    // Prefill with current Jerusalem wall-clock time (handles DST automatically)
+    setEntryTime(utcToJerusalemWall(new Date()))
   }, [])
 
   function toggleTO(key: TOKey, dir: TODir) {
@@ -96,8 +96,8 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
           symbol,
           direction,
           entryPrice: 0,
-          entryTime: new Date(entryTime).toISOString(),
-          exitTime: exitTime ? new Date(exitTime).toISOString() : undefined,
+          entryTime: jerusalemWallToUTC(entryTime).toISOString(),
+          exitTime: exitTime ? jerusalemWallToUTC(exitTime).toISOString() : undefined,
           pnl: pnl ? parseFloat(pnl) : undefined,
           rrAchieved: rrAchieved ? parseFloat(rrAchieved) : undefined,
           rrPlanned: rrPlanned ? parseFloat(rrPlanned) : undefined,

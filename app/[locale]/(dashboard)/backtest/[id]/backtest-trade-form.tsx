@@ -9,6 +9,7 @@ import { EntryReasonSelect, type EntryReason } from '@/components/trade/entry-re
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { jerusalemWallToUTC } from '@/lib/timezone'
 
 const schema = z.object({
   direction: z.enum(['LONG', 'SHORT']),
@@ -54,8 +55,8 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
           symbol,
           isBacktest: true,
           backtestSessionId: sessionId,
-          entryTime: new Date(data.entryTime).toISOString(),
-          exitTime: data.exitTime ? new Date(data.exitTime).toISOString() : undefined,
+          entryTime: jerusalemWallToUTC(data.entryTime).toISOString(),
+          exitTime: data.exitTime ? jerusalemWallToUTC(data.exitTime).toISOString() : undefined,
         }),
       })
 

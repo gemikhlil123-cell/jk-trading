@@ -81,7 +81,7 @@ export default async function TradesPage({
                   )}
                 </div>
                 <span className="text-[#4A5A7A] text-[10px]">
-                  {trade.entryTime.toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' })}
+                  {trade.entryTime.toLocaleDateString('ar-SA', { month: 'short', day: 'numeric', timeZone: 'Asia/Jerusalem' })}
                 </span>
               </div>
 
@@ -125,7 +125,7 @@ export default async function TradesPage({
 
               {/* Time */}
               <div className="flex gap-4 text-[10px] text-[#4A5A7A]">
-                <span>الوقت: <span className="text-[#8899BB] font-mono">{trade.entryTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })}</span></span>
+                <span>الوقت: <span className="text-[#8899BB] font-mono">{trade.entryTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}</span></span>
               </div>
 
               {trade.notes && (
