@@ -54,6 +54,17 @@ enum AlertType {
   MENTOR_COMMENT
   SYSTEM
   BILLING
+  TRADOVATE_SYNC
+}
+
+enum TradeSource {
+  MANUAL
+  TRADOVATE
+}
+
+enum TradovateEnv {
+  LIVE
+  DEMO
 }
 
 // ─── Models ───────────────────────────────────────────────────────────────────
@@ -83,6 +94,7 @@ model User {
   studentComments  MentorComment[] @relation("StudentComments")
   alerts           Alert[]
   backtestSessions BacktestSession[]
+  tradovateAccount TradovateAccount?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -152,6 +164,11 @@ model Trade {
   killzone   Killzone?
   cyclePhase CyclePhase?
 
+  // Tradovate integration
+  source          TradeSource @default(MANUAL)
+  externalFillId  String?     @unique
+  needsReview     Boolean     @default(false)
+
   backtestSessionId String?
   backtestSession   BacktestSession? @relation(fields: [backtestSessionId], references: [id])
 
@@ -217,6 +234,37 @@ model Alert {
 
   @@index([userId, isRead])
   @@map("alerts")
+}
+
+model TradovateAccount {
+  id                   String       @id @default(cuid())
+  userId               String       @unique
+  env                  TradovateEnv @default(LIVE)
+  // Encrypted credentials (AES-256-GCM, format: iv:tag:ciphertext hex)
+  usernameEnc          String       @db.Text
+  passwordEnc          String       @db.Text
+  cidEnc               String       @db.Text
+  secretEnc            String       @db.Text
+  appId                String?
+  deviceId             String?
+  // Session tokens
+  accessToken          String?      @db.Text
+  mdAccessToken        String?      @db.Text
+  tokenExpiresAt       DateTime?
+  // Sync state
+  isActive             Boolean      @default(true)
+  lastSyncAt           DateTime?
+  lastSyncStatus       String?      // "ok" | "error: ..."
+  lastErrorAt          DateTime?
+  lastErrorMessage     String?      @db.Text
+  importedTradesCount  Int          @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tradovate_accounts")
 }
 
 model BacktestSession {

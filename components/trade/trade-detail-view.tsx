@@ -21,6 +21,8 @@ interface TradeData {
   selfRating: number | null
   emotionalState: string | null
   isBacktest: boolean
+  source?: string | null
+  needsReview?: boolean
   entryReasons: { id: string; name: string; category: string }[]
   comments: { id: string; body: string; mentorName: string | null; createdAt: string }[]
   sentiments?: { key: string; label: string; tone: 'positive' | 'negative' | 'neutral'; count: number }[]

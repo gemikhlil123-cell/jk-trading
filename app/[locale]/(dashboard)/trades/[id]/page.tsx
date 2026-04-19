@@ -53,6 +53,8 @@ export default async function TradeDetailPage({
     selfRating: trade.selfRating,
     emotionalState: trade.emotionalState,
     isBacktest: trade.isBacktest,
+    source: trade.source,
+    needsReview: trade.needsReview,
     entryReasons: trade.entryReasons.map((er) => ({
       id: er.entryReason.id,
       name: er.entryReason.name,

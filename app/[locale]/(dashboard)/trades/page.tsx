@@ -113,6 +113,18 @@ export default async function TradesPage({
                   </span>
                 )}
 
+                {trade.source === 'TRADOVATE' && (
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-[rgba(96,165,250,0.1)] border border-[rgba(96,165,250,0.3)] text-[#60A5FA] font-bold">
+                    🔄 Tradovate
+                  </span>
+                )}
+
+                {trade.needsReview && (
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-[rgba(251,191,36,0.12)] border border-[rgba(251,191,36,0.35)] text-[#FBBF24] font-bold">
+                    ⚠ أكمل الأسباب
+                  </span>
+                )}
+
                 {trade.entryReasons.slice(0, 2).map((ter) => (
                   <span key={ter.entryReasonId} className="text-[10px] px-2 py-1 rounded-full bg-[#162035] text-[#8899BB]">
                     {ter.entryReason.name}
