@@ -353,13 +353,19 @@ export function TradovateCSV() {
 
   const saveResult = (r: ParsedResult) => {
     setResult(r)
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(r)) } catch { /* ignore */ }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(r))
+      window.dispatchEvent(new CustomEvent('jk-csv-updated'))
+    } catch { /* ignore */ }
   }
 
   const clearResult = () => {
     setResult(null)
     setError(null)
-    try { localStorage.removeItem(STORAGE_KEY) } catch { /* ignore */ }
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+      window.dispatchEvent(new CustomEvent('jk-csv-updated'))
+    } catch { /* ignore */ }
   }
 
   const handleFile = (file: File) => {

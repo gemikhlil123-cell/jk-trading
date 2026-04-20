@@ -12,6 +12,7 @@ export function AnalyticsSubnav({ locale }: Props) {
   const tabs = [
     { href: `/${locale}/analytics`, label: 'التحليل الشامل', match: '/analytics' },
     { href: `/${locale}/strategy`, label: 'استراتيجيتك', match: '/strategy' },
+    { href: `/${locale}/deep-analysis`, label: 'التحليل العميق', match: '/deep-analysis' },
     { href: `/${locale}/mindset`, label: 'العقلية والمخاطرة', match: '/mindset' },
   ]
 

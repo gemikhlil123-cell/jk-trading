@@ -169,6 +169,11 @@ model Trade {
   externalFillId  String?     @unique
   needsReview     Boolean     @default(false)
 
+  // Claude-based deep notes analysis (structured extraction)
+  notesAnalysis       String?   @db.Text  // JSON: timeframes, confluences, sessions, instruments, summary_ar, ...
+  notesAnalysisAt     DateTime?
+  notesAnalysisModel  String?
+
   backtestSessionId String?
   backtestSession   BacktestSession? @relation(fields: [backtestSessionId], references: [id])
 

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { computeKillzone, computeCyclePhase } from '@/lib/autoTag'
+import { analyzeNote, MODEL_ID as CLAUDE_MODEL_ID } from '@/lib/claude-analysis'
 import { z } from 'zod'
 
 const createTradeSchema = z.object({
@@ -100,6 +101,32 @@ export async function POST(req: Request) {
       entryReasons: { include: { entryReason: true } },
     },
   })
+
+  // Fire-and-forget Claude note analysis (only if note is substantial + API key present).
+  // Does NOT block the response — errors are swallowed to keep trade creation reliable.
+  if (
+    process.env.ANTHROPIC_API_KEY &&
+    typeof data.notes === 'string' &&
+    data.notes.trim().length >= 10
+  ) {
+    const noteText = data.notes.trim()
+    const tradeId = trade.id
+    void (async () => {
+      try {
+        const result = await analyzeNote(noteText)
+        await prisma.trade.update({
+          where: { id: tradeId },
+          data: {
+            notesAnalysis: JSON.stringify(result),
+            notesAnalysisAt: new Date(),
+            notesAnalysisModel: CLAUDE_MODEL_ID,
+          },
+        })
+      } catch (err) {
+        console.error('[trades.POST] background analyzeNote failed', tradeId, err)
+      }
+    })()
+  }
 
   return NextResponse.json(trade, { status: 201 })
 }

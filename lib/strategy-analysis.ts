@@ -74,6 +74,21 @@ export interface ReasonComboInsight {
   action: ReasonAction
 }
 
+export interface ReasonTripleInsight {
+  names: [string, string, string]
+  trades: number
+  wins: number
+  winRate: number
+  totalPnl: number
+  avgPnl: number
+  expectancy: number
+  confidence: number
+  action: ReasonAction
+  // Week vs month comparison for this triple
+  thisMonth: { trades: number; wins: number; winRate: number; totalPnl: number }
+  thisWeek: { trades: number; wins: number; winRate: number; totalPnl: number }
+}
+
 export interface WeeklySnapshot {
   trades: number
   wins: number
@@ -94,6 +109,7 @@ export interface WeeklyComparison {
 export interface StrategyAnalysis {
   reasons: ReasonInsight[]
   combos: ReasonComboInsight[]
+  triples: ReasonTripleInsight[]
   weekly: WeeklyComparison
   actionSummary: {
     keep: ReasonInsight[]
@@ -102,6 +118,9 @@ export interface StrategyAnalysis {
     review: ReasonInsight[]
   }
 }
+
+// Triple-combo minimum (user preference: stricter than pair combos)
+const MIN_TRIPLE_SAMPLE = 10
 
 // ──────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -503,6 +522,85 @@ export async function getStrategyAnalysis(
     })
     .sort((a, b) => b.expectancy - a.expectancy)
 
+  // ─── Triple combos (3-reason patterns, min 10 occurrences) ───
+  const tripleMap = new Map<
+    string,
+    {
+      names: [string, string, string]
+      trades: { pnl: number; rr: number | null; isWin: boolean; time: Date }[]
+    }
+  >()
+  for (const t of trades) {
+    const names = t.reasons.map((r) => r.name).sort()
+    if (names.length < 3) continue
+    for (let i = 0; i < names.length; i++) {
+      for (let j = i + 1; j < names.length; j++) {
+        for (let k = j + 1; k < names.length; k++) {
+          const key = `${names[i]}|${names[j]}|${names[k]}`
+          const cur = tripleMap.get(key) ?? {
+            names: [names[i], names[j], names[k]] as [string, string, string],
+            trades: [],
+          }
+          cur.trades.push({ pnl: t.pnl, rr: t.rr, isWin: t.isWin, time: t.entryTime })
+          tripleMap.set(key, cur)
+        }
+      }
+    }
+  }
+
+  const nowWeekStart = (() => {
+    const d = new Date()
+    d.setUTCDate(d.getUTCDate() - d.getUTCDay())
+    d.setUTCHours(0, 0, 0, 0)
+    return d
+  })()
+  const nowMonthStart = (() => {
+    const d = new Date()
+    d.setUTCDate(1)
+    d.setUTCHours(0, 0, 0, 0)
+    return d
+  })()
+
+  const triples: ReasonTripleInsight[] = Array.from(tripleMap.values())
+    .filter((c) => c.trades.length >= MIN_TRIPLE_SAMPLE)
+    .map((c) => {
+      const wins = c.trades.filter((t) => t.isWin).length
+      const winRate = wins / c.trades.length
+      const totalPnl = c.trades.reduce((s, t) => s + t.pnl, 0)
+      const { expectancy } = computeExpectancy(c.trades)
+      const { action } = classifyReason(winRate, expectancy, 'PNL', c.trades.length, 'STABLE')
+
+      const thisWeekTrades = c.trades.filter((t) => t.time >= nowWeekStart)
+      const thisMonthTrades = c.trades.filter((t) => t.time >= nowMonthStart)
+
+      const buildSlice = (arr: typeof c.trades) => {
+        const w = arr.filter((t) => t.isWin).length
+        const p = arr.reduce((s, t) => s + t.pnl, 0)
+        return {
+          trades: arr.length,
+          wins: w,
+          winRate: arr.length > 0 ? w / arr.length : 0,
+          totalPnl: p,
+        }
+      }
+
+      return {
+        names: c.names,
+        trades: c.trades.length,
+        wins,
+        winRate,
+        totalPnl,
+        avgPnl: totalPnl / c.trades.length,
+        expectancy,
+        confidence: confidenceFromSample(c.trades.length),
+        action,
+        thisMonth: buildSlice(thisMonthTrades),
+        thisWeek: buildSlice(thisWeekTrades),
+      }
+    })
+    // Sort by expectancy desc (user preference)
+    .sort((a, b) => b.expectancy - a.expectancy)
+
   // ─── Weekly comparison ───
   const nowWeekKey = weekKey(new Date())
   const lastWeekDate = new Date()
@@ -556,5 +654,5 @@ export async function getStrategyAnalysis(
   // Avoid unused var warning
   void RECENT_SLICE
 
-  return { reasons, combos, weekly, actionSummary }
+  return { reasons, combos, triples, weekly, actionSummary }
 }
