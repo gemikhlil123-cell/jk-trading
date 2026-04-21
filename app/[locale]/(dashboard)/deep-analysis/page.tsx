@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getDeepAggregate } from '@/lib/deep-analysis-aggregator'
 import { getStrategyAnalysis } from '@/lib/strategy-analysis'
 import { checkDeepAccess, canViewDeepAnalysisFor } from '@/lib/deep-analysis-guard'
+import { detectProvider } from '@/lib/ai-provider'
 import { AnalyticsSubnav } from '@/components/analytics/analytics-subnav'
 import { DeepAnalysisView } from '@/components/deep-analysis/deep-analysis-view'
 
@@ -72,7 +73,8 @@ export default async function DeepAnalysisPage({
     getStrategyAnalysis(targetUserId, { isBacktest: false }),
   ])
 
-  const hasApiKey = !!process.env.ANTHROPIC_API_KEY
+  const provider = detectProvider()
+  const hasApiKey = provider !== 'none'
 
   return (
     <div style={{ padding: '14px 14px 100px', direction: 'rtl' }}>
@@ -97,8 +99,36 @@ export default async function DeepAnalysisPage({
             marginBottom: 10,
           }}
         >
-          ⚠️ مفتاح Anthropic API غير مضبوط في Netlify. التحليل الذكي معطّل حتى تتم إضافة
-          ANTHROPIC_API_KEY.
+          ⚠️ لم يتم إعداد مفتاح ذكاء اصطناعي بعد.
+          <br />
+          أضف <b>GEMINI_API_KEY</b> (مجاني من{' '}
+          <a
+            href="https://aistudio.google.com/app/apikey"
+            target="_blank"
+            rel="noopener"
+            style={{ color: '#D4AF37', textDecoration: 'underline' }}
+          >
+            Google AI Studio
+          </a>
+          ) في Netlify، وسيبدأ التحليل الذكي تلقائياً.
+        </div>
+      )}
+
+      {hasApiKey && (
+        <div
+          style={{
+            background: 'rgba(29,185,84,0.06)',
+            border: '1px solid rgba(29,185,84,0.2)',
+            color: '#8899BB',
+            fontSize: 10,
+            padding: '6px 10px',
+            borderRadius: 8,
+            marginBottom: 10,
+          }}
+        >
+          🤖 المزوّد: <b style={{ color: '#1DB954' }}>
+            {provider === 'gemini' ? 'Gemini 2.5 Flash (مجاني)' : 'Claude Opus 4.7'}
+          </b>
         </div>
       )}
 

@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
-import { analyzeUnanalyzedTrades, reanalyzeAllTrades } from '@/lib/claude-analysis'
+import {
+  analyzeUnanalyzedTrades,
+  reanalyzeAllTrades,
+  detectProvider,
+} from '@/lib/ai-provider'
 import { canViewDeepAnalysisFor } from '@/lib/deep-analysis-guard'
 
 // POST /api/deep-analysis/reanalyze
@@ -11,9 +15,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (detectProvider() === 'none') {
     return NextResponse.json(
-      { error: 'ANTHROPIC_API_KEY is not configured' },
+      {
+        error:
+          'No AI provider configured. Set GEMINI_API_KEY (free) or ANTHROPIC_API_KEY on Netlify.',
+      },
       { status: 500 }
     )
   }

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { computeKillzone, computeCyclePhase } from '@/lib/autoTag'
-import { analyzeNote, MODEL_ID as CLAUDE_MODEL_ID } from '@/lib/claude-analysis'
+import { analyzeNote, detectProvider } from '@/lib/ai-provider'
 import { z } from 'zod'
 
 const createTradeSchema = z.object({
@@ -102,10 +102,10 @@ export async function POST(req: Request) {
     },
   })
 
-  // Fire-and-forget Claude note analysis (only if note is substantial + API key present).
+  // Fire-and-forget AI note analysis (Gemini free tier by default, Claude fallback).
   // Does NOT block the response — errors are swallowed to keep trade creation reliable.
   if (
-    process.env.ANTHROPIC_API_KEY &&
+    detectProvider() !== 'none' &&
     typeof data.notes === 'string' &&
     data.notes.trim().length >= 10
   ) {
@@ -113,13 +113,13 @@ export async function POST(req: Request) {
     const tradeId = trade.id
     void (async () => {
       try {
-        const result = await analyzeNote(noteText)
+        const { result, model } = await analyzeNote(noteText)
         await prisma.trade.update({
           where: { id: tradeId },
           data: {
             notesAnalysis: JSON.stringify(result),
             notesAnalysisAt: new Date(),
-            notesAnalysisModel: CLAUDE_MODEL_ID,
+            notesAnalysisModel: model,
           },
         })
       } catch (err) {

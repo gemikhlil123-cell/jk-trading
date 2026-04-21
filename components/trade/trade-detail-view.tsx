@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { TradeEditForm } from './trade-edit-form'
 
 interface TradeData {
   id: string
@@ -75,10 +76,24 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
   const router = useRouter()
   const [deleting, setDeleting] = useState(false)
   const [zoomImg, setZoomImg] = useState<string | null>(null)
+  const [editing, setEditing] = useState(false)
 
   const isWin = trade.pnl !== null && trade.pnl > 0
   const isLoss = trade.pnl !== null && trade.pnl < 0
   const { meta, cleanNotes } = parseMeta(trade.notes)
+
+  if (editing) {
+    return (
+      <TradeEditForm
+        trade={trade}
+        onCancel={() => setEditing(false)}
+        onSaved={() => {
+          setEditing(false)
+          router.refresh()
+        }}
+      />
+    )
+  }
 
   let charts: Record<string, string> = {}
   if (trade.chartImages) {
@@ -343,20 +358,34 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
         </div>
       )}
 
-      {/* Delete button */}
-      <button
-        type="button"
-        onClick={handleDelete}
-        disabled={deleting}
-        className="w-full py-3 rounded-xl text-xs font-bold border transition-all disabled:opacity-50"
-        style={{
-          background: 'rgba(231,76,60,0.08)',
-          borderColor: 'rgba(231,76,60,0.3)',
-          color: '#E74C3C',
-        }}
-      >
-        {deleting ? 'جاري الحذف...' : '🗑 حذف الصفقة'}
-      </button>
+      {/* Edit + Delete buttons */}
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => setEditing(true)}
+          className="w-full py-3 rounded-xl text-xs font-black border transition-all"
+          style={{
+            background: 'linear-gradient(90deg, #A07D1C, #D4AF37)',
+            borderColor: 'transparent',
+            color: '#0A192F',
+          }}
+        >
+          ✏️ تعديل الصفقة
+        </button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={deleting}
+          className="w-full py-3 rounded-xl text-xs font-bold border transition-all disabled:opacity-50"
+          style={{
+            background: 'rgba(231,76,60,0.08)',
+            borderColor: 'rgba(231,76,60,0.3)',
+            color: '#E74C3C',
+          }}
+        >
+          {deleting ? 'جاري الحذف...' : '🗑 حذف'}
+        </button>
+      </div>
 
       {/* Zoom modal */}
       {zoomImg && (
