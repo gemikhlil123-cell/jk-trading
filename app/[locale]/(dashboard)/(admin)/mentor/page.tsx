@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
+import { StudentRow } from './student-row'
 
 export const dynamic = 'force-dynamic'
 
@@ -69,7 +69,7 @@ export default async function MentorOverviewPage({
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
+            gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1.4fr',
             padding: '10px 12px',
             background: 'rgba(212,175,55,0.06)',
             borderBottom: '1px solid rgba(212,175,55,0.1)',
@@ -83,6 +83,7 @@ export default async function MentorOverviewPage({
           <div style={{ textAlign: 'center' }}>فوز %</div>
           <div style={{ textAlign: 'center' }}>P&amp;L</div>
           <div style={{ textAlign: 'center' }}>آخر صفقة</div>
+          <div style={{ textAlign: 'center' }}>الاشتراك</div>
         </div>
 
         {rows.length === 0 && (
@@ -92,49 +93,7 @@ export default async function MentorOverviewPage({
         )}
 
         {rows.map((r, i) => (
-          <Link
-            key={r.id}
-            href={`/${locale}/mentor/${r.id}`}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
-              padding: '12px',
-              textDecoration: 'none',
-              borderTop: i > 0 ? '1px solid rgba(212,175,55,0.07)' : 'none',
-              fontSize: 12,
-              color: '#C8D8EE',
-              alignItems: 'center',
-            }}
-          >
-            <div>
-              <div style={{ fontWeight: 700 }}>{r.name}</div>
-              <div style={{ fontSize: 10, color: '#4A5A7A', marginTop: 2 }}>{r.email}</div>
-            </div>
-            <div style={{ textAlign: 'center' }}>{r.trades}</div>
-            <div
-              style={{
-                textAlign: 'center',
-                color: r.winRate >= 50 ? '#1DB954' : '#E74C3C',
-                fontWeight: 700,
-              }}
-            >
-              {r.trades > 0 ? `${r.winRate.toFixed(0)}%` : '—'}
-            </div>
-            <div
-              style={{
-                textAlign: 'center',
-                color: r.totalPnl >= 0 ? '#1DB954' : '#E74C3C',
-                fontWeight: 700,
-              }}
-            >
-              {r.trades > 0 ? `${r.totalPnl >= 0 ? '+' : ''}${r.totalPnl.toFixed(0)}` : '—'}
-            </div>
-            <div style={{ textAlign: 'center', color: '#8899BB', fontSize: 10 }}>
-              {r.lastTradeAt
-                ? new Date(r.lastTradeAt).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' })
-                : '—'}
-            </div>
-          </Link>
+          <StudentRow key={r.id} r={r} locale={locale} first={i === 0} />
         ))}
       </div>
     </div>

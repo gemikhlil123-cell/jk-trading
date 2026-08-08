@@ -1,14 +1,158 @@
 'use client'
 
 import { useState } from 'react'
-import { DeepAnalysis, BreakdownRow, ReasonRow } from '@/lib/deep-analysis'
+import { DeepAnalysis, BreakdownRow, ReasonRow, TraderNarrative } from '@/lib/deep-analysis'
 
 interface Props {
   live: DeepAnalysis
   backtest: DeepAnalysis
+  liveNarrative?: TraderNarrative
+  backtestNarrative?: TraderNarrative
 }
 
 type Mode = 'LIVE' | 'BACKTEST'
+
+// Renders "**text**" as bold within Arabic strings
+function renderBold(text: string): React.ReactNode[] {
+  const parts = text.split(/\*\*(.+?)\*\*/g)
+  return parts.map((p, i) =>
+    i % 2 === 1 ? (
+      <span key={i} style={{ color: '#D4AF37', fontWeight: 800 }}>
+        {p}
+      </span>
+    ) : (
+      <span key={i}>{p}</span>
+    )
+  )
+}
+
+function NarrativeCard({ n }: { n: TraderNarrative }) {
+  const sections: { title: string; icon: string; items: string[]; accent: string }[] = [
+    { title: 'الكومبوهات (٣ نقاط) التي تكررت ونجحت معك', icon: '✦', items: n.bestCombos, accent: '#D4AF37' },
+    { title: 'نقاط الدخول التي اشتغلت معك', icon: '✓', items: n.workingReasons, accent: '#1DB954' },
+    { title: 'نقاط الدخول التي ما اشتغلت معك', icon: '✕', items: n.losingReasons, accent: '#E74C3C' },
+    { title: 'أفضل ساعاتك (بتوقيت القدس — نفس ما تكتبه)', icon: '🕐', items: n.bestHours, accent: '#C9A84C' },
+    { title: 'أفضل أيام الأسبوع عندك', icon: '📅', items: n.bestDays, accent: '#C9A84C' },
+  ]
+
+  const sessionItems: string[] = []
+  if (n.bestSession) sessionItems.push(`**أقوى جلسة لك:** ${n.bestSession}`)
+  if (n.weakSession) sessionItems.push(`**أضعف جلسة لك:** ${n.weakSession}`)
+  if (sessionItems.length > 0) {
+    sections.push({ title: 'جلسات التداول (Killzones)', icon: '🎯', items: sessionItems, accent: '#8899BB' })
+  }
+
+  return (
+    <div
+      style={{
+        margin: '14px',
+        padding: '16px 14px',
+        background: 'linear-gradient(180deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.02) 100%)',
+        border: '1px solid rgba(212,175,55,0.3)',
+        borderRadius: 14,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+        <span style={{ fontSize: 18 }}>🧠</span>
+        <h3 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37', margin: 0 }}>
+          تحليل شخصي — ما الذي يعمل معك؟
+        </h3>
+      </div>
+
+      <p
+        style={{
+          fontSize: 13,
+          color: '#C8D8EE',
+          lineHeight: 1.7,
+          margin: 0,
+          marginBottom: 14,
+          fontWeight: 600,
+        }}
+      >
+        {n.headline}
+      </p>
+
+      {sections.map((sec) =>
+        sec.items.length === 0 ? null : (
+          <div key={sec.title} style={{ marginBottom: 12 }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                marginBottom: 6,
+              }}
+            >
+              <span style={{ fontSize: 13 }}>{sec.icon}</span>
+              <h4
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: sec.accent,
+                  margin: 0,
+                }}
+              >
+                {sec.title}
+              </h4>
+            </div>
+            <ul
+              style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 4,
+              }}
+            >
+              {sec.items.map((it, i) => (
+                <li
+                  key={i}
+                  style={{
+                    fontSize: 12,
+                    color: '#C8D8EE',
+                    lineHeight: 1.8,
+                    paddingRight: 18,
+                    position: 'relative',
+                  }}
+                >
+                  <span
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: 6,
+                      width: 5,
+                      height: 5,
+                      background: sec.accent,
+                      borderRadius: '50%',
+                    }}
+                  />
+                  {renderBold(it)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      )}
+
+      <div
+        style={{
+          marginTop: 14,
+          padding: '10px 12px',
+          background: 'rgba(212,175,55,0.08)',
+          border: '1px solid rgba(212,175,55,0.2)',
+          borderRadius: 10,
+          fontSize: 12,
+          color: '#C9A84C',
+          lineHeight: 1.7,
+          fontWeight: 600,
+        }}
+      >
+        💡 {n.overall}
+      </div>
+    </div>
+  )
+}
 
 const CAT_COLORS: Record<string, string> = {
   SMT: 'rgba(100,150,255,0.85)',
@@ -217,9 +361,10 @@ function ReasonsTable({
   )
 }
 
-export function DeepAnalyticsView({ live, backtest }: Props) {
+export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarrative }: Props) {
   const [mode, setMode] = useState<Mode>('LIVE')
   const data = mode === 'LIVE' ? live : backtest
+  const narrative = mode === 'LIVE' ? liveNarrative : backtestNarrative
 
   return (
     <div>
@@ -267,6 +412,9 @@ export function DeepAnalyticsView({ live, backtest }: Props) {
           </button>
         </div>
       </div>
+
+      {/* Personalized narrative — what actually works for you */}
+      {narrative && data.totalTrades > 0 && <NarrativeCard n={narrative} />}
 
       {/* Summary KPIs */}
       <div style={{ padding: 14 }}>
@@ -385,7 +533,7 @@ export function DeepAnalyticsView({ live, backtest }: Props) {
           />
 
           <BreakdownTable
-            title="أداء الساعات (UTC)"
+            title="أداء الساعات (توقيت القدس — نفس ما كتبته في الصفقة)"
             rows={data.hourPerf}
             emptyMsg="لا توجد بيانات."
           />

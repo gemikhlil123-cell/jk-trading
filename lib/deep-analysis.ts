@@ -1,5 +1,6 @@
 import { prisma } from './prisma'
 import { Killzone, CyclePhase, Symbol as TradingSymbol } from '@prisma/client'
+import { jerusalemHour, jerusalemDayOfWeek, jerusalemDateKey } from './timezone'
 
 const MIN_SAMPLE = 3
 const STRONG_WIN = 0.65
@@ -249,10 +250,10 @@ export async function getDeepAnalysis(
     .map(([key, rows]) => makeRow(key, key, rows))
     .sort((a, b) => b.totalPnl - a.totalPnl)
 
-  // Day of week (UTC-based, same as killzone)
+  // Day of week — Asia/Jerusalem timezone (matches what user typed)
   const dowGroups = new Map<number, { pnl: number; isWin: boolean }[]>()
   for (const t of enriched) {
-    const d = new Date(t.entryTime).getUTCDay()
+    const d = jerusalemDayOfWeek(new Date(t.entryTime))
     const arr = dowGroups.get(d) ?? []
     arr.push({ pnl: t.pnlNum, isWin: t.isWin })
     dowGroups.set(d, arr)
@@ -261,16 +262,16 @@ export async function getDeepAnalysis(
     .map(([d, rows]) => makeRow(String(d), DAY_LABELS[d] ?? String(d), rows))
     .sort((a, b) => Number(a.key) - Number(b.key))
 
-  // Hour of day (UTC)
+  // Hour of day — Asia/Jerusalem timezone (matches what user typed in the form)
   const hourGroups = new Map<number, { pnl: number; isWin: boolean }[]>()
   for (const t of enriched) {
-    const h = new Date(t.entryTime).getUTCHours()
+    const h = jerusalemHour(new Date(t.entryTime))
     const arr = hourGroups.get(h) ?? []
     arr.push({ pnl: t.pnlNum, isWin: t.isWin })
     hourGroups.set(h, arr)
   }
   const hourPerf = Array.from(hourGroups.entries())
-    .map(([h, rows]) => makeRow(String(h), `${String(h).padStart(2, '0')}:00 UTC`, rows))
+    .map(([h, rows]) => makeRow(String(h), `${String(h).padStart(2, '0')}:00`, rows))
     .sort((a, b) => Number(a.key) - Number(b.key))
 
   // Direction breakdown
@@ -314,10 +315,11 @@ export async function getDeepAnalysis(
     }
   }
 
-  // Daily equity curve
+  // Daily equity curve — Asia/Jerusalem date keys (a trade at 01:00 Jerusalem
+  // should count on its Jerusalem date, not the UTC date from the night before).
   const dailyMap = new Map<string, number>()
   for (const t of enriched) {
-    const key = new Date(t.entryTime).toISOString().slice(0, 10)
+    const key = jerusalemDateKey(new Date(t.entryTime))
     dailyMap.set(key, (dailyMap.get(key) ?? 0) + t.pnlNum)
   }
   const sortedDays = Array.from(dailyMap.entries()).sort((a, b) => a[0].localeCompare(b[0]))
@@ -356,4 +358,179 @@ export async function getDeepAnalysis(
     dailyEquity,
     filters,
   }
+}
+
+// ──────────────────────────────────────────────────────────────────────────
+// Personalized narrative builder
+// ──────────────────────────────────────────────────────────────────────────
+
+export interface TraderNarrative {
+  headline: string                // one-line summary
+  workingReasons: string[]        // bullet sentences describing what works
+  losingReasons: string[]         // bullet sentences describing what doesn't
+  bestCombos: string[]            // 3-reason combos that repeated & succeeded
+  bestHours: string[]             // best hours in Jerusalem local time
+  bestDays: string[]              // best days of week
+  bestSession: string | null      // strongest killzone
+  weakSession: string | null      // weakest killzone
+  overall: string                 // final verdict / advice
+}
+
+function fmtPct(x: number): string {
+  return `${Math.round(x * 100)}%`
+}
+
+function fmtSigned(n: number): string {
+  return `${n >= 0 ? '+' : ''}${Math.round(n)}`
+}
+
+interface TripleLike {
+  names: [string, string, string]
+  trades: number
+  wins: number
+  winRate: number
+  totalPnl: number
+  expectancy: number
+}
+
+/**
+ * Build a professional Arabic narrative from a user's deep analysis —
+ * exactly what worked, what didn't, best hours/days/sessions, and top 3-way combos.
+ *
+ * Pass in the `triples` array from getStrategyAnalysis if you want combo lines.
+ */
+export function buildTraderNarrative(
+  deep: DeepAnalysis,
+  triples: TripleLike[] = []
+): TraderNarrative {
+  const n: TraderNarrative = {
+    headline: '',
+    workingReasons: [],
+    losingReasons: [],
+    bestCombos: [],
+    bestHours: [],
+    bestDays: [],
+    bestSession: null,
+    weakSession: null,
+    overall: '',
+  }
+
+  if (deep.totalTrades === 0) {
+    n.headline = 'لا توجد صفقات كافية للتحليل بعد.'
+    n.overall = 'ابدأ بتسجيل صفقاتك (حقيقية أو باكتست) وستحصل على تحليل شخصي كامل.'
+    return n
+  }
+
+  // Headline
+  n.headline =
+    `وفقاً لتحليل ${deep.totalTrades} صفقة — نسبة نجاحك ${fmtPct(deep.winRate)}، ` +
+    `ربحت ${deep.totalWins} وخسرت ${deep.totalLosses}، ` +
+    `والإجمالي ${fmtSigned(deep.totalPnl)} نقطة` +
+    (deep.profitFactor > 0 ? ` (Profit Factor ${deep.profitFactor.toFixed(2)}).` : '.')
+
+  // Working reasons
+  for (const r of deep.winningReasons.slice(0, 5)) {
+    n.workingReasons.push(
+      `**${r.label}** اشتغل معك في ${r.trades} صفقة — نجاح ${fmtPct(r.winRate)} (${r.wins} ربح / ${r.losses} خسارة)، إجمالي ${fmtSigned(r.totalPnl)} نقطة.`
+    )
+  }
+
+  // Losing reasons
+  for (const r of deep.losingReasons.slice(0, 5)) {
+    n.losingReasons.push(
+      `**${r.label}** ما اشتغل — ${r.trades} صفقة بنجاح ${fmtPct(r.winRate)} فقط، إجمالي ${fmtSigned(r.totalPnl)} نقطة. فكّر بتقليله أو حذفه من خطتك.`
+    )
+  }
+
+  // Triple combos — user's specific request
+  // "نقاط الدخول الي تكرروا ونجحوا باستمرار هم X + Y + Z"
+  const goodTriples = triples
+    .filter((t) => t.trades >= 3 && t.winRate >= 0.6 && t.totalPnl > 0)
+    .sort((a, b) => {
+      const sa = a.winRate * Math.min(a.trades, 20) + a.expectancy / 10
+      const sb = b.winRate * Math.min(b.trades, 20) + b.expectancy / 10
+      return sb - sa
+    })
+    .slice(0, 5)
+
+  for (const t of goodTriples) {
+    n.bestCombos.push(
+      `**${t.names.join(' + ')}** — ظهر ${t.trades} مرة بنجاح ${fmtPct(t.winRate)} (${t.wins} ربح) وإجمالي ${fmtSigned(t.totalPnl)} نقطة.`
+    )
+  }
+
+  // If no "good" triples qualify by strict criteria, show the most-repeated triples as-is
+  if (n.bestCombos.length === 0 && triples.length > 0) {
+    const topByFrequency = [...triples]
+      .sort((a, b) => b.trades - a.trades || b.winRate - a.winRate)
+      .slice(0, 3)
+    for (const t of topByFrequency) {
+      n.bestCombos.push(
+        `**${t.names.join(' + ')}** — ظهر ${t.trades} مرة بنجاح ${fmtPct(t.winRate)}.`
+      )
+    }
+  }
+
+  // Best hours (Jerusalem time) — sorted by win rate among those with ≥3 trades
+  const strongHours = deep.hourPerf
+    .filter((h) => h.trades >= 3 && h.winRate >= 0.6)
+    .sort((a, b) => b.winRate - a.winRate || b.trades - a.trades)
+    .slice(0, 5)
+  for (const h of strongHours) {
+    n.bestHours.push(
+      `الساعة ${h.label} — ${h.trades} صفقة بنجاح ${fmtPct(h.winRate)} (${fmtSigned(h.totalPnl)} نقطة).`
+    )
+  }
+
+  // Best days
+  const strongDays = deep.dayOfWeekPerf
+    .filter((d) => d.trades >= 3 && d.winRate >= 0.55)
+    .sort((a, b) => b.winRate - a.winRate || b.trades - a.trades)
+    .slice(0, 3)
+  for (const d of strongDays) {
+    n.bestDays.push(
+      `${d.label} — ${d.trades} صفقة بنجاح ${fmtPct(d.winRate)} (${fmtSigned(d.totalPnl)} نقطة).`
+    )
+  }
+
+  // Sessions — best & worst
+  const sessionsWithData = deep.killzonePerf.filter((k) => k.trades >= 3)
+  if (sessionsWithData.length > 0) {
+    const best = [...sessionsWithData].sort((a, b) => b.winRate - a.winRate)[0]
+    const worst = [...sessionsWithData].sort((a, b) => a.winRate - b.winRate)[0]
+    if (best.winRate >= 0.55) {
+      n.bestSession = `${best.label} — ${best.trades} صفقة بنجاح ${fmtPct(best.winRate)} وإجمالي ${fmtSigned(best.totalPnl)} نقطة.`
+    }
+    if (worst !== best && worst.winRate <= 0.45) {
+      n.weakSession = `${worst.label} — ${worst.trades} صفقة بنجاح ${fmtPct(worst.winRate)} فقط (${fmtSigned(worst.totalPnl)} نقطة). جرّب تقليل الدخول فيها.`
+    }
+  }
+
+  // Overall verdict
+  const hasStrongCombos = n.bestCombos.length > 0
+  const hasStrongReasons = n.workingReasons.length > 0
+  const hasWeakSpots = n.losingReasons.length > 0 || n.weakSession
+
+  if (deep.winRate >= 0.6 && hasStrongCombos) {
+    n.overall =
+      `خطتك واضحة: ركّز على الكومبوهات التي أثبتت نجاحها` +
+      (n.bestSession ? ` في ${n.bestSession.split('—')[0].trim()}` : '') +
+      `${hasWeakSpots ? '، وقلّل من نقاط الضعف المذكورة أعلاه' : ''}. ` +
+      `استمر بنفس الانضباط.`
+  } else if (deep.winRate >= 0.5 && hasStrongReasons) {
+    n.overall =
+      `أداؤك إيجابي لكن يمكن تحسينه — ركّز على الأسباب الرابحة، ` +
+      `تجنّب ${hasWeakSpots ? 'الأسباب والأوقات الضعيفة المذكورة' : 'الدخول العشوائي'}، ` +
+      `وتابع جمع بيانات أكثر لتثبت أفضل كومبوهاتك.`
+  } else if (hasStrongReasons) {
+    n.overall =
+      `نسبة النجاح الإجمالية ${fmtPct(deep.winRate)} — لكن لديك أسباب رابحة يمكن البناء عليها. ` +
+      `اترك ما لا يعمل، وضاعف من ${n.workingReasons[0].split('**')[1] ?? 'أقوى سبب ناجح'}.`
+  } else {
+    n.overall =
+      `تحتاج لتسجيل صفقات أكثر لاستخلاص نقاط قوتك. ` +
+      `ركّز على التوثيق الدقيق لكل سبب دخول ووقته.`
+  }
+
+  return n
 }

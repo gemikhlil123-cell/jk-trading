@@ -94,3 +94,48 @@ export function formatJerusalemDateTime(date: Date | string): string {
     hour: '2-digit', minute: '2-digit', hour12: false,
   })
 }
+
+// ─── Parts helpers used by analytics ──────────────────────────────────────
+// These read hour/day/date as the user EXPERIENCED them (Jerusalem wall-clock),
+// not as UTC — so what users type into the trade form matches what analysis shows.
+
+function jerusalemParts(date: Date): { y: number; m: number; d: number; h: number; mi: number; dayOfWeek: number } {
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: TZ,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit',
+    hour12: false,
+    weekday: 'short',
+  })
+  const parts = fmt.formatToParts(date)
+  const get = (t: string) => parts.find(p => p.type === t)?.value ?? '0'
+  let hour = parseInt(get('hour'), 10)
+  if (hour === 24) hour = 0
+  const weekdayMap: Record<string, number> = {
+    Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6,
+  }
+  return {
+    y: parseInt(get('year'), 10),
+    m: parseInt(get('month'), 10),
+    d: parseInt(get('day'), 10),
+    h: hour,
+    mi: parseInt(get('minute'), 10),
+    dayOfWeek: weekdayMap[get('weekday')] ?? 0,
+  }
+}
+
+/** Hour of day (0–23) in Asia/Jerusalem — matches what user typed in the trade form. */
+export function jerusalemHour(date: Date): number {
+  return jerusalemParts(date).h
+}
+
+/** Day of week in Asia/Jerusalem (0 = Sunday … 6 = Saturday). */
+export function jerusalemDayOfWeek(date: Date): number {
+  return jerusalemParts(date).dayOfWeek
+}
+
+/** YYYY-MM-DD in Asia/Jerusalem — used for daily equity grouping. */
+export function jerusalemDateKey(date: Date): string {
+  const p = jerusalemParts(date)
+  return `${p.y}-${String(p.m).padStart(2, '0')}-${String(p.d).padStart(2, '0')}`
+}

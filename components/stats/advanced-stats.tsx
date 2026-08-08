@@ -5,6 +5,7 @@ interface Trade {
   killzone: string | null
   entryTime: Date
   direction: string
+  symbol: string
 }
 
 interface Props {
@@ -120,7 +121,28 @@ export function AdvancedStats({ trades }: Props) {
     }))
     .filter((d) => d.total >= 2)
 
-  // ─── Section 4: Consecutive Losses ───────────────────────────────────────
+  // ─── Section 4: Performance by Symbol ─────────────────────────────────────
+  const symMap: Record<string, { wins: number; total: number; pnlSum: number }> = {}
+  for (const t of closed) {
+    const sym = (t.symbol || '').trim().toUpperCase() || 'غير محدد'
+    if (!symMap[sym]) symMap[sym] = { wins: 0, total: 0, pnlSum: 0 }
+    symMap[sym].total++
+    symMap[sym].pnlSum += t.pnl
+    if (t.pnl > 0) symMap[sym].wins++
+  }
+
+  const symStats = Object.entries(symMap)
+    .map(([sym, d]) => ({
+      sym,
+      wins: d.wins,
+      total: d.total,
+      pnlSum: d.pnlSum,
+      winRate: d.total > 0 ? (d.wins / d.total) * 100 : 0,
+    }))
+    .filter((s) => s.total >= 3)
+    .sort((a, b) => b.pnlSum - a.pnlSum)
+
+  // ─── Section 5: Consecutive Losses ───────────────────────────────────────
   const sorted = [...closed].sort(
     (a, b) => new Date(a.entryTime).getTime() - new Date(b.entryTime).getTime()
   )
@@ -346,7 +368,45 @@ export function AdvancedStats({ trades }: Props) {
         </>
       )}
 
-      {/* ─── Section 4: Consecutive Losses ─── */}
+      {/* ─── Section 4: Performance by Symbol ─── */}
+      {symStats.length > 1 && (
+        <>
+          <div className="sec-title">أداء حسب الأداة</div>
+          <div className="card-dark p-3 space-y-2">
+            {symStats.map((s) => {
+              const good = s.winRate >= 50
+              const barW = `${Math.min(s.winRate, 100)}%`
+              return (
+                <div key={s.sym}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3, gap: 8 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: '#D4AF37', flex: 1 }}>{s.sym}</span>
+                    <span style={{ fontSize: 10, color: '#8899BB' }}>{s.total} صفقة</span>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: good ? '#1DB954' : '#E74C3C' }}>
+                      {s.winRate.toFixed(0)}%
+                    </span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: s.pnlSum >= 0 ? '#1DB954' : '#E74C3C' }}>
+                      {fmt(s.pnlSum)}
+                    </span>
+                  </div>
+                  <div style={{ height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 2, overflow: 'hidden' }}>
+                    <div
+                      style={{
+                        height: '100%',
+                        width: barW,
+                        background: good ? '#1DB954' : '#E74C3C',
+                        borderRadius: 2,
+                        transition: 'width 0.4s',
+                      }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </>
+      )}
+
+      {/* ─── Section 5: Consecutive Losses ─── */}
       <div className="sec-title">تحليل الخسائر المتتالية</div>
       <div className="card-dark p-3">
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>

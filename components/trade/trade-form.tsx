@@ -84,7 +84,9 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!entryTime) { setError('أدخل وقت الدخول'); return }
-    if (entryReasonIds.length === 0) { setError('يجب اختيار سبب دخول واحد على الأقل'); return }
+    // Outcome is now required (points OR R) so every trade is analyzable. Entry reasons are optional.
+    const hasOutcome = pnl.trim() !== '' || rrAchieved.trim() !== ''
+    if (!hasOutcome) { setError('أدخل نتيجة الصفقة — النقاط أو R (إجباري)'); return }
 
     setLoading(true); setError('')
     try {
@@ -181,7 +183,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
         <div><label className={lc}>وقت الخروج</label><input type="datetime-local" value={exitTime} onChange={e => setExitTime(e.target.value)} className={ic} /></div>
       </div>
 
-      <div className="sec-title">النتائج</div>
+      <div className="sec-title">النتيجة * <span className="text-[#8899BB] font-normal">(النقاط أو R — إجباري)</span></div>
       <div className="grid grid-cols-3 gap-2">
         <div><label className={lc}>النتيجة (نقاط)</label><input type="number" step="any" placeholder="+25" value={pnl} onChange={e => setPnl(e.target.value)} className={ic} /></div>
         <div><label className={lc}>RR المحقق</label><input type="number" step="0.1" placeholder="2.5" value={rrAchieved} onChange={e => setRrAchieved(e.target.value)} className={ic} /></div>
@@ -242,9 +244,8 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
       <div className="sec-title">صور الشارت</div>
       <ChartImages value={chartImages} onChange={setChartImages} />
 
-      <div className="sec-title">أسباب الدخول</div>
-      <EntryReasonSelect reasons={reasons} value={entryReasonIds} onChange={setEntryReasonIds}
-        error={error.includes('سبب') ? error : undefined} />
+      <div className="sec-title">أسباب الدخول <span className="text-[#8899BB] font-normal">(اختياري — لكن يحسّن تحليل المدرّب)</span></div>
+      <EntryReasonSelect reasons={reasons} value={entryReasonIds} onChange={setEntryReasonIds} />
 
       <div className="sec-title">التقييم الذاتي</div>
       <div className="card-dark p-3.5 space-y-3">

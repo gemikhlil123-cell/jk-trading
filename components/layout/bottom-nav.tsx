@@ -119,7 +119,12 @@ export function BottomNav({ locale, role }: BottomNavProps) {
                 isActive ? 'text-[#D4AF37]' : 'text-[#4A5A7A] hover:text-[#8899BB]'
               )}
             >
-              {tab.icon(isActive)}
+              <span
+                className="transition-transform duration-200"
+                style={isActive ? { transform: 'scale(1.12)', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.55))' } : undefined}
+              >
+                {tab.icon(isActive)}
+              </span>
               <span className="text-[9px] font-semibold leading-none">{tab.label}</span>
               <span
                 className={cn(

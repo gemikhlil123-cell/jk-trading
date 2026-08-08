@@ -6,6 +6,8 @@ import { getDeepAnalysis } from '@/lib/deep-analysis'
 import { MentorCommentForm } from '@/components/mentor/mentor-comment-form'
 import { formatJerusalemDate, formatJerusalemTime } from '@/lib/timezone'
 import { StudentTradeChartImages } from '@/components/mentor/student-trade-chart-images'
+import { buildCoachReport, type CoachTrade } from '@/lib/coach'
+import { CoachReportView } from '@/components/coach/coach-report'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,11 +18,13 @@ export default async function MentorStudentPage({
   searchParams,
 }: {
   params: Promise<{ locale: string; studentId: string }>
-  searchParams: Promise<{ page?: string }>
+  searchParams: Promise<{ page?: string; type?: string }>
 }) {
   const { locale, studentId } = await params
-  const { page: pageStr } = await searchParams
+  const { page: pageStr, type: typeStr } = await searchParams
   const page = Math.max(1, parseInt(pageStr || '1'))
+  const type = typeStr === 'backtest' ? 'backtest' : 'live'
+  const isBacktest = type === 'backtest'
   const session = await auth()
   if (!session?.user?.id) redirect(`/${locale}/login`)
 
@@ -33,15 +37,15 @@ export default async function MentorStudentPage({
   })
   if (!student) redirect(`/${locale}/mentor`)
 
-  const analysis = await getDeepAnalysis(studentId, { isBacktest: false })
+  const analysis = await getDeepAnalysis(studentId, { isBacktest })
 
   const totalTrades = await prisma.trade.count({
-    where: { userId: studentId, isBacktest: false },
+    where: { userId: studentId, isBacktest },
   })
   const totalPages = Math.max(1, Math.ceil(totalTrades / PAGE_SIZE))
 
   const trades = await prisma.trade.findMany({
-    where: { userId: studentId, isBacktest: false },
+    where: { userId: studentId, isBacktest },
     include: {
       entryReasons: { include: { entryReason: true } },
       comments: {
@@ -53,6 +57,27 @@ export default async function MentorStudentPage({
     take: PAGE_SIZE,
     skip: (page - 1) * PAGE_SIZE,
   })
+
+  // Coach report — built from ALL the student's trades of the selected type
+  const coachRows = await prisma.trade.findMany({
+    where: { userId: studentId, isBacktest, pnl: { not: null } },
+    include: { entryReasons: { include: { entryReason: true } } },
+    orderBy: { entryTime: 'desc' },
+    take: 600,
+  })
+  const coachTrades: CoachTrade[] = coachRows.map((t) => ({
+    pnl: Number(t.pnl),
+    rr: t.rrAchieved != null ? Number(t.rrAchieved) : null,
+    direction: t.direction,
+    symbol: t.symbol,
+    killzone: t.killzone,
+    cyclePhase: t.cyclePhase,
+    entryTime: t.entryTime,
+    reasons: t.entryReasons.map((r) => r.entryReason.name),
+    selfRating: t.selfRating,
+    emotionalState: t.emotionalState,
+  }))
+  const coachReport = buildCoachReport(coachTrades)
 
   return (
     <div dir="rtl" style={{ fontFamily: 'Cairo, sans-serif', padding: '20px 16px 100px' }}>
@@ -68,6 +93,36 @@ export default async function MentorStudentPage({
           {student.name ?? student.email}
         </h1>
         <p style={{ fontSize: 11, color: '#4A5A7A', marginTop: 2 }}>{student.email}</p>
+      </div>
+
+      {/* Live / Backtest toggle */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+        {([
+          { key: 'live', label: 'صفقات مباشرة' },
+          { key: 'backtest', label: 'باكتيست' },
+        ] as const).map(tab => {
+          const active = type === tab.key
+          return (
+            <Link
+              key={tab.key}
+              href={`/${locale}/mentor/${studentId}?type=${tab.key}`}
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                padding: '10px 0',
+                borderRadius: 10,
+                fontSize: 12,
+                fontWeight: 800,
+                textDecoration: 'none',
+                background: active ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.03)',
+                border: `1px solid ${active ? '#D4AF37' : 'rgba(212,175,55,0.12)'}`,
+                color: active ? '#D4AF37' : '#8899BB',
+              }}
+            >
+              {tab.label}
+            </Link>
+          )
+        })}
       </div>
 
       {/* Summary */}
@@ -113,9 +168,14 @@ export default async function MentorStudentPage({
         ))}
       </div>
 
+      {/* Automated coach report */}
+      <div style={{ marginBottom: 18 }}>
+        <CoachReportView report={coachReport} name={student.name ?? undefined} />
+      </div>
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
         <h2 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37' }}>
-          جميع صفقات الطالب ({totalTrades})
+          {isBacktest ? 'صفقات الباكتيست' : 'الصفقات المباشرة'} ({totalTrades})
         </h2>
         <span style={{ fontSize: 11, color: '#4A5A7A' }}>
           صفحة {page} / {totalPages}
@@ -277,7 +337,7 @@ export default async function MentorStudentPage({
         <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 20 }}>
           {page > 1 && (
             <Link
-              href={`/${locale}/mentor/${studentId}?page=${page - 1}`}
+              href={`/${locale}/mentor/${studentId}?type=${type}&page=${page - 1}`}
               style={{
                 padding: '8px 14px',
                 background: 'rgba(212,175,55,0.1)',
@@ -294,7 +354,7 @@ export default async function MentorStudentPage({
           )}
           {page < totalPages && (
             <Link
-              href={`/${locale}/mentor/${studentId}?page=${page + 1}`}
+              href={`/${locale}/mentor/${studentId}?type=${type}&page=${page + 1}`}
               style={{
                 padding: '8px 14px',
                 background: 'rgba(212,175,55,0.1)',

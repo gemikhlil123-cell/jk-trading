@@ -5,6 +5,10 @@ import Link from 'next/link'
 import { EquityCurve } from '@/components/charts/equity-curve'
 import { DailyPnlChart } from '@/components/charts/daily-pnl-chart'
 import { LucidChallenge } from '@/components/stats/lucid-challenge'
+import { GoalsWidget } from '@/components/stats/goals-widget'
+import { CalendarWidget } from '@/components/calendar/calendar-widget'
+import { computeGoalProgress } from '@/lib/goals'
+import { getUpcomingEvents } from '@/lib/economic-calendar'
 import { StatsAnalysis } from '@/components/stats/stats-analysis'
 import { AdvancedStats } from '@/components/stats/advanced-stats'
 import { TradovateCSV } from '@/components/stats/tradovate-csv'
@@ -43,6 +47,61 @@ export default async function DashboardPage({
   if (!session?.user?.id) redirect(`/${locale}/login`)
 
   const since = getDateFilter(period)
+
+  const tradovateAccount = await prisma.tradovateAccount.findUnique({
+    where: { userId: session.user.id as string },
+    select: { id: true },
+  })
+
+  const activeGoals = await prisma.goal.findMany({
+    where: { userId: session.user.id as string, isActive: true },
+    orderBy: { createdAt: 'desc' },
+    take: 4,
+  })
+
+  // Compute goal progress (independent of the period filter)
+  const widgetGoals = activeGoals.length > 0
+    ? await (async () => {
+        const [goalTrades, journals] = await Promise.all([
+          prisma.trade.findMany({
+            where: { userId: session.user!.id as string, isBacktest: false },
+            select: { entryTime: true, pnl: true },
+            orderBy: { entryTime: 'desc' },
+            take: 500,
+          }),
+          prisma.dailyJournal.findMany({
+            where: { userId: session.user!.id as string },
+            select: { date: true, disciplineRating: true },
+            orderBy: { date: 'desc' },
+            take: 90,
+          }),
+        ])
+        const tInputs = goalTrades.map((t) => ({ entryTime: t.entryTime, pnl: t.pnl !== null ? Number(t.pnl) : null }))
+        return activeGoals.map((g) => {
+          const gi = { id: g.id, metric: g.metric, period: g.period, target: Number(g.target) }
+          const p = computeGoalProgress(gi, tInputs, journals)
+          return { id: g.id, metric: g.metric, period: g.period, target: Number(g.target), current: p.current, pct: p.pct, achieved: p.achieved, unit: p.unit }
+        })
+      })()
+    : []
+
+  // Today's high-impact economic events (Jerusalem day)
+  const todayEvents = await (async () => {
+    try {
+      const { events } = await getUpcomingEvents(3)
+      const todayKey = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Jerusalem', year: 'numeric', month: '2-digit', day: '2-digit',
+      }).format(new Date())
+      const keyOf = (iso: string) => new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Jerusalem', year: 'numeric', month: '2-digit', day: '2-digit',
+      }).format(new Date(iso))
+      return events
+        .filter((e) => e.impact === 'HIGH' && keyOf(e.date) === todayKey)
+        .map((e) => ({ date: e.date, currency: e.currency, title: e.title, impact: e.impact }))
+    } catch {
+      return []
+    }
+  })()
 
   const trades = await prisma.trade.findMany({
     where: {
@@ -140,8 +199,49 @@ export default async function DashboardPage({
       {/* Session Alert — live session performance */}
       <SessionAlert userId={session.user.id as string} />
 
-      {/* Lucid Challenge */}
-      <LucidChallenge currentPnl={allTimePnl} target={3000} />
+      {/* Tradovate connect CTA — shown only when no account linked */}
+      {!tradovateAccount && (
+        <Link
+          href={`/${locale}/settings`}
+          className="card-vibrant card-hover-lift anim-fade-up"
+          style={{
+            display: 'flex', alignItems: 'center', gap: 12,
+            padding: '14px 16px', marginBottom: 12, textDecoration: 'none',
+          }}
+        >
+          <div
+            className="stat-glow"
+            style={{
+              width: 42, height: 42, borderRadius: 12, flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.3)',
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.8">
+              <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
+            </svg>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#D4AF37' }}>اربط حساب Tradovate</div>
+            <div style={{ fontSize: 11, color: '#8899BB', marginTop: 2 }}>
+              صفقاتك تتحدّث تلقائياً في الموقع — اضغط للربط
+            </div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A5A7A" strokeWidth="2" style={{ transform: 'scaleX(-1)' }}>
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
+      )}
+
+      {/* Goals (user-defined) — fall back to Lucid Challenge if none set */}
+      {widgetGoals.length > 0 ? (
+        <GoalsWidget goals={widgetGoals} locale={locale} />
+      ) : (
+        <LucidChallenge currentPnl={allTimePnl} target={3000} />
+      )}
+
+      {/* Today's high-impact economic news */}
+      <CalendarWidget events={todayEvents} locale={locale} />
 
       {/* Tradovate CSV Importer */}
       <TradovateCSV />
@@ -187,12 +287,8 @@ export default async function DashboardPage({
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 10 }}>
         {/* أيام رابحة */}
         <div
-          style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
-            padding: '14px 14px 12px',
-          }}
+          className={`card-vibrant card-hover-lift anim-fade-up ${winDaysRate >= 50 ? 'stat-accent-win' : 'stat-accent-loss'}`}
+          style={{ padding: '14px 14px 12px' }}
         >
           <div style={{ fontSize: 10, color: '#4A5A7A', fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
             أيام رابحة
@@ -207,12 +303,8 @@ export default async function DashboardPage({
 
         {/* نسبة النجاح */}
         <div
-          style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
-            padding: '14px 14px 12px',
-          }}
+          className={`card-vibrant card-hover-lift anim-fade-up anim-delay-1 ${winRate >= 50 ? 'stat-accent-win' : 'stat-accent-loss'}`}
+          style={{ padding: '14px 14px 12px' }}
         >
           <div style={{ fontSize: 10, color: '#4A5A7A', fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
             نسبة النجاح
@@ -227,12 +319,8 @@ export default async function DashboardPage({
 
         {/* نسبة ربح/خسارة */}
         <div
-          style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
-            padding: '14px 14px 12px',
-          }}
+          className={`card-vibrant card-hover-lift anim-fade-up anim-delay-2 ${avgWinLossRatio >= 1 ? 'stat-accent-win' : 'stat-accent-loss'}`}
+          style={{ padding: '14px 14px 12px' }}
         >
           <div style={{ fontSize: 10, color: '#4A5A7A', fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
             نسبة ربح/خسارة
@@ -247,12 +335,8 @@ export default async function DashboardPage({
 
         {/* P&L + إجمالي */}
         <div
-          style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
-            padding: '14px 14px 12px',
-          }}
+          className={`card-vibrant card-hover-lift anim-fade-up anim-delay-3 ${totalPnl >= 0 ? 'stat-accent-win' : 'stat-accent-loss'}`}
+          style={{ padding: '14px 14px 12px' }}
         >
           <div style={{ fontSize: 10, color: '#4A5A7A', fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
             P&amp;L الإجمالي
@@ -482,6 +566,7 @@ export default async function DashboardPage({
           killzone: t.killzone,
           entryTime: t.entryTime,
           direction: t.direction,
+          symbol: t.symbol,
         }))} />
       </div>
 

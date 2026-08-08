@@ -44,6 +44,28 @@ export default async function DashboardLayout({
         </div>
         <div className="flex items-center gap-2">
           <Link
+            href={`/${locale}/prep`}
+            aria-label="مركز التحضير اليومي"
+            className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{ color: 'rgba(201,168,76,0.85)', background: 'rgba(201,168,76,0.10)', border: '1px solid rgba(201,168,76,0.22)' }}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+          </Link>
+          <Link
+            href={`/${locale}/jk-trading`}
+            aria-label="مركز JK TRADING التعليمي"
+            className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{ color: 'rgba(201,168,76,0.85)', background: 'rgba(201,168,76,0.10)', border: '1px solid rgba(201,168,76,0.22)' }}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </Link>
+          <Link
             href={`/${locale}/settings`}
             aria-label="الإعدادات"
             className="w-8 h-8 rounded-full flex items-center justify-center"

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { jerusalemWallToUTC, utcToJerusalemWall } from '@/lib/timezone'
 
 interface TradeData {
   id: string
@@ -47,19 +48,29 @@ function splitMeta(raw: string | null): { clean: string; metaSuffix: string } {
   return { clean: raw.slice(0, idx).replace(/\n+$/, ''), metaSuffix: raw.slice(idx) }
 }
 
-// Convert ISO date to local datetime-local input value (Asia/Jerusalem preserved as-is)
-function isoToLocalInput(iso: string | null): string {
+// Split stored UTC-ISO into separate date ("YYYY-MM-DD") + time ("HH:MM")
+// READ AS JERUSALEM WALL-CLOCK — same timezone used by the new-trade form
+// and by the analysis page. This keeps what the user typed == what they see
+// here == what shows in the analytics hour/day buckets.
+function isoToDatePart(iso: string | null): string {
   if (!iso) return ''
   const d = new Date(iso)
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(
-    d.getHours()
-  )}:${pad(d.getMinutes())}`
+  if (isNaN(d.getTime())) return ''
+  return utcToJerusalemWall(d).split('T')[0] ?? ''
 }
 
-function localInputToIso(v: string): string | null {
-  if (!v) return null
-  const d = new Date(v)
+function isoToTimePart(iso: string | null): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ''
+  return utcToJerusalemWall(d).split('T')[1] ?? ''
+}
+
+function combineDateTimeToIso(date: string, time: string): string | null {
+  if (!date) return null
+  const t = time || '00:00'
+  // Interpret the input as Jerusalem wall-clock (independent of browser TZ)
+  const d = jerusalemWallToUTC(`${date}T${t}`)
   return isNaN(d.getTime()) ? null : d.toISOString()
 }
 
@@ -84,8 +95,10 @@ export function TradeEditForm({
     direction: trade.direction,
     entryPrice: trade.entryPrice,
     exitPrice: trade.exitPrice,
-    entryTime: isoToLocalInput(trade.entryTime),
-    exitTime: isoToLocalInput(trade.exitTime),
+    entryDate: isoToDatePart(trade.entryTime),
+    entryTimeOfDay: isoToTimePart(trade.entryTime),
+    exitDate: isoToDatePart(trade.exitTime),
+    exitTimeOfDay: isoToTimePart(trade.exitTime),
     pnl: trade.pnl,
     rrAchieved: trade.rrAchieved,
     rrPlanned: trade.rrPlanned,
@@ -120,8 +133,11 @@ export function TradeEditForm({
         direction: form.direction,
         entryPrice: Number(form.entryPrice) || 0,
         exitPrice: form.exitPrice === null || form.exitPrice === undefined ? null : Number(form.exitPrice),
-        entryTime: localInputToIso(form.entryTime) ?? trade.entryTime,
-        exitTime: form.exitTime ? localInputToIso(form.exitTime) : null,
+        entryTime:
+          combineDateTimeToIso(form.entryDate, form.entryTimeOfDay) ?? trade.entryTime,
+        exitTime: form.exitDate
+          ? combineDateTimeToIso(form.exitDate, form.exitTimeOfDay)
+          : null,
         pnl: form.pnl === null || form.pnl === undefined ? null : Number(form.pnl),
         rrAchieved: form.rrAchieved === null || form.rrAchieved === undefined ? null : Number(form.rrAchieved),
         rrPlanned: form.rrPlanned === null || form.rrPlanned === undefined ? null : Number(form.rrPlanned),
@@ -209,24 +225,37 @@ export function TradeEditForm({
           />
         </div>
 
-        {/* Times */}
-        <div className="grid grid-cols-2 gap-2 mb-3">
-          <div>
-            <label className="text-[10px] text-[#8899BB] block mb-1">وقت الدخول</label>
-            <input
-              type="datetime-local"
-              value={form.entryTime}
-              onChange={(e) => setForm({ ...form, entryTime: e.target.value })}
-              className={inputCls}
+        {/* Times — flexible text inputs accept Arabic digits and any separators */}
+        <div className="mb-3">
+          <label className="text-[10px] text-[#8899BB] block mb-1">وقت الدخول</label>
+          <div className="grid grid-cols-[1fr_90px] gap-2">
+            <DateTextField
+              value={form.entryDate}
+              onChange={(v) => setForm({ ...form, entryDate: v })}
+              placeholder="YYYY-MM-DD"
+            />
+            <TimeTextField
+              value={form.entryTimeOfDay}
+              onChange={(v) => setForm({ ...form, entryTimeOfDay: v })}
+              placeholder="HH:MM"
             />
           </div>
-          <div>
-            <label className="text-[10px] text-[#8899BB] block mb-1">وقت الخروج</label>
-            <input
-              type="datetime-local"
-              value={form.exitTime}
-              onChange={(e) => setForm({ ...form, exitTime: e.target.value })}
-              className={inputCls}
+        </div>
+
+        <div className="mb-3">
+          <label className="text-[10px] text-[#8899BB] block mb-1">
+            وقت الخروج <span className="text-[#4A5A7A]">(اختياري)</span>
+          </label>
+          <div className="grid grid-cols-[1fr_90px] gap-2">
+            <DateTextField
+              value={form.exitDate}
+              onChange={(v) => setForm({ ...form, exitDate: v })}
+              placeholder="YYYY-MM-DD"
+            />
+            <TimeTextField
+              value={form.exitTimeOfDay}
+              onChange={(v) => setForm({ ...form, exitTimeOfDay: v })}
+              placeholder="HH:MM"
             />
           </div>
         </div>
@@ -390,12 +419,19 @@ const selectCls = inputCls
 const textareaCls =
   'w-full bg-[#0D1520] border border-[rgba(212,175,55,0.15)] rounded-lg px-3 py-2 text-xs text-[#C8D8EE] focus:border-[#D4AF37] outline-none leading-relaxed resize-y'
 
+// Normalize Arabic-Indic (٠-٩) & Persian-Indic (۰-۹) digits + Arabic decimal markers (٫ ،) to ASCII
+function normalizeDigits(s: string): string {
+  return s
+    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+    .replace(/[٫،]/g, '.')
+}
+
 function NumberField({
   label,
   value,
   onChange,
   allowNull,
-  step,
   min,
   max,
 }: {
@@ -407,26 +443,142 @@ function NumberField({
   min?: number
   max?: number
 }) {
+  // Local string state preserves intermediate values like "1." while typing,
+  // and lets us accept Arabic digits that type="number" would silently reject.
+  const [local, setLocal] = useState<string>(
+    value === null || value === undefined || Number.isNaN(value) ? '' : String(value)
+  )
+
   return (
     <div>
       <label className="text-[10px] text-[#8899BB] block mb-1">{label}</label>
       <input
-        type="number"
-        step={step ?? 'any'}
-        min={min}
-        max={max}
-        value={value === null || value === undefined ? '' : value}
+        type="text"
+        inputMode="decimal"
+        dir="ltr"
+        value={local}
         onChange={(e) => {
-          const v = e.target.value
-          if (v === '') {
-            onChange(allowNull ? null : 0)
-          } else {
-            const n = Number(v)
-            if (!isNaN(n)) onChange(n)
+          const raw = normalizeDigits(e.target.value)
+          // Accept empty, digits, one optional decimal point, optional leading minus
+          if (raw === '' || /^-?\d*\.?\d*$/.test(raw)) {
+            setLocal(raw)
+            if (raw === '' || raw === '-' || raw === '.' || raw === '-.') {
+              onChange(allowNull ? null : 0)
+              return
+            }
+            const n = parseFloat(raw)
+            if (!isNaN(n)) {
+              if (min !== undefined && n < min) return
+              if (max !== undefined && n > max) return
+              onChange(n)
+            }
           }
         }}
         className={inputCls}
       />
     </div>
+  )
+}
+
+// Parse a user-typed date into ISO "YYYY-MM-DD". Returns '' if empty, or input
+// unchanged if not yet parseable (let the user keep typing).
+function parseFlexibleDate(raw: string): string {
+  const s = normalizeDigits(raw).trim()
+  if (!s) return ''
+  // Already ISO: 2026-04-21
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)
+  if (m) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`
+  // DD/MM/YYYY or DD-MM-YYYY or DD.MM.YYYY
+  m = s.match(/^(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{4})$/)
+  if (m) return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`
+  // YYYY/MM/DD
+  m = s.match(/^(\d{4})[/.](\d{1,2})[/.](\d{1,2})$/)
+  if (m) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`
+  return s
+}
+
+function parseFlexibleTime(raw: string): string {
+  const s = normalizeDigits(raw).trim()
+  if (!s) return ''
+  const m = s.match(/^(\d{1,2})[:.](\d{1,2})$/)
+  if (m) return `${m[1].padStart(2, '0')}:${m[2].padStart(2, '0')}`
+  return s
+}
+
+function DateTextField({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string
+  onChange: (v: string) => void
+  placeholder?: string
+}) {
+  const [local, setLocal] = useState<string>(value || '')
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      dir="ltr"
+      value={local}
+      placeholder={placeholder}
+      onChange={(e) => {
+        // Allow freeform typing; normalize digits as the user types
+        const raw = normalizeDigits(e.target.value)
+        setLocal(raw)
+        // Only commit parseable ISO dates to parent form state.
+        // Empty string is also valid (clears the field).
+        const parsed = parseFlexibleDate(raw)
+        if (parsed === '' || /^\d{4}-\d{2}-\d{2}$/.test(parsed)) {
+          onChange(parsed)
+        }
+      }}
+      onBlur={() => {
+        // On blur, try one more parse attempt and sync display
+        const parsed = parseFlexibleDate(local)
+        setLocal(parsed)
+        if (parsed === '' || /^\d{4}-\d{2}-\d{2}$/.test(parsed)) {
+          onChange(parsed)
+        }
+      }}
+      className={inputCls}
+    />
+  )
+}
+
+function TimeTextField({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string
+  onChange: (v: string) => void
+  placeholder?: string
+}) {
+  const [local, setLocal] = useState<string>(value || '')
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      dir="ltr"
+      value={local}
+      placeholder={placeholder}
+      onChange={(e) => {
+        const raw = normalizeDigits(e.target.value)
+        setLocal(raw)
+        const parsed = parseFlexibleTime(raw)
+        if (parsed === '' || /^\d{2}:\d{2}$/.test(parsed)) {
+          onChange(parsed)
+        }
+      }}
+      onBlur={() => {
+        const parsed = parseFlexibleTime(local)
+        setLocal(parsed)
+        if (parsed === '' || /^\d{2}:\d{2}$/.test(parsed)) {
+          onChange(parsed)
+        }
+      }}
+      className={inputCls}
+    />
   )
 }

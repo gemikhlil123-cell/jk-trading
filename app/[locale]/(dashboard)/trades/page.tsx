@@ -34,12 +34,20 @@ export default async function TradesPage({
           </div>
           <p className="text-[#4A5A7A] mb-1">لا توجد صفقات بعد</p>
           <p className="text-[#2A3A5A] text-xs mb-4">ابدأ بتسجيل أول صفقة من تبويب اليومية</p>
-          <Link
-            href={`/${locale}/trades/new`}
-            className="inline-flex items-center gap-2 gold-btn px-5 py-2.5 rounded-xl text-sm"
-          >
-            + تسجيل صفقة
-          </Link>
+          <div className="flex items-center gap-2 justify-center">
+            <Link
+              href={`/${locale}/trades/new`}
+              className="inline-flex items-center gap-2 gold-btn px-5 py-2.5 rounded-xl text-sm"
+            >
+              + تسجيل صفقة
+            </Link>
+            <Link
+              href={`/${locale}/trades/import`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm border border-[#1F2D4A] text-[#A7B3CC] hover:text-[#D4AF37] hover:border-[#D4AF37]/40 transition"
+            >
+              📥 استيراد CSV
+            </Link>
+          </div>
         </div>
       </div>
     )
@@ -49,12 +57,20 @@ export default async function TradesPage({
     <div className="px-4 relative z-[1]">
       <div className="flex items-center justify-between mt-4 mb-3">
         <h1 className="text-[#D4AF37] text-sm font-bold tracking-wide">سجل الصفقات ({trades.length})</h1>
-        <Link
-          href={`/${locale}/trades/new`}
-          className="gold-btn px-4 py-2 rounded-xl text-xs flex items-center gap-1.5"
-        >
-          + جديدة
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/${locale}/trades/import`}
+            className="px-3 py-2 rounded-xl text-xs border border-[#1F2D4A] text-[#A7B3CC] hover:text-[#D4AF37] hover:border-[#D4AF37]/40 transition"
+          >
+            📥 استيراد CSV
+          </Link>
+          <Link
+            href={`/${locale}/trades/new`}
+            className="gold-btn px-4 py-2 rounded-xl text-xs flex items-center gap-1.5"
+          >
+            + جديدة
+          </Link>
+        </div>
       </div>
 
       <div className="space-y-2.5">

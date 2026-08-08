@@ -21,8 +21,11 @@ const createTradeSchema = z.object({
   chartImages: z.string().optional(),
   selfRating: z.number().int().min(1).max(10).optional(),
   emotionalState: z.string().optional(),
-  entryReasonIds: z.array(z.string()).min(1, 'يجب اختيار سبب دخول واحد على الأقل'),
+  entryReasonIds: z.array(z.string()).default([]), // optional now — reduces friction
   backtestSessionId: z.string().optional(),
+}).refine((d) => d.pnl != null || d.rrAchieved != null, {
+  message: 'أدخل نتيجة الصفقة — النقاط أو R',
+  path: ['pnl'],
 })
 
 export async function GET(req: Request) {

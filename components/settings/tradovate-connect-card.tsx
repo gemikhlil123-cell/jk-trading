@@ -152,6 +152,11 @@ export function TradovateConnectCard({
         )}
       </div>
 
+      <p className="text-[11px] leading-relaxed mb-4" style={{ color: '#8899BB' }}>
+        اربط حسابك مرة واحدة، وبعدها صفقاتك تتزامن <span className="font-bold" style={{ color: '#C9A84C' }}>تلقائياً كل دقيقتين</span> —
+        بدون رفع ملفات. تُستورد الصفقات مع وسم الجلسة والـ killzone، وتُعلَّم «بحاجة لمراجعة» لتُكمل سبب الدخول والصورة.
+      </p>
+
       {message && (
         <div
           className="rounded-lg p-3 mb-4 text-[11px]"
@@ -338,13 +343,17 @@ export function TradovateConnectCard({
               color: 'rgba(201,168,76,0.7)',
             }}
           >
-            <p className="font-bold mb-1" style={{ color: '#C9A84C' }}>
-              كيف تحصل على CID + Secret؟
+            <p className="font-bold mb-1.5" style={{ color: '#C9A84C' }}>
+              كيف تحصل على CID + Secret؟ (خطوة بخطوة)
             </p>
-            <p>
-              ادخل على <span className="font-mono" style={{ color: '#C9A84C' }}>trader.tradovate.com</span> →
-              Settings → API Access → Generate Credentials. إذا الخيار مش متاح، تواصل مع دعم شركة البروب
-              (TakeProfitTrader / Lucid) واطلب تفعيل الـ API للاستخدام في أدوات Journaling.
+            <ol className="space-y-1" style={{ listStyle: 'none', paddingInlineStart: 0 }}>
+              <li><span style={{ color: '#C9A84C' }}>1)</span> ادخل على <span className="font-mono" style={{ color: '#C9A84C' }}>trader.tradovate.com</span> وسجّل دخولك.</li>
+              <li><span style={{ color: '#C9A84C' }}>2)</span> افتح <span className="font-mono">Application Settings → API Access</span>.</li>
+              <li><span style={{ color: '#C9A84C' }}>3)</span> اضغط <span className="font-mono">Generate API Key</span> — انسخ الـ <span className="font-mono">CID</span> والـ <span className="font-mono">Secret</span>.</li>
+              <li><span style={{ color: '#C9A84C' }}>4)</span> الصقهما هنا مع اسم المستخدم وكلمة المرور، واختر Live أو Demo.</li>
+            </ol>
+            <p className="mt-2">
+              إذا خيار الـ API غير متاح، تواصل مع دعم شركة البروب (TakeProfitTrader / Lucid) واطلب تفعيل API للاستخدام في أدوات Journaling.
             </p>
             <p className="mt-2">
               🔒 بياناتك مشفّرة بـ AES-256. نطلب صلاحيات قراءة فقط — لا يتم تنفيذ أي أوامر تداول.

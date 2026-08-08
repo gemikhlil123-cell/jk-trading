@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { SUPER_MENTOR_EMAIL } from '@/lib/mentor-guard'
 
 // GET /api/admin — list all users with stats
 export async function GET() {
@@ -10,9 +11,9 @@ export async function GET() {
 
   const currentUser = await prisma.user.findUnique({
     where: { id: session.user!.id as string },
-    select: { role: true },
+    select: { role: true, email: true },
   })
-  if (currentUser?.role !== 'MENTOR') {
+  if (currentUser?.role !== 'MENTOR' || currentUser?.email !== SUPER_MENTOR_EMAIL) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
@@ -66,12 +67,11 @@ export async function DELETE(req: Request) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   // Only the super admin can delete users
-  const superAdminEmail = 'gemikhlil123@gmail.com'
   const currentUser = await prisma.user.findUnique({
     where: { id: session.user!.id as string },
     select: { role: true, email: true },
   })
-  if (currentUser?.role !== 'MENTOR' || currentUser?.email !== superAdminEmail) {
+  if (currentUser?.role !== 'MENTOR' || currentUser?.email !== SUPER_MENTOR_EMAIL) {
     return NextResponse.json({ error: 'Forbidden — Super Admin only' }, { status: 403 })
   }
 
@@ -92,6 +92,7 @@ const patchSchema = z.object({
   userId: z.string(),
   isActive: z.boolean().optional(),
   subscriptionStatus: z.enum(['trial', 'active', 'expired', 'cancelled']).optional(),
+  subscriptionTier: z.enum(['BASIC', 'PRO']).optional(),
 })
 
 export async function PATCH(req: Request) {
@@ -100,9 +101,11 @@ export async function PATCH(req: Request) {
 
   const currentUser = await prisma.user.findUnique({
     where: { id: session.user!.id as string },
-    select: { role: true },
+    select: { role: true, email: true },
   })
-  if (currentUser?.role !== 'MENTOR') {
+  // Only the super mentor can administrate users — defense in depth even
+  // if someone else somehow has role=MENTOR in the DB.
+  if (currentUser?.role !== 'MENTOR' || currentUser?.email !== SUPER_MENTOR_EMAIL) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
@@ -110,23 +113,39 @@ export async function PATCH(req: Request) {
   const parsed = patchSchema.safeParse(body)
   if (!parsed.success) return NextResponse.json({ error: 'Invalid data' }, { status: 400 })
 
-  const { userId, isActive, subscriptionStatus } = parsed.data
+  const { userId, isActive, subscriptionStatus, subscriptionTier } = parsed.data
 
   const updateData: Record<string, unknown> = {}
   if (isActive !== undefined) updateData.isActive = isActive
+
   if (subscriptionStatus !== undefined) {
     updateData.subscriptionStatus = subscriptionStatus
-    // If activating subscription, set active indefinitely (null trialEndsAt)
+    // Keep subscriptionTier in sync — PRO features (deep analysis, strategy insights)
+    // check tier === 'PRO', not status. Without this sync, "تفعيل الاشتراك"
+    // appeared to work but students stayed on BASIC and were still blocked.
     if (subscriptionStatus === 'active') {
       updateData.isActive = true
       updateData.trialEndsAt = null
+      updateData.subscriptionTier = 'PRO'
+    } else if (subscriptionStatus === 'expired' || subscriptionStatus === 'cancelled') {
+      updateData.subscriptionTier = 'BASIC'
     }
+  }
+
+  // Allow explicit tier override (wins over the automatic sync above)
+  if (subscriptionTier !== undefined) {
+    updateData.subscriptionTier = subscriptionTier
   }
 
   const updated = await prisma.user.update({
     where: { id: userId },
     data: updateData,
-    select: { id: true, isActive: true, subscriptionStatus: true },
+    select: {
+      id: true,
+      isActive: true,
+      subscriptionStatus: true,
+      subscriptionTier: true,
+    },
   })
 
   return NextResponse.json(updated)
