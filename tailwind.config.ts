@@ -9,10 +9,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        sans: ['Cairo', 'Tajawal', 'system-ui', 'sans-serif'],
-      },
       colors: {
         navy: {
           DEFAULT: '#0A192F',
@@ -66,6 +62,7 @@ const config: Config = {
       fontFamily: {
         arabic: ['var(--font-cairo)', 'Cairo', 'Tajawal', 'sans-serif'],
         sans: ['var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',
