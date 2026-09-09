@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        sans: ['Cairo', 'Tajawal', 'system-ui', 'sans-serif'],
+      },
       colors: {
         navy: {
           DEFAULT: '#0A192F',
@@ -49,8 +53,8 @@ const config: Config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        win: '#22c55e',
-        loss: '#ef4444',
+        win: '#4E9E7A',
+        loss: '#BB5B5B',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

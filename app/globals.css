@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @tailwind base;
@@ -7,6 +8,30 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+
+  /* Every figure the trader compares — P&L, R, prices, counts — uses this.
+     Tabular figures keep digits in the same column from row to row. */
+  .num {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    letter-spacing: -0.01em;
+  }
+  /* Uppercase micro-labels need air or they read as a smudge. */
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  /* Reserved for the single most important figure on a screen. */
+  .display-figure {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
 }
 
 @layer base {
@@ -17,7 +42,7 @@
     --card-foreground: 210 40% 85%;
     --popover: 222 40% 10%;
     --popover-foreground: 210 40% 85%;
-    --primary: 43 62% 52%;
+    --primary: 40 50% 53%;
     --primary-foreground: 222 47% 6%;
     --secondary: 222 35% 16%;
     --secondary-foreground: 210 40% 85%;
@@ -25,16 +50,16 @@
     --muted-foreground: 210 20% 55%;
     --accent: 222 35% 16%;
     --accent-foreground: 210 40% 85%;
-    --destructive: 0 72% 51%;
+    --destructive: 0 41% 55%;
     --destructive-foreground: 210 40% 98%;
     --border: 222 35% 16%;
     --input: 222 40% 12%;
-    --ring: 43 62% 52%;
-    --chart-1: 142 71% 45%;
-    --chart-2: 0 72% 51%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 199 89% 48%;
-    --chart-5: 271 81% 56%;
+    --ring: 40 50% 53%;
+    --chart-1: 153 34% 46%;
+    --chart-2: 0 41% 55%;
+    --chart-3: 35 51% 50%;
+    --chart-4: 205 36% 55%;
+    --chart-5: 271 30% 55%;
     --radius: 0.75rem;
   }
 
@@ -51,8 +76,8 @@
     content: '';
     position: fixed; inset: 0;
     background:
-      radial-gradient(ellipse at 20% 20%, rgba(212,175,55,0.04) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(212,175,55,0.03) 0%, transparent 60%);
+      radial-gradient(ellipse at 20% 20%, rgba(194,155,74,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(194,155,74,0.03) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
@@ -62,43 +87,43 @@
   html[data-theme="light"] body { color: #2A1F10; }
   html[data-theme="light"] body::before {
     background:
-      radial-gradient(ellipse at 20% 20%, rgba(160,125,28,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(160,125,28,0.05) 0%, transparent 60%);
+      radial-gradient(ellipse at 20% 20%, rgba(138,106,31,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(138,106,31,0.05) 0%, transparent 60%);
   }
   html[data-theme="light"] .card-dark,
   html[data-theme="light"] .card-gold,
   html[data-theme="light"] .card-navy {
     background: #FFFFFF;
-    border-color: rgba(160,125,28,0.25);
+    border-color: rgba(138,106,31,0.25);
     color: #2A1F10;
   }
   html[data-theme="light"] .form-input-dark {
     background: #FFFFFF;
     color: #2A1F10;
-    border-color: rgba(160,125,28,0.25);
+    border-color: rgba(138,106,31,0.25);
   }
   html[data-theme="light"] .sec-title { color: #7D5A1C; }
   html[data-theme="light"] ::-webkit-scrollbar-track { background: #EDE4CD; }
 
   ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-track { background: #0D1520; }
-  ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.25); border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.45); }
+  ::-webkit-scrollbar-thumb { background: rgba(194,155,74,0.25); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(194,155,74,0.45); }
 
   [dir="rtl"] .ltr-num { direction: ltr; unicode-bidi: embed; }
 }
 
 @layer components {
   /* ─── Cards ─── */
-  .card-dark  { @apply bg-[#111D2E] border border-[rgba(212,175,55,0.18)] rounded-2xl; }
-  .card-gold  { @apply bg-[#162035] border border-[rgba(212,175,55,0.35)] rounded-2xl; }
-  .card-navy  { @apply bg-[#111D2E] border border-[rgba(212,175,55,0.18)] rounded-2xl; }
+  .card-dark  { @apply bg-[#111D2E] border border-[rgba(194,155,74,0.18)] rounded-2xl; }
+  .card-gold  { @apply bg-[#162035] border border-[rgba(194,155,74,0.35)] rounded-2xl; }
+  .card-navy  { @apply bg-[#111D2E] border border-[rgba(194,155,74,0.18)] rounded-2xl; }
 
   /* ─── Section title ─── */
   .sec-title {
-    @apply text-[11px] font-bold text-[#D4AF37] tracking-widest uppercase mb-2.5 mt-5 flex items-center gap-2;
+    @apply text-[11px] font-bold text-[#C29B4A] tracking-widest uppercase mb-2.5 mt-5 flex items-center gap-2;
   }
-  .sec-title::after { content: ''; flex: 1; height: 1px; background: rgba(212,175,55,0.18); }
+  .sec-title::after { content: ''; flex: 1; height: 1px; background: rgba(194,155,74,0.18); }
 
   /* ─── Stat card ─── */
   .stat-card { @apply card-dark p-4 flex flex-col gap-1; }
@@ -107,7 +132,7 @@
   .form-input-dark {
     width: 100%;
     background: #162035;
-    border: 1px solid rgba(212,175,55,0.18);
+    border: 1px solid rgba(194,155,74,0.18);
     color: #C8D8EE;
     border-radius: 12px;
     padding: 11px 13px;
@@ -116,15 +141,15 @@
     outline: none;
     transition: border-color 0.18s;
   }
-  .form-input-dark:focus { border-color: #D4AF37; }
+  .form-input-dark:focus { border-color: #C29B4A; }
   .form-input-dark::placeholder { color: #4A5A7A; }
 
   /* ─── Toggle pill ─── */
   .pill-toggle {
-    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[rgba(212,175,55,0.18)] bg-[#162035] text-[#8899BB] text-xs cursor-pointer transition-all select-none;
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[rgba(194,155,74,0.18)] bg-[#162035] text-[#8899BB] text-xs cursor-pointer transition-all select-none;
   }
   .pill-toggle.active {
-    @apply bg-[rgba(212,175,55,0.12)] border-[rgba(212,175,55,0.45)] text-[#D4AF37];
+    @apply bg-[rgba(194,155,74,0.12)] border-[rgba(194,155,74,0.45)] text-[#C29B4A];
   }
 
   /* ─── PnL colors ─── */
@@ -138,7 +163,7 @@
 
   /* ─── Gold button ─── */
   .gold-btn {
-    background: linear-gradient(135deg, #A07D1C, #D4AF37);
+    background: linear-gradient(135deg, #8A6A1F, #C29B4A);
     color: #080C14;
     font-weight: 700;
     border: none;
@@ -150,7 +175,7 @@
 
   /* ─── Progress ─── */
   .progress-track { background: #0D1520; border-radius: 99px; height: 6px; overflow: hidden; }
-  .progress-fill  { height: 6px; border-radius: 99px; background: linear-gradient(90deg, #A07D1C, #D4AF37); transition: width 0.4s cubic-bezier(0.4,0,0.2,1); position: relative; overflow: hidden; }
+  .progress-fill  { height: 6px; border-radius: 99px; background: linear-gradient(90deg, #8A6A1F, #C29B4A); transition: width 0.4s cubic-bezier(0.4,0,0.2,1); position: relative; overflow: hidden; }
   .progress-fill::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
@@ -161,7 +186,7 @@
   /* ─── Vibrant cards (gradient + glow on hover) ─── */
   .card-vibrant {
     background: linear-gradient(150deg, #16223a 0%, #111d2e 55%, #0e1828 100%);
-    border: 1px solid rgba(212,175,55,0.20);
+    border: 1px solid rgba(194,155,74,0.20);
     border-radius: 1rem;
     position: relative;
     overflow: hidden;
@@ -169,23 +194,23 @@
   }
   .card-vibrant::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.55), transparent);
+    background: linear-gradient(90deg, transparent, rgba(194,155,74,0.55), transparent);
     opacity: 0; transition: opacity 0.22s ease;
   }
   .card-hover-lift { transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, border-color 0.22s ease; will-change: transform; }
   .card-hover-lift:hover,
   .card-vibrant:hover {
     transform: translateY(-3px);
-    border-color: rgba(212,175,55,0.45);
-    box-shadow: 0 10px 30px -8px rgba(0,0,0,0.6), 0 0 22px -6px rgba(212,175,55,0.28);
+    border-color: rgba(194,155,74,0.45);
+    box-shadow: 0 10px 30px -8px rgba(0,0,0,0.6), 0 0 22px -6px rgba(194,155,74,0.28);
   }
   .card-vibrant:hover::before { opacity: 1; }
 
   /* category accent gradients for stat tiles */
-  .stat-accent-gold { background: linear-gradient(150deg, rgba(212,175,55,0.10), rgba(212,175,55,0.02) 60%), #111d2e; }
-  .stat-accent-win  { background: linear-gradient(150deg, rgba(29,185,84,0.12), rgba(29,185,84,0.02) 60%), #111d2e; }
+  .stat-accent-gold { background: linear-gradient(150deg, rgba(194,155,74,0.10), rgba(194,155,74,0.02) 60%), #111d2e; }
+  .stat-accent-win  { background: linear-gradient(150deg, rgba(78,158,122,0.12), rgba(78,158,122,0.02) 60%), #111d2e; }
   .stat-accent-loss { background: linear-gradient(150deg, rgba(231,76,60,0.12), rgba(231,76,60,0.02) 60%), #111d2e; }
-  .stat-accent-info { background: linear-gradient(150deg, rgba(56,189,248,0.12), rgba(56,189,248,0.02) 60%), #111d2e; }
+  .stat-accent-info { background: linear-gradient(150deg, rgba(90,150,190,0.12), rgba(90,150,190,0.02) 60%), #111d2e; }
 
   /* subtle gold glow for emphasis (live session / current PnL) */
   .stat-glow { animation: glow-pulse 3s ease-in-out infinite; }
@@ -204,16 +229,16 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.45); }
-  50%      { box-shadow: 0 0 0 6px rgba(212,175,55,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(194,155,74,0.45); }
+  50%      { box-shadow: 0 0 0 6px rgba(194,155,74,0); }
 }
 @keyframes shimmer {
   0%   { transform: translateX(-100%); }
   60%, 100% { transform: translateX(100%); }
 }
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 14px -4px rgba(212,175,55,0.25); }
-  50%      { box-shadow: 0 0 26px -2px rgba(212,175,55,0.55); }
+  0%, 100% { box-shadow: 0 0 14px -4px rgba(194,155,74,0.25); }
+  50%      { box-shadow: 0 0 26px -2px rgba(194,155,74,0.55); }
 }
 
 @media (prefers-reduced-motion: reduce) {
