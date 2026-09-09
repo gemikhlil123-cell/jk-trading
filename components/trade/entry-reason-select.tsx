@@ -76,12 +76,12 @@ export function EntryReasonSelect({
             error
               ? 'border-red-500/50'
               : open
-              ? 'border-[#F5F5DC]/50'
-              : 'border-[#1D3461] hover:border-[#F5F5DC]/30'
+              ? 'border-[#EDEBE4]/50'
+              : 'border-[#1D3461] hover:border-[#EDEBE4]/30'
           )}
         >
             {selectedReasons.length === 0 ? (
-              <span className="text-[#F5F5DC]/30 text-sm flex-1">
+              <span className="text-[#EDEBE4]/30 text-sm flex-1">
                 اختر أسباب الدخول (إلزامي)
               </span>
             ) : (
@@ -91,7 +91,7 @@ export function EntryReasonSelect({
                     key={r.id}
                     className={cn(
                       'inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border',
-                      CATEGORY_COLORS[r.category] || 'bg-[#F5F5DC]/10 text-[#F5F5DC] border-[#F5F5DC]/20'
+                      CATEGORY_COLORS[r.category] || 'bg-[#EDEBE4]/10 text-[#EDEBE4] border-[#EDEBE4]/20'
                     )}
                   >
                     {r.name}
@@ -109,7 +109,7 @@ export function EntryReasonSelect({
             <ChevronDown
               size={16}
               className={cn(
-                'text-[#F5F5DC]/40 flex-shrink-0 mt-0.5 transition-transform',
+                'text-[#EDEBE4]/40 flex-shrink-0 mt-0.5 transition-transform',
                 open && 'rotate-180'
               )}
             />
@@ -123,7 +123,7 @@ export function EntryReasonSelect({
           <div className="max-h-[400px] overflow-y-auto p-2 space-y-3">
             {Object.entries(grouped).map(([category, items]) => (
               <div key={category}>
-                <p className="text-xs font-semibold text-[#F5F5DC]/40 uppercase tracking-wider px-2 mb-1.5">
+                <p className="text-xs font-semibold text-[#EDEBE4]/40 uppercase tracking-wider px-2 mb-1.5">
                   {CATEGORY_LABELS[category] || category}
                 </p>
                 <div className="grid grid-cols-2 gap-1">
@@ -140,21 +140,21 @@ export function EntryReasonSelect({
                             ? cn(
                                 'border',
                                 CATEGORY_COLORS[category] ||
-                                  'bg-[#F5F5DC]/10 text-[#F5F5DC] border-[#F5F5DC]/30'
+                                  'bg-[#EDEBE4]/10 text-[#EDEBE4] border-[#EDEBE4]/30'
                               )
-                            : 'text-[#F5F5DC]/70 hover:bg-[#F5F5DC]/5 hover:text-[#F5F5DC]'
+                            : 'text-[#EDEBE4]/70 hover:bg-[#EDEBE4]/5 hover:text-[#EDEBE4]'
                         )}
                       >
                         <span
                           className={cn(
                             'w-4 h-4 rounded flex items-center justify-center border flex-shrink-0',
                             selected
-                              ? 'bg-[#F5F5DC]/20 border-[#F5F5DC]/40'
-                              : 'border-[#F5F5DC]/20'
+                              ? 'bg-[#EDEBE4]/20 border-[#EDEBE4]/40'
+                              : 'border-[#EDEBE4]/20'
                           )}
                         >
                           {selected && (
-                            <Check size={10} className="text-[#F5F5DC]" />
+                            <Check size={10} className="text-[#EDEBE4]" />
                           )}
                         </span>
                         {item.name}
@@ -168,7 +168,7 @@ export function EntryReasonSelect({
 
           {value.length > 0 && (
             <div className="border-t border-[#1D3461] p-2 flex justify-between items-center">
-              <span className="text-[#F5F5DC]/50 text-xs">
+              <span className="text-[#EDEBE4]/50 text-xs">
                 {value.length} محدد
               </span>
               <button

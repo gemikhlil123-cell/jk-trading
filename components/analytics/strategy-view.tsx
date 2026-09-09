@@ -11,8 +11,8 @@ interface Props {
 type Mode = 'LIVE' | 'BACKTEST'
 
 const CONFIDENCE_STYLES: Record<ConfidenceLevel, { bg: string; fg: string; label: string }> = {
-  HIGH: { bg: 'rgba(29,185,84,0.18)', fg: '#1DB954', label: 'ثقة عالية' },
-  MEDIUM: { bg: 'rgba(201,168,76,0.18)', fg: '#C9A84C', label: 'ثقة متوسطة' },
+  HIGH: { bg: 'rgba(78,158,122,0.18)', fg: '#4E9E7A', label: 'ثقة عالية' },
+  MEDIUM: { bg: 'rgba(194,155,74,0.18)', fg: '#C29B4A', label: 'ثقة متوسطة' },
   LOW: { bg: 'rgba(255,130,60,0.18)', fg: '#FF823C', label: 'ثقة منخفضة' },
   NONE: { bg: 'rgba(74,90,122,0.18)', fg: '#8899BB', label: 'عيّنة صغيرة جداً' },
 }
@@ -77,12 +77,12 @@ export function StrategyView({ live, backtest }: Props) {
               flex: 1,
               padding: '10px',
               borderRadius: 12,
-              background: mode === 'LIVE' ? 'rgba(212,175,55,0.18)' : '#162035',
+              background: mode === 'LIVE' ? 'rgba(194,155,74,0.18)' : '#162035',
               border:
                 mode === 'LIVE'
-                  ? '1px solid rgba(212,175,55,0.5)'
-                  : '1px solid rgba(212,175,55,0.14)',
-              color: mode === 'LIVE' ? '#D4AF37' : '#8899BB',
+                  ? '1px solid rgba(194,155,74,0.5)'
+                  : '1px solid rgba(194,155,74,0.14)',
+              color: mode === 'LIVE' ? '#C29B4A' : '#8899BB',
               fontWeight: 700,
               fontSize: 12,
               cursor: 'pointer',
@@ -97,12 +97,12 @@ export function StrategyView({ live, backtest }: Props) {
               padding: '10px',
               borderRadius: 12,
               background:
-                mode === 'BACKTEST' ? 'rgba(212,175,55,0.18)' : '#162035',
+                mode === 'BACKTEST' ? 'rgba(194,155,74,0.18)' : '#162035',
               border:
                 mode === 'BACKTEST'
-                  ? '1px solid rgba(212,175,55,0.5)'
-                  : '1px solid rgba(212,175,55,0.14)',
-              color: mode === 'BACKTEST' ? '#D4AF37' : '#8899BB',
+                  ? '1px solid rgba(194,155,74,0.5)'
+                  : '1px solid rgba(194,155,74,0.14)',
+              color: mode === 'BACKTEST' ? '#C29B4A' : '#8899BB',
               fontWeight: 700,
               fontSize: 12,
               cursor: 'pointer',
@@ -119,12 +119,12 @@ export function StrategyView({ live, backtest }: Props) {
           className="card-gold"
           style={{
             padding: '16px 16px',
-            background: 'linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.03))',
+            background: 'linear-gradient(135deg, rgba(194,155,74,0.12), rgba(194,155,74,0.03))',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
             <span style={{ fontSize: 24 }}>⚔️</span>
-            <h2 style={{ fontSize: 15, fontWeight: 800, color: '#D4AF37' }}>
+            <h2 style={{ fontSize: 15, fontWeight: 800, color: '#C29B4A' }}>
               استراتيجيتك المخصصة
             </h2>
             <ConfidenceBadge level={data.confidence} />
@@ -137,7 +137,7 @@ export function StrategyView({ live, backtest }: Props) {
       {data.redFlags.length > 0 && (
         <div style={{ padding: '0 14px 14px' }}>
           <h3 className="sec-title">⚠️ تحذيرات</h3>
-          <div className="card-dark" style={{ padding: '12px 14px', borderRight: '3px solid #E74C3C' }}>
+          <div className="card-dark" style={{ padding: '12px 14px', borderRight: '3px solid #BB5B5B' }}>
             {data.redFlags.map((flag, i) => (
               <div
                 key={i}
@@ -145,7 +145,7 @@ export function StrategyView({ live, backtest }: Props) {
                   fontSize: 12,
                   color: '#C8D8EE',
                   padding: '6px 0',
-                  borderBottom: i < data.redFlags.length - 1 ? '1px solid rgba(231,76,60,0.15)' : 'none',
+                  borderBottom: i < data.redFlags.length - 1 ? '1px solid rgba(187,91,91,0.15)' : 'none',
                 }}
               >
                 {flag}
@@ -161,7 +161,7 @@ export function StrategyView({ live, backtest }: Props) {
           <h3 className="sec-title">✅ قواعد الدخول (ادخل عندما...)</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {data.rules.take.map((rule, i) => (
-              <RuleCard key={i} rule={rule} accent="#1DB954" />
+              <RuleCard key={i} rule={rule} accent="#4E9E7A" />
             ))}
           </div>
         </div>
@@ -173,7 +173,7 @@ export function StrategyView({ live, backtest }: Props) {
           <h3 className="sec-title">⛔ قواعد التجنّب (لا تدخل عندما...)</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {data.rules.avoid.map((rule, i) => (
-              <RuleCard key={i} rule={rule} accent="#E74C3C" />
+              <RuleCard key={i} rule={rule} accent="#BB5B5B" />
             ))}
           </div>
         </div>
@@ -185,7 +185,7 @@ export function StrategyView({ live, backtest }: Props) {
           <h3 className="sec-title">👁️ للمراقبة (نتائج واعدة لكن عيّنة صغيرة)</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {data.rules.observe.map((rule, i) => (
-              <RuleCard key={i} rule={rule} accent="#C9A84C" />
+              <RuleCard key={i} rule={rule} accent="#C29B4A" />
             ))}
           </div>
         </div>
@@ -203,7 +203,7 @@ export function StrategyView({ live, backtest }: Props) {
                   fontSize: 12,
                   color: '#C8D8EE',
                   padding: '6px 0',
-                  borderBottom: i < data.positionSizing.length - 1 ? '1px solid rgba(212,175,55,0.08)' : 'none',
+                  borderBottom: i < data.positionSizing.length - 1 ? '1px solid rgba(194,155,74,0.08)' : 'none',
                   lineHeight: 1.6,
                 }}
               >
@@ -226,7 +226,7 @@ export function StrategyView({ live, backtest }: Props) {
                   fontSize: 12,
                   color: '#C8D8EE',
                   padding: '6px 0',
-                  borderBottom: i < data.sessionPlan.length - 1 ? '1px solid rgba(212,175,55,0.08)' : 'none',
+                  borderBottom: i < data.sessionPlan.length - 1 ? '1px solid rgba(194,155,74,0.08)' : 'none',
                   lineHeight: 1.6,
                 }}
               >

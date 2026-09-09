@@ -62,14 +62,14 @@ export function DeepAnalysisView({
       {studentName && (
         <div style={headerBoxStyle}>
           <span style={{ color: '#8899BB', fontSize: 11 }}>تعرض تحليل الطالب:</span>{' '}
-          <b style={{ color: '#D4AF37' }}>{studentName}</b>
+          <b style={{ color: '#C29B4A' }}>{studentName}</b>
         </div>
       )}
 
       {/* Summary bar + re-analyze */}
       <div style={summaryBarStyle}>
         <div>
-          <div style={{ color: '#D4AF37', fontSize: 13, fontWeight: 800 }}>
+          <div style={{ color: '#C29B4A', fontSize: 13, fontWeight: 800 }}>
             📊 {data.totalAnalyzed} ملاحظة محلّلة
           </div>
           <div style={{ color: '#8899BB', fontSize: 10, marginTop: 2 }}>
@@ -225,11 +225,11 @@ function InfoRow({
             key={i.label}
             style={{
               background: '#111D2E',
-              border: '1px solid rgba(212,175,55,0.15)',
+              border: '1px solid rgba(194,155,74,0.15)',
               borderRadius: 6,
               padding: '3px 8px',
               fontSize: 11,
-              color: '#D4AF37',
+              color: '#C29B4A',
             }}
           >
             {i.label} <span style={{ color: '#8899BB' }}>({i.value})</span>
@@ -251,7 +251,7 @@ function renderBuckets(buckets: Bucket[], opts: { showWinRate?: boolean } = {}) 
 }
 
 function BucketRow({ b, showWinRate }: { b: Bucket; showWinRate?: boolean }) {
-  const pnlColor = b.totalPnl >= 0 ? '#1DB954' : '#E74C3C'
+  const pnlColor = b.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B'
   return (
     <div
       style={{
@@ -260,16 +260,16 @@ function BucketRow({ b, showWinRate }: { b: Bucket; showWinRate?: boolean }) {
         alignItems: 'center',
         gap: 8,
         background: '#111D2E',
-        border: '1px solid rgba(212,175,55,0.10)',
+        border: '1px solid rgba(194,155,74,0.10)',
         borderRadius: 8,
         padding: '6px 10px',
         fontSize: 12,
       }}
     >
-      <span style={{ color: '#F5E6A3', fontWeight: 600 }}>{b.label}</span>
+      <span style={{ color: '#E4CE9B', fontWeight: 600 }}>{b.label}</span>
       <span style={{ color: '#8899BB', fontSize: 10 }}>{b.count}×</span>
       {showWinRate && b.wins + b.losses > 0 && (
-        <span style={{ color: '#D4AF37', fontSize: 10 }}>{(b.winRate * 100).toFixed(0)}%</span>
+        <span style={{ color: '#C29B4A', fontSize: 10 }}>{(b.winRate * 100).toFixed(0)}%</span>
       )}
       <span style={{ color: pnlColor, fontWeight: 700, fontSize: 11 }}>
         {b.totalPnl >= 0 ? '+' : ''}
@@ -293,13 +293,13 @@ function renderTriples(triples: ReasonTripleInsight[]) {
   return (
     <div style={{ display: 'grid', gap: 8 }}>
       {triples.slice(0, 20).map((t) => {
-        const pnlColor = t.totalPnl >= 0 ? '#1DB954' : '#E74C3C'
+        const pnlColor = t.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B'
         return (
           <div
             key={t.names.join('|')}
             style={{
               background: '#111D2E',
-              border: '1px solid rgba(212,175,55,0.12)',
+              border: '1px solid rgba(194,155,74,0.12)',
               borderRadius: 10,
               padding: 10,
             }}
@@ -309,8 +309,8 @@ function renderTriples(triples: ReasonTripleInsight[]) {
                 <span
                   key={n}
                   style={{
-                    background: 'rgba(212,175,55,0.12)',
-                    color: '#D4AF37',
+                    background: 'rgba(194,155,74,0.12)',
+                    color: '#C29B4A',
                     fontSize: 10,
                     padding: '2px 6px',
                     borderRadius: 4,
@@ -330,16 +330,16 @@ function renderTriples(triples: ReasonTripleInsight[]) {
               }}
             >
               <span>
-                إجمالي: <b style={{ color: '#F5E6A3' }}>{t.trades}</b>
+                إجمالي: <b style={{ color: '#E4CE9B' }}>{t.trades}</b>
               </span>
               <span>
-                نسبة النجاح: <b style={{ color: '#D4AF37' }}>{(t.winRate * 100).toFixed(0)}%</b>
+                نسبة النجاح: <b style={{ color: '#C29B4A' }}>{(t.winRate * 100).toFixed(0)}%</b>
               </span>
               <span>
                 P&L: <b style={{ color: pnlColor }}>{t.totalPnl.toFixed(0)}$</b>
               </span>
               <span>
-                التوقع: <b style={{ color: '#F5E6A3' }}>{t.expectancy.toFixed(1)}</b>
+                التوقع: <b style={{ color: '#E4CE9B' }}>{t.expectancy.toFixed(1)}</b>
               </span>
             </div>
             <div
@@ -353,11 +353,11 @@ function renderTriples(triples: ReasonTripleInsight[]) {
             >
               <span>
                 الشهر: <b style={{ color: '#8899BB' }}>{t.thisMonth.trades}</b> / نجاح{' '}
-                <b style={{ color: '#D4AF37' }}>{(t.thisMonth.winRate * 100).toFixed(0)}%</b>
+                <b style={{ color: '#C29B4A' }}>{(t.thisMonth.winRate * 100).toFixed(0)}%</b>
               </span>
               <span>
                 الأسبوع: <b style={{ color: '#8899BB' }}>{t.thisWeek.trades}</b> / نجاح{' '}
-                <b style={{ color: '#D4AF37' }}>{(t.thisWeek.winRate * 100).toFixed(0)}%</b>
+                <b style={{ color: '#C29B4A' }}>{(t.thisWeek.winRate * 100).toFixed(0)}%</b>
               </span>
             </div>
           </div>
@@ -376,7 +376,7 @@ function TextSection({
   items: TextBucket[]
   tone: 'good' | 'bad'
 }) {
-  const color = tone === 'good' ? '#1DB954' : '#E74C3C'
+  const color = tone === 'good' ? '#4E9E7A' : '#BB5B5B'
   return (
     <div style={sectionStyle}>
       <div style={{ ...sectionTitleStyle, color }}>{title}</div>
@@ -386,11 +386,11 @@ function TextSection({
             key={t.text}
             style={{
               background: '#0A192F',
-              border: `1px solid ${tone === 'good' ? 'rgba(29,185,84,0.15)' : 'rgba(231,76,60,0.15)'}`,
+              border: `1px solid ${tone === 'good' ? 'rgba(78,158,122,0.15)' : 'rgba(187,91,91,0.15)'}`,
               borderRadius: 6,
               padding: '6px 8px',
               fontSize: 11,
-              color: '#F5E6A3',
+              color: '#E4CE9B',
               display: 'flex',
               justifyContent: 'space-between',
               gap: 6,
@@ -409,7 +409,7 @@ function TextSection({
 
 const headerBoxStyle: React.CSSProperties = {
   background: '#111D2E',
-  border: '1px solid rgba(212,175,55,0.15)',
+  border: '1px solid rgba(194,155,74,0.15)',
   borderRadius: 8,
   padding: 8,
   marginBottom: 10,
@@ -418,7 +418,7 @@ const headerBoxStyle: React.CSSProperties = {
 
 const summaryBarStyle: React.CSSProperties = {
   background: '#111D2E',
-  border: '1px solid rgba(212,175,55,0.20)',
+  border: '1px solid rgba(194,155,74,0.20)',
   borderRadius: 12,
   padding: 10,
   display: 'flex',
@@ -430,7 +430,7 @@ const summaryBarStyle: React.CSSProperties = {
 }
 
 const primaryBtnStyle = (disabled: boolean): React.CSSProperties => ({
-  background: disabled ? 'rgba(212,175,55,0.2)' : 'linear-gradient(90deg,#A07D1C,#D4AF37)',
+  background: disabled ? 'rgba(194,155,74,0.2)' : 'linear-gradient(90deg,#8A6A1F,#C29B4A)',
   color: '#0A192F',
   border: 'none',
   borderRadius: 8,
@@ -443,8 +443,8 @@ const primaryBtnStyle = (disabled: boolean): React.CSSProperties => ({
 
 const secondaryBtnStyle = (disabled: boolean): React.CSSProperties => ({
   background: 'transparent',
-  color: '#D4AF37',
-  border: '1px solid rgba(212,175,55,0.3)',
+  color: '#C29B4A',
+  border: '1px solid rgba(194,155,74,0.3)',
   borderRadius: 8,
   padding: '8px 12px',
   fontSize: 11,
@@ -454,9 +454,9 @@ const secondaryBtnStyle = (disabled: boolean): React.CSSProperties => ({
 })
 
 const messageBoxStyle = (success: boolean): React.CSSProperties => ({
-  background: success ? 'rgba(29,185,84,0.12)' : 'rgba(231,76,60,0.12)',
-  border: `1px solid ${success ? 'rgba(29,185,84,0.3)' : 'rgba(231,76,60,0.3)'}`,
-  color: success ? '#1DB954' : '#E74C3C',
+  background: success ? 'rgba(78,158,122,0.12)' : 'rgba(187,91,91,0.12)',
+  border: `1px solid ${success ? 'rgba(78,158,122,0.3)' : 'rgba(187,91,91,0.3)'}`,
+  color: success ? '#4E9E7A' : '#BB5B5B',
   fontSize: 11,
   padding: '6px 10px',
   borderRadius: 8,
@@ -465,7 +465,7 @@ const messageBoxStyle = (success: boolean): React.CSSProperties => ({
 
 const sectionStyle: React.CSSProperties = {
   background: '#0F1A2B',
-  border: '1px solid rgba(212,175,55,0.10)',
+  border: '1px solid rgba(194,155,74,0.10)',
   borderRadius: 12,
   padding: 12,
   marginBottom: 10,
@@ -474,7 +474,7 @@ const sectionStyle: React.CSSProperties = {
 const sectionTitleStyle: React.CSSProperties = {
   fontSize: 12,
   fontWeight: 800,
-  color: '#D4AF37',
+  color: '#C29B4A',
   marginBottom: 8,
 }
 

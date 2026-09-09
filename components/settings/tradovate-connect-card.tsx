@@ -127,14 +127,14 @@ export function TradovateConnectCard({
     <div
       className="rounded-2xl p-5"
       style={{
-        background: 'linear-gradient(180deg, rgba(201,168,76,0.06) 0%, rgba(8,12,20,0.6) 100%)',
-        border: '1px solid rgba(201,168,76,0.18)',
+        background: 'linear-gradient(180deg, rgba(194,155,74,0.06) 0%, rgba(8,12,20,0.6) 100%)',
+        border: '1px solid rgba(194,155,74,0.18)',
       }}
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-[#C9A84C] text-sm font-black tracking-wider">ربط Tradovate</h2>
-          <p className="text-[10px] mt-0.5" style={{ color: 'rgba(201,168,76,0.5)' }}>
+          <h2 className="text-[#C29B4A] text-sm font-black tracking-wider">ربط Tradovate</h2>
+          <p className="text-[10px] mt-0.5" style={{ color: 'rgba(194,155,74,0.5)' }}>
             TakeProfitTrader / Lucid / غيرها
           </p>
         </div>
@@ -142,9 +142,9 @@ export function TradovateConnectCard({
           <span
             className="text-[10px] px-2 py-1 rounded-full font-bold"
             style={{
-              background: account.isActive ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)',
-              color: account.isActive ? '#22c55e' : '#ef4444',
-              border: `1px solid ${account.isActive ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`,
+              background: account.isActive ? 'rgba(34,197,94,0.15)' : 'rgba(187,91,91,0.15)',
+              color: account.isActive ? '#4E9E7A' : '#BB5B5B',
+              border: `1px solid ${account.isActive ? 'rgba(34,197,94,0.3)' : 'rgba(187,91,91,0.3)'}`,
             }}
           >
             {account.isActive ? '● متصل' : '● غير نشط'}
@@ -153,7 +153,7 @@ export function TradovateConnectCard({
       </div>
 
       <p className="text-[11px] leading-relaxed mb-4" style={{ color: '#8899BB' }}>
-        اربط حسابك مرة واحدة، وبعدها صفقاتك تتزامن <span className="font-bold" style={{ color: '#C9A84C' }}>تلقائياً كل دقيقتين</span> —
+        اربط حسابك مرة واحدة، وبعدها صفقاتك تتزامن <span className="font-bold" style={{ color: '#C29B4A' }}>تلقائياً كل دقيقتين</span> —
         بدون رفع ملفات. تُستورد الصفقات مع وسم الجلسة والـ killzone، وتُعلَّم «بحاجة لمراجعة» لتُكمل سبب الدخول والصورة.
       </p>
 
@@ -161,9 +161,9 @@ export function TradovateConnectCard({
         <div
           className="rounded-lg p-3 mb-4 text-[11px]"
           style={{
-            background: message.type === 'ok' ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)',
-            border: `1px solid ${message.type === 'ok' ? 'rgba(34,197,94,0.25)' : 'rgba(239,68,68,0.25)'}`,
-            color: message.type === 'ok' ? '#4ade80' : '#f87171',
+            background: message.type === 'ok' ? 'rgba(34,197,94,0.08)' : 'rgba(187,91,91,0.08)',
+            border: `1px solid ${message.type === 'ok' ? 'rgba(34,197,94,0.25)' : 'rgba(187,91,91,0.25)'}`,
+            color: message.type === 'ok' ? '#4ade80' : '#C87676',
           }}
         >
           {message.text}
@@ -187,9 +187,9 @@ export function TradovateConnectCard({
             <div
               className="rounded-lg p-2 text-[10px]"
               style={{
-                background: 'rgba(239,68,68,0.06)',
-                border: '1px solid rgba(239,68,68,0.2)',
-                color: '#f87171',
+                background: 'rgba(187,91,91,0.06)',
+                border: '1px solid rgba(187,91,91,0.2)',
+                color: '#C87676',
               }}
             >
               آخر خطأ: {account.lastErrorMessage}
@@ -202,7 +202,7 @@ export function TradovateConnectCard({
               disabled={syncing}
               className="flex-1 h-10 rounded-lg text-[11px] font-black tracking-wider disabled:opacity-50"
               style={{
-                background: 'linear-gradient(90deg, #C9A84C, #B38E2A)',
+                background: 'linear-gradient(90deg, #C29B4A, #B38E2A)',
                 color: '#0A0F1A',
               }}
             >
@@ -212,9 +212,9 @@ export function TradovateConnectCard({
               onClick={() => setShowForm(true)}
               className="px-4 h-10 rounded-lg text-[11px] font-bold"
               style={{
-                background: 'rgba(201,168,76,0.08)',
-                border: '1px solid rgba(201,168,76,0.25)',
-                color: '#C9A84C',
+                background: 'rgba(194,155,74,0.08)',
+                border: '1px solid rgba(194,155,74,0.25)',
+                color: '#C29B4A',
               }}
             >
               تعديل
@@ -224,9 +224,9 @@ export function TradovateConnectCard({
               disabled={loading}
               className="px-4 h-10 rounded-lg text-[11px] font-bold disabled:opacity-50"
               style={{
-                background: 'rgba(239,68,68,0.08)',
-                border: '1px solid rgba(239,68,68,0.25)',
-                color: '#f87171',
+                background: 'rgba(187,91,91,0.08)',
+                border: '1px solid rgba(187,91,91,0.25)',
+                color: '#C87676',
               }}
             >
               قطع
@@ -238,7 +238,7 @@ export function TradovateConnectCard({
       {showForm && (
         <form onSubmit={handleConnect} className="space-y-3">
           <div>
-            <label className="block text-[10px] mb-1.5 font-bold" style={{ color: 'rgba(201,168,76,0.7)' }}>
+            <label className="block text-[10px] mb-1.5 font-bold" style={{ color: 'rgba(194,155,74,0.7)' }}>
               البيئة
             </label>
             <div className="flex gap-2">
@@ -251,10 +251,10 @@ export function TradovateConnectCard({
                   style={{
                     background:
                       form.env === e
-                        ? 'linear-gradient(90deg, #C9A84C, #B38E2A)'
-                        : 'rgba(201,168,76,0.06)',
-                    color: form.env === e ? '#0A0F1A' : '#C9A84C',
-                    border: '1px solid rgba(201,168,76,0.25)',
+                        ? 'linear-gradient(90deg, #C29B4A, #B38E2A)'
+                        : 'rgba(194,155,74,0.06)',
+                    color: form.env === e ? '#0A0F1A' : '#C29B4A',
+                    border: '1px solid rgba(194,155,74,0.25)',
                   }}
                 >
                   {e === 'LIVE' ? 'Live (حقيقي)' : 'Demo (تجريبي)'}
@@ -290,7 +290,7 @@ export function TradovateConnectCard({
             required
           />
           <details className="text-[10px]">
-            <summary className="cursor-pointer" style={{ color: 'rgba(201,168,76,0.6)' }}>
+            <summary className="cursor-pointer" style={{ color: 'rgba(194,155,74,0.6)' }}>
               حقول اختيارية (App ID / Device ID)
             </summary>
             <div className="mt-2 space-y-2">
@@ -313,7 +313,7 @@ export function TradovateConnectCard({
               disabled={loading}
               className="flex-1 h-10 rounded-lg text-[11px] font-black tracking-wider disabled:opacity-50"
               style={{
-                background: 'linear-gradient(90deg, #C9A84C, #B38E2A)',
+                background: 'linear-gradient(90deg, #C29B4A, #B38E2A)',
                 color: '#0A0F1A',
               }}
             >
@@ -325,9 +325,9 @@ export function TradovateConnectCard({
                 onClick={() => setShowForm(false)}
                 className="px-4 h-10 rounded-lg text-[11px] font-bold"
                 style={{
-                  background: 'rgba(201,168,76,0.06)',
-                  border: '1px solid rgba(201,168,76,0.25)',
-                  color: '#C9A84C',
+                  background: 'rgba(194,155,74,0.06)',
+                  border: '1px solid rgba(194,155,74,0.25)',
+                  color: '#C29B4A',
                 }}
               >
                 إلغاء
@@ -338,19 +338,19 @@ export function TradovateConnectCard({
           <div
             className="rounded-lg p-3 text-[10px] leading-relaxed mt-3"
             style={{
-              background: 'rgba(201,168,76,0.04)',
-              border: '1px solid rgba(201,168,76,0.15)',
-              color: 'rgba(201,168,76,0.7)',
+              background: 'rgba(194,155,74,0.04)',
+              border: '1px solid rgba(194,155,74,0.15)',
+              color: 'rgba(194,155,74,0.7)',
             }}
           >
-            <p className="font-bold mb-1.5" style={{ color: '#C9A84C' }}>
+            <p className="font-bold mb-1.5" style={{ color: '#C29B4A' }}>
               كيف تحصل على CID + Secret؟ (خطوة بخطوة)
             </p>
             <ol className="space-y-1" style={{ listStyle: 'none', paddingInlineStart: 0 }}>
-              <li><span style={{ color: '#C9A84C' }}>1)</span> ادخل على <span className="font-mono" style={{ color: '#C9A84C' }}>trader.tradovate.com</span> وسجّل دخولك.</li>
-              <li><span style={{ color: '#C9A84C' }}>2)</span> افتح <span className="font-mono">Application Settings → API Access</span>.</li>
-              <li><span style={{ color: '#C9A84C' }}>3)</span> اضغط <span className="font-mono">Generate API Key</span> — انسخ الـ <span className="font-mono">CID</span> والـ <span className="font-mono">Secret</span>.</li>
-              <li><span style={{ color: '#C9A84C' }}>4)</span> الصقهما هنا مع اسم المستخدم وكلمة المرور، واختر Live أو Demo.</li>
+              <li><span style={{ color: '#C29B4A' }}>1)</span> ادخل على <span className="font-mono" style={{ color: '#C29B4A' }}>trader.tradovate.com</span> وسجّل دخولك.</li>
+              <li><span style={{ color: '#C29B4A' }}>2)</span> افتح <span className="font-mono">Application Settings → API Access</span>.</li>
+              <li><span style={{ color: '#C29B4A' }}>3)</span> اضغط <span className="font-mono">Generate API Key</span> — انسخ الـ <span className="font-mono">CID</span> والـ <span className="font-mono">Secret</span>.</li>
+              <li><span style={{ color: '#C29B4A' }}>4)</span> الصقهما هنا مع اسم المستخدم وكلمة المرور، واختر Live أو Demo.</li>
             </ol>
             <p className="mt-2">
               إذا خيار الـ API غير متاح، تواصل مع دعم شركة البروب (TakeProfitTrader / Lucid) واطلب تفعيل API للاستخدام في أدوات Journaling.
@@ -368,8 +368,8 @@ export function TradovateConnectCard({
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between text-[11px]">
-      <span style={{ color: 'rgba(201,168,76,0.55)' }}>{label}</span>
-      <span className="font-bold" style={{ color: '#F5F5DC' }}>
+      <span style={{ color: 'rgba(194,155,74,0.55)' }}>{label}</span>
+      <span className="font-bold" style={{ color: '#EDEBE4' }}>
         {value}
       </span>
     </div>
@@ -391,8 +391,8 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-[10px] mb-1.5 font-bold" style={{ color: 'rgba(201,168,76,0.7)' }}>
-        {label} {required && <span style={{ color: '#ef4444' }}>*</span>}
+      <label className="block text-[10px] mb-1.5 font-bold" style={{ color: 'rgba(194,155,74,0.7)' }}>
+        {label} {required && <span style={{ color: '#BB5B5B' }}>*</span>}
       </label>
       <input
         type={type}
@@ -402,8 +402,8 @@ function Field({
         className="w-full h-9 px-3 rounded-lg text-[11px] outline-none"
         style={{
           background: 'rgba(8,12,20,0.6)',
-          border: '1px solid rgba(201,168,76,0.2)',
-          color: '#F5F5DC',
+          border: '1px solid rgba(194,155,74,0.2)',
+          color: '#EDEBE4',
         }}
       />
     </div>

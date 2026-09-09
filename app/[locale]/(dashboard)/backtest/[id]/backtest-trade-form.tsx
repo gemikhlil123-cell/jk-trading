@@ -83,17 +83,17 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Direction */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">الاتجاه</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">الاتجاه</Label>
           <div className="flex gap-2">
             <label className="flex-1">
               <input type="radio" value="LONG" {...register('direction')} className="sr-only peer" />
-              <div className="peer-checked:bg-green-500/20 peer-checked:border-green-500/50 peer-checked:text-green-400 border border-[#1D3461] rounded-lg px-2 py-2 text-xs text-center cursor-pointer text-[#F5F5DC]/60 hover:bg-[#112240] transition-colors">
+              <div className="peer-checked:bg-green-500/20 peer-checked:border-green-500/50 peer-checked:text-green-400 border border-[#1D3461] rounded-lg px-2 py-2 text-xs text-center cursor-pointer text-[#EDEBE4]/60 hover:bg-[#112240] transition-colors">
                 شراء
               </div>
             </label>
             <label className="flex-1">
               <input type="radio" value="SHORT" {...register('direction')} className="sr-only peer" />
-              <div className="peer-checked:bg-red-500/20 peer-checked:border-red-500/50 peer-checked:text-red-400 border border-[#1D3461] rounded-lg px-2 py-2 text-xs text-center cursor-pointer text-[#F5F5DC]/60 hover:bg-[#112240] transition-colors">
+              <div className="peer-checked:bg-red-500/20 peer-checked:border-red-500/50 peer-checked:text-red-400 border border-[#1D3461] rounded-lg px-2 py-2 text-xs text-center cursor-pointer text-[#EDEBE4]/60 hover:bg-[#112240] transition-colors">
                 بيع
               </div>
             </label>
@@ -102,10 +102,10 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
 
         {/* Entry Price */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">سعر الدخول *</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">سعر الدخول *</Label>
           <Input
             type="number" step="0.00001" placeholder="21000"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC] placeholder:text-[#F5F5DC]/20"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4] placeholder:text-[#EDEBE4]/20"
             {...register('entryPrice', { valueAsNumber: true })}
           />
           {errors.entryPrice && <p className="text-red-400 text-xs">{errors.entryPrice.message}</p>}
@@ -113,20 +113,20 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
 
         {/* Exit Price */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">سعر الخروج</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">سعر الخروج</Label>
           <Input
             type="number" step="0.00001" placeholder="21200"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC] placeholder:text-[#F5F5DC]/20"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4] placeholder:text-[#EDEBE4]/20"
             {...register('exitPrice', { valueAsNumber: true })}
           />
         </div>
 
         {/* PnL */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">PnL ($)</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">PnL ($)</Label>
           <Input
             type="number" step="0.01" placeholder="250"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC] placeholder:text-[#F5F5DC]/20"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4] placeholder:text-[#EDEBE4]/20"
             {...register('pnl', { valueAsNumber: true })}
           />
         </div>
@@ -135,10 +135,10 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Entry Time */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">وقت الدخول *</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">وقت الدخول *</Label>
           <Input
             type="datetime-local"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC]"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4]"
             {...register('entryTime')}
           />
           {errors.entryTime && <p className="text-red-400 text-xs">{errors.entryTime.message}</p>}
@@ -146,30 +146,30 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
 
         {/* Exit Time */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">وقت الخروج</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">وقت الخروج</Label>
           <Input
             type="datetime-local"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC]"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4]"
             {...register('exitTime')}
           />
         </div>
 
         {/* RR Achieved */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">RR المحقق</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">RR المحقق</Label>
           <Input
             type="number" step="0.1" placeholder="2.5"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC] placeholder:text-[#F5F5DC]/20"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4] placeholder:text-[#EDEBE4]/20"
             {...register('rrAchieved', { valueAsNumber: true })}
           />
         </div>
 
         {/* RR Planned */}
         <div className="space-y-1.5">
-          <Label className="text-[#F5F5DC]/70 text-sm">RR المخطط</Label>
+          <Label className="text-[#EDEBE4]/70 text-sm">RR المخطط</Label>
           <Input
             type="number" step="0.1" placeholder="3.0"
-            className="bg-[#112240] border-[#1D3461] text-[#F5F5DC] placeholder:text-[#F5F5DC]/20"
+            className="bg-[#112240] border-[#1D3461] text-[#EDEBE4] placeholder:text-[#EDEBE4]/20"
             {...register('rrPlanned', { valueAsNumber: true })}
           />
         </div>
@@ -177,7 +177,7 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
 
       {/* Entry Reasons */}
       <div className="space-y-1.5">
-        <Label className="text-[#F5F5DC]/70 text-sm">
+        <Label className="text-[#EDEBE4]/70 text-sm">
           أسباب الدخول <span className="text-red-400">*</span>
         </Label>
         <Controller
@@ -196,11 +196,11 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
 
       {/* Notes */}
       <div className="space-y-1.5">
-        <Label className="text-[#F5F5DC]/70 text-sm">ملاحظات</Label>
+        <Label className="text-[#EDEBE4]/70 text-sm">ملاحظات</Label>
         <textarea
           rows={2}
           placeholder="ملاحظاتك عن هذه الصفقة..."
-          className="w-full bg-[#112240] border border-[#1D3461] text-[#F5F5DC] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F5F5DC]/50 placeholder:text-[#F5F5DC]/20 resize-none"
+          className="w-full bg-[#112240] border border-[#1D3461] text-[#EDEBE4] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#EDEBE4]/50 placeholder:text-[#EDEBE4]/20 resize-none"
           {...register('notes')}
         />
       </div>
@@ -214,7 +214,7 @@ export function BacktestTradeForm({ sessionId, symbol, entryReasons }: Props) {
       <Button
         type="submit"
         disabled={loading}
-        className="bg-[#F5F5DC] text-[#0A192F] hover:bg-[#E8E8C0] font-semibold px-8"
+        className="bg-[#EDEBE4] text-[#0A192F] hover:bg-[#DEDAD0] font-semibold px-8"
       >
         {loading ? 'جاري الإضافة...' : 'إضافة الصفقة'}
       </Button>

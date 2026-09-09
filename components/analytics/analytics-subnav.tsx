@@ -25,7 +25,7 @@ export function AnalyticsSubnav({ locale }: Props) {
         background: '#111D2E',
         padding: 4,
         borderRadius: 12,
-        border: '1px solid rgba(212,175,55,0.12)',
+        border: '1px solid rgba(194,155,74,0.12)',
         overflowX: 'auto',
       }}
     >
@@ -44,9 +44,9 @@ export function AnalyticsSubnav({ locale }: Props) {
               fontWeight: 700,
               textDecoration: 'none',
               whiteSpace: 'nowrap',
-              background: active ? 'rgba(212,175,55,0.15)' : 'transparent',
-              color: active ? '#D4AF37' : '#4A5A7A',
-              border: active ? '1px solid rgba(212,175,55,0.3)' : '1px solid transparent',
+              background: active ? 'rgba(194,155,74,0.15)' : 'transparent',
+              color: active ? '#C29B4A' : '#4A5A7A',
+              border: active ? '1px solid rgba(194,155,74,0.3)' : '1px solid transparent',
               fontFamily: 'Cairo, sans-serif',
             }}
           >

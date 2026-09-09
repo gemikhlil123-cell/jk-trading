@@ -78,7 +78,7 @@ export function NewSessionForm({ locale }: Props) {
           placeholder="مثال: باكتيست لندن يناير 2025"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-[#111D2E] border-[rgba(212,175,55,0.18)] text-[#C8D8EE] placeholder:text-[#C8D8EE]/20"
+          className="bg-[#111D2E] border-[rgba(194,155,74,0.18)] text-[#C8D8EE] placeholder:text-[#C8D8EE]/20"
         />
       </div>
 
@@ -87,7 +87,7 @@ export function NewSessionForm({ locale }: Props) {
         <select
           value={symbol}
           onChange={(e) => setSymbol(e.target.value)}
-          className="w-full bg-[#111D2E] border border-[rgba(212,175,55,0.18)] text-[#C8D8EE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F5F5DC]/50"
+          className="w-full bg-[#111D2E] border border-[rgba(194,155,74,0.18)] text-[#C8D8EE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#EDEBE4]/50"
         >
           {symbols.map((s) => (
             <option key={s} value={s}>{symbolLabels[s]}</option>
@@ -104,7 +104,7 @@ export function NewSessionForm({ locale }: Props) {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="bg-[#111D2E] border-[rgba(212,175,55,0.18)] text-[#C8D8EE]"
+            className="bg-[#111D2E] border-[rgba(194,155,74,0.18)] text-[#C8D8EE]"
           />
         </div>
         <div className="space-y-1.5">
@@ -115,7 +115,7 @@ export function NewSessionForm({ locale }: Props) {
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="bg-[#111D2E] border-[rgba(212,175,55,0.18)] text-[#C8D8EE]"
+            className="bg-[#111D2E] border-[rgba(194,155,74,0.18)] text-[#C8D8EE]"
           />
         </div>
       </div>
@@ -131,7 +131,7 @@ export function NewSessionForm({ locale }: Props) {
           type="button"
           variant="outline"
           onClick={() => router.back()}
-          className="flex-1 border-[rgba(212,175,55,0.18)] text-[#C8D8EE]/60 hover:text-[#C8D8EE] bg-transparent hover:bg-[#111D2E]"
+          className="flex-1 border-[rgba(194,155,74,0.18)] text-[#C8D8EE]/60 hover:text-[#C8D8EE] bg-transparent hover:bg-[#111D2E]"
         >
           إلغاء
         </Button>

@@ -89,7 +89,7 @@ export default async function MentorStudentPage({
       </Link>
 
       <div style={{ marginTop: 10, marginBottom: 14 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 900, color: '#D4AF37' }}>
+        <h1 style={{ fontSize: 22, fontWeight: 900, color: '#C29B4A' }}>
           {student.name ?? student.email}
         </h1>
         <p style={{ fontSize: 11, color: '#4A5A7A', marginTop: 2 }}>{student.email}</p>
@@ -114,9 +114,9 @@ export default async function MentorStudentPage({
                 fontSize: 12,
                 fontWeight: 800,
                 textDecoration: 'none',
-                background: active ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.03)',
-                border: `1px solid ${active ? '#D4AF37' : 'rgba(212,175,55,0.12)'}`,
-                color: active ? '#D4AF37' : '#8899BB',
+                background: active ? 'rgba(194,155,74,0.15)' : 'rgba(255,255,255,0.03)',
+                border: `1px solid ${active ? '#C29B4A' : 'rgba(194,155,74,0.12)'}`,
+                color: active ? '#C29B4A' : '#8899BB',
               }}
             >
               {tab.label}
@@ -139,24 +139,24 @@ export default async function MentorStudentPage({
           {
             label: 'فوز %',
             value: analysis.totalTrades > 0 ? `${(analysis.winRate * 100).toFixed(0)}%` : '—',
-            color: analysis.winRate >= 0.5 ? '#1DB954' : '#E74C3C',
+            color: analysis.winRate >= 0.5 ? '#4E9E7A' : '#BB5B5B',
           },
           {
             label: 'P&L',
             value: `${analysis.totalPnl >= 0 ? '+' : ''}${analysis.totalPnl.toFixed(0)}`,
-            color: analysis.totalPnl >= 0 ? '#1DB954' : '#E74C3C',
+            color: analysis.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B',
           },
           {
             label: 'PF',
             value: analysis.profitFactor === Infinity ? '∞' : analysis.profitFactor.toFixed(2),
-            color: '#D4AF37',
+            color: '#C29B4A',
           },
         ].map(s => (
           <div
             key={s.label}
             style={{
               background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(212,175,55,0.1)',
+              border: '1px solid rgba(194,155,74,0.1)',
               borderRadius: 12,
               padding: '12px 8px',
               textAlign: 'center',
@@ -174,7 +174,7 @@ export default async function MentorStudentPage({
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-        <h2 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37' }}>
+        <h2 style={{ fontSize: 14, fontWeight: 800, color: '#C29B4A' }}>
           {isBacktest ? 'صفقات الباكتيست' : 'الصفقات المباشرة'} ({totalTrades})
         </h2>
         <span style={{ fontSize: 11, color: '#4A5A7A' }}>
@@ -189,7 +189,7 @@ export default async function MentorStudentPage({
               padding: 30,
               textAlign: 'center',
               background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(212,175,55,0.1)',
+              border: '1px solid rgba(194,155,74,0.1)',
               borderRadius: 12,
               color: '#4A5A7A',
               fontSize: 12,
@@ -206,7 +206,7 @@ export default async function MentorStudentPage({
               key={t.id}
               style={{
                 background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(212,175,55,0.1)',
+                border: '1px solid rgba(194,155,74,0.1)',
                 borderRadius: 12,
                 padding: 12,
               }}
@@ -219,8 +219,8 @@ export default async function MentorStudentPage({
                       fontWeight: 700,
                       padding: '2px 8px',
                       borderRadius: 20,
-                      background: t.direction === 'LONG' ? 'rgba(29,185,84,0.15)' : 'rgba(231,76,60,0.15)',
-                      color: t.direction === 'LONG' ? '#1DB954' : '#E74C3C',
+                      background: t.direction === 'LONG' ? 'rgba(78,158,122,0.15)' : 'rgba(187,91,91,0.15)',
+                      color: t.direction === 'LONG' ? '#4E9E7A' : '#BB5B5B',
                     }}
                   >
                     {t.direction === 'LONG' ? 'شراء' : 'بيع'}
@@ -235,7 +235,7 @@ export default async function MentorStudentPage({
                     style={{
                       fontSize: 14,
                       fontWeight: 800,
-                      color: pnl >= 0 ? '#1DB954' : '#E74C3C',
+                      color: pnl >= 0 ? '#4E9E7A' : '#BB5B5B',
                     }}
                   >
                     {pnl >= 0 ? '+' : ''}{pnl.toFixed(0)} نقطة
@@ -252,8 +252,8 @@ export default async function MentorStudentPage({
                         fontSize: 10,
                         padding: '2px 6px',
                         borderRadius: 8,
-                        background: 'rgba(212,175,55,0.08)',
-                        color: '#D4AF37',
+                        background: 'rgba(194,155,74,0.08)',
+                        color: '#C29B4A',
                       }}
                     >
                       {r.entryReason.name}
@@ -291,13 +291,13 @@ export default async function MentorStudentPage({
                       key={c.id}
                       style={{
                         padding: 8,
-                        background: 'rgba(212,175,55,0.06)',
+                        background: 'rgba(194,155,74,0.06)',
                         borderRadius: 8,
-                        borderRight: '3px solid #D4AF37',
+                        borderRight: '3px solid #C29B4A',
                         marginBottom: 4,
                       }}
                     >
-                      <div style={{ fontSize: 10, color: '#D4AF37', fontWeight: 700, marginBottom: 4 }}>
+                      <div style={{ fontSize: 10, color: '#C29B4A', fontWeight: 700, marginBottom: 4 }}>
                         {c.mentor.name ?? c.mentor.email} · {formatJerusalemDate(c.createdAt)}
                       </div>
                       <div style={{ color: '#C8D8EE', fontSize: 12 }}>{c.body}</div>
@@ -311,11 +311,11 @@ export default async function MentorStudentPage({
                   href={`/${locale}/trades/${t.id}`}
                   style={{
                     fontSize: 11,
-                    color: '#D4AF37',
+                    color: '#C29B4A',
                     textDecoration: 'none',
                     padding: '6px 10px',
-                    background: 'rgba(212,175,55,0.08)',
-                    border: '1px solid rgba(212,175,55,0.2)',
+                    background: 'rgba(194,155,74,0.08)',
+                    border: '1px solid rgba(194,155,74,0.2)',
                     borderRadius: 8,
                     fontWeight: 700,
                   }}
@@ -340,10 +340,10 @@ export default async function MentorStudentPage({
               href={`/${locale}/mentor/${studentId}?type=${type}&page=${page - 1}`}
               style={{
                 padding: '8px 14px',
-                background: 'rgba(212,175,55,0.1)',
-                border: '1px solid rgba(212,175,55,0.25)',
+                background: 'rgba(194,155,74,0.1)',
+                border: '1px solid rgba(194,155,74,0.25)',
                 borderRadius: 10,
-                color: '#D4AF37',
+                color: '#C29B4A',
                 fontSize: 12,
                 fontWeight: 700,
                 textDecoration: 'none',
@@ -357,10 +357,10 @@ export default async function MentorStudentPage({
               href={`/${locale}/mentor/${studentId}?type=${type}&page=${page + 1}`}
               style={{
                 padding: '8px 14px',
-                background: 'rgba(212,175,55,0.1)',
-                border: '1px solid rgba(212,175,55,0.25)',
+                background: 'rgba(194,155,74,0.1)',
+                border: '1px solid rgba(194,155,74,0.25)',
                 borderRadius: 10,
-                color: '#D4AF37',
+                color: '#C29B4A',
                 fontSize: 12,
                 fontWeight: 700,
                 textDecoration: 'none',

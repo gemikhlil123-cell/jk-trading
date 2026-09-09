@@ -187,10 +187,10 @@ export default async function DashboardPage({
   }))
 
   // Stat cards data
-  const pnlColor = totalPnl >= 0 ? '#1DB954' : '#E74C3C'
-  const winRateColor = winRate >= 50 ? '#1DB954' : '#E74C3C'
-  const winDaysColor = winDaysRate >= 50 ? '#1DB954' : '#E74C3C'
-  const rrColor = avgWinLossRatio >= 1 ? '#1DB954' : '#E74C3C'
+  const pnlColor = totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B'
+  const winRateColor = winRate >= 50 ? '#4E9E7A' : '#BB5B5B'
+  const winDaysColor = winDaysRate >= 50 ? '#4E9E7A' : '#BB5B5B'
+  const rrColor = avgWinLossRatio >= 1 ? '#4E9E7A' : '#BB5B5B'
 
   const pfLabel = profitFactor >= 999 ? '∞' : profitFactor.toFixed(2)
 
@@ -214,15 +214,15 @@ export default async function DashboardPage({
             style={{
               width: 42, height: 42, borderRadius: 12, flexShrink: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.3)',
+              background: 'rgba(194,155,74,0.12)', border: '1px solid rgba(194,155,74,0.3)',
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.8">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C29B4A" strokeWidth="1.8">
               <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
             </svg>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 800, color: '#D4AF37' }}>اربط حساب Tradovate</div>
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#C29B4A' }}>اربط حساب Tradovate</div>
             <div style={{ fontSize: 11, color: '#8899BB', marginTop: 2 }}>
               صفقاتك تتحدّث تلقائياً في الموقع — اضغط للربط
             </div>
@@ -256,7 +256,7 @@ export default async function DashboardPage({
           background: '#111D2E',
           padding: 4,
           borderRadius: 12,
-          border: '1px solid rgba(212,175,55,0.12)',
+          border: '1px solid rgba(194,155,74,0.12)',
         }}
       >
         {['day', 'week', 'month', 'all'].map((p) => (
@@ -272,9 +272,9 @@ export default async function DashboardPage({
               fontWeight: 700,
               textDecoration: 'none',
               transition: 'all 0.2s',
-              background: period === p ? 'rgba(212,175,55,0.15)' : 'transparent',
-              color: period === p ? '#D4AF37' : '#4A5A7A',
-              border: period === p ? '1px solid rgba(212,175,55,0.3)' : '1px solid transparent',
+              background: period === p ? 'rgba(194,155,74,0.15)' : 'transparent',
+              color: period === p ? '#C29B4A' : '#4A5A7A',
+              border: period === p ? '1px solid rgba(194,155,74,0.3)' : '1px solid transparent',
               fontFamily: 'Cairo, sans-serif',
             }}
           >
@@ -371,11 +371,11 @@ export default async function DashboardPage({
                 marginBottom: 8,
               }}
             >
-              <div style={{ fontSize: 12, color: '#D4AF37', fontWeight: 700 }}>نقاط الأداء</div>
+              <div style={{ fontSize: 12, color: '#C29B4A', fontWeight: 700 }}>نقاط الأداء</div>
               <div
                 style={{
                   fontSize: 11,
-                  color: score >= 70 ? '#1DB954' : score >= 40 ? '#D4AF37' : '#E74C3C',
+                  color: score >= 70 ? '#4E9E7A' : score >= 40 ? '#C29B4A' : '#BB5B5B',
                   fontWeight: 700,
                   background: 'rgba(255,255,255,0.05)',
                   borderRadius: 6,
@@ -406,7 +406,7 @@ export default async function DashboardPage({
               marginBottom: 10,
             }}
           >
-            <div style={{ fontSize: 12, color: '#D4AF37', fontWeight: 700, marginBottom: 8 }}>
+            <div style={{ fontSize: 12, color: '#C29B4A', fontWeight: 700, marginBottom: 8 }}>
               ربح/خسارة يومي
             </div>
             <DailyPnlChart trades={tradesForCharts} />
@@ -431,7 +431,7 @@ export default async function DashboardPage({
                   marginBottom: 8,
                 }}
               >
-                <div style={{ fontSize: 12, color: '#D4AF37', fontWeight: 700 }}>منحنى الرأس المال</div>
+                <div style={{ fontSize: 12, color: '#C29B4A', fontWeight: 700 }}>منحنى الرأس المال</div>
                 <div style={{ fontSize: 10, color: '#8899BB' }}>
                   عامل الربح: {pfLabel}
                 </div>
@@ -459,7 +459,7 @@ export default async function DashboardPage({
             padding: '14px 14px 12px',
           }}
         >
-          <div style={{ fontSize: 12, color: '#D4AF37', fontWeight: 700, marginBottom: 12 }}>
+          <div style={{ fontSize: 12, color: '#C29B4A', fontWeight: 700, marginBottom: 12 }}>
             التقويم الشهري
           </div>
           <TradingCalendar trades={tradesForCharts} />
@@ -478,10 +478,10 @@ export default async function DashboardPage({
             <div
               style={{
                 padding: '12px 14px',
-                borderBottom: '1px solid rgba(212,175,55,0.1)',
+                borderBottom: '1px solid rgba(194,155,74,0.1)',
               }}
             >
-              <span style={{ fontSize: 12, color: '#D4AF37', fontWeight: 700 }}>آخر الصفقات</span>
+              <span style={{ fontSize: 12, color: '#C29B4A', fontWeight: 700 }}>آخر الصفقات</span>
             </div>
             {trades.slice(0, 10).map((trade, i) => {
               const pnl = trade.pnl !== null ? Number(trade.pnl) : null
@@ -489,13 +489,13 @@ export default async function DashboardPage({
                 <Link
                   key={trade.id}
                   href={`/${locale}/trades/${trade.id}`}
-                  className="hover:bg-[rgba(212,175,55,0.05)] transition-colors"
+                  className="hover:bg-[rgba(194,155,74,0.05)] transition-colors"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '12px 14px',
-                    borderTop: i > 0 ? '1px solid rgba(212,175,55,0.07)' : 'none',
+                    borderTop: i > 0 ? '1px solid rgba(194,155,74,0.07)' : 'none',
                     textDecoration: 'none',
                     cursor: 'pointer',
                   }}
@@ -508,9 +508,9 @@ export default async function DashboardPage({
                         padding: '2px 8px',
                         borderRadius: 20,
                         background: trade.direction === 'LONG'
-                          ? 'rgba(29,185,84,0.12)'
-                          : 'rgba(231,76,60,0.12)',
-                        color: trade.direction === 'LONG' ? '#1DB954' : '#E74C3C',
+                          ? 'rgba(78,158,122,0.12)'
+                          : 'rgba(187,91,91,0.12)',
+                        color: trade.direction === 'LONG' ? '#4E9E7A' : '#BB5B5B',
                       }}
                     >
                       {trade.direction === 'LONG' ? 'شراء' : 'بيع'}
@@ -533,7 +533,7 @@ export default async function DashboardPage({
                         style={{
                           fontSize: 14,
                           fontWeight: 700,
-                          color: pnl >= 0 ? '#1DB954' : '#E74C3C',
+                          color: pnl >= 0 ? '#4E9E7A' : '#BB5B5B',
                         }}
                       >
                         {pnl >= 0 ? '+' : ''}{pnl.toFixed(0)} نقطة

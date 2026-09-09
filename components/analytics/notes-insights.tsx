@@ -6,10 +6,10 @@ const SEV_STYLES: Record<
   NotesTip['severity'],
   { bg: string; border: string; fg: string }
 > = {
-  CRITICAL: { bg: 'rgba(231,76,60,0.10)', border: '#E74C3C', fg: '#E74C3C' },
+  CRITICAL: { bg: 'rgba(187,91,91,0.10)', border: '#BB5B5B', fg: '#BB5B5B' },
   WARNING: { bg: 'rgba(255,180,70,0.08)', border: '#FFB446', fg: '#FFB446' },
-  SUCCESS: { bg: 'rgba(29,185,84,0.08)', border: '#1DB954', fg: '#1DB954' },
-  INFO: { bg: '#111D2E', border: 'rgba(212,175,55,0.18)', fg: '#C9A84C' },
+  SUCCESS: { bg: 'rgba(78,158,122,0.08)', border: '#4E9E7A', fg: '#4E9E7A' },
+  INFO: { bg: '#111D2E', border: 'rgba(194,155,74,0.18)', fg: '#C29B4A' },
 }
 
 interface Props {
@@ -78,7 +78,7 @@ export function NotesInsights({ notes, tips }: Props) {
           }}
         >
           <div>
-            <p style={{ fontSize: 11, color: '#1DB954', fontWeight: 700, marginBottom: 8 }}>
+            <p style={{ fontSize: 11, color: '#4E9E7A', fontWeight: 700, marginBottom: 8 }}>
               ✓ مشاعر في الصفقات الرابحة
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -90,7 +90,7 @@ export function NotesInsights({ notes, tips }: Props) {
                   key={s.key}
                   style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}
                 >
-                  <span style={{ color: s.tone === 'positive' ? '#1DB954' : '#8899BB' }}>
+                  <span style={{ color: s.tone === 'positive' ? '#4E9E7A' : '#8899BB' }}>
                     {s.label}
                   </span>
                   <span style={{ color: '#8899BB' }}>{s.count}×</span>
@@ -99,7 +99,7 @@ export function NotesInsights({ notes, tips }: Props) {
             </div>
           </div>
           <div>
-            <p style={{ fontSize: 11, color: '#E74C3C', fontWeight: 700, marginBottom: 8 }}>
+            <p style={{ fontSize: 11, color: '#BB5B5B', fontWeight: 700, marginBottom: 8 }}>
               ✕ مشاعر في الصفقات الخاسرة
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -111,7 +111,7 @@ export function NotesInsights({ notes, tips }: Props) {
                   key={s.key}
                   style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}
                 >
-                  <span style={{ color: s.tone === 'negative' ? '#E74C3C' : '#8899BB' }}>
+                  <span style={{ color: s.tone === 'negative' ? '#BB5B5B' : '#8899BB' }}>
                     {s.label}
                   </span>
                   <span style={{ color: '#8899BB' }}>{s.count}×</span>
@@ -134,7 +134,7 @@ export function NotesInsights({ notes, tips }: Props) {
           }}
         >
           <div>
-            <p style={{ fontSize: 11, color: '#1DB954', fontWeight: 700, marginBottom: 8 }}>
+            <p style={{ fontSize: 11, color: '#4E9E7A', fontWeight: 700, marginBottom: 8 }}>
               كلمات في الرابح
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
@@ -148,8 +148,8 @@ export function NotesInsights({ notes, tips }: Props) {
                     fontSize: 10,
                     padding: '3px 8px',
                     borderRadius: 99,
-                    background: 'rgba(29,185,84,0.12)',
-                    color: '#1DB954',
+                    background: 'rgba(78,158,122,0.12)',
+                    color: '#4E9E7A',
                   }}
                 >
                   {k.word} · {k.count}
@@ -158,7 +158,7 @@ export function NotesInsights({ notes, tips }: Props) {
             </div>
           </div>
           <div>
-            <p style={{ fontSize: 11, color: '#E74C3C', fontWeight: 700, marginBottom: 8 }}>
+            <p style={{ fontSize: 11, color: '#BB5B5B', fontWeight: 700, marginBottom: 8 }}>
               كلمات في الخاسر
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
@@ -172,8 +172,8 @@ export function NotesInsights({ notes, tips }: Props) {
                     fontSize: 10,
                     padding: '3px 8px',
                     borderRadius: 99,
-                    background: 'rgba(231,76,60,0.12)',
-                    color: '#E74C3C',
+                    background: 'rgba(187,91,91,0.12)',
+                    color: '#BB5B5B',
                   }}
                 >
                   {k.word} · {k.count}

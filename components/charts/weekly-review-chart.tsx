@@ -24,19 +24,19 @@ const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<
   const d = payload[0].payload as TagAnalysis
   return (
     <div className="bg-[#112240] border border-[#1D3461] rounded-lg p-3 text-xs space-y-1 shadow-xl">
-      <p className="font-semibold text-[#F5F5DC] text-sm">{d.tag}</p>
-      <p className="text-[#F5F5DC]/50">{d.category}</p>
+      <p className="font-semibold text-[#EDEBE4] text-sm">{d.tag}</p>
+      <p className="text-[#EDEBE4]/50">{d.category}</p>
       <div className="pt-1 space-y-0.5">
         <p className="text-green-400">فوز: {d.wins} ({(d.winRate * 100).toFixed(0)}%)</p>
         <p className="text-red-400">خسارة: {d.losses} ({(d.lossRate * 100).toFixed(0)}%)</p>
-        <p className="text-[#F5F5DC]/60">مجموع: {d.appearances}</p>
+        <p className="text-[#EDEBE4]/60">مجموع: {d.appearances}</p>
       </div>
     </div>
   )
 }
 
 export function WeeklyReviewChart({ title, data, type }: WeeklyReviewChartProps) {
-  const color = type === 'keep' ? '#22c55e' : '#ef4444'
+  const color = type === 'keep' ? '#4E9E7A' : '#BB5B5B'
   const threshold = type === 'keep' ? 0.7 : 0.6
 
   const chartData = data
@@ -49,7 +49,7 @@ export function WeeklyReviewChart({ title, data, type }: WeeklyReviewChartProps)
 
   if (chartData.length === 0) {
     return (
-      <div className="h-[250px] flex items-center justify-center text-[#F5F5DC]/30 text-sm">
+      <div className="h-[250px] flex items-center justify-center text-[#EDEBE4]/30 text-sm">
         لا توجد بيانات كافية
       </div>
     )
@@ -57,7 +57,7 @@ export function WeeklyReviewChart({ title, data, type }: WeeklyReviewChartProps)
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-[#F5F5DC]/70 mb-3">{title}</h3>
+      <h3 className="text-sm font-semibold text-[#EDEBE4]/70 mb-3">{title}</h3>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={chartData}
@@ -71,7 +71,7 @@ export function WeeklyReviewChart({ title, data, type }: WeeklyReviewChartProps)
           />
           <XAxis
             dataKey="tag"
-            tick={{ fill: '#F5F5DC60', fontSize: 10 }}
+            tick={{ fill: '#EDEBE460', fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             angle={-35}
@@ -79,13 +79,13 @@ export function WeeklyReviewChart({ title, data, type }: WeeklyReviewChartProps)
             interval={0}
           />
           <YAxis
-            tick={{ fill: '#F5F5DC50', fontSize: 10 }}
+            tick={{ fill: '#EDEBE450', fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             domain={[0, 100]}
             tickFormatter={(v) => `${v}%`}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F5F5DC08' }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: '#EDEBE408' }} />
           <ReferenceLine
             y={threshold * 100}
             stroke={color}

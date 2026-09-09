@@ -25,7 +25,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-1.5 rounded-lg text-[#F5F5DC]/50 hover:text-[#D4AF37] hover:bg-[#F5F5DC]/5 transition-colors"
+      className="p-1.5 rounded-lg text-[#EDEBE4]/50 hover:text-[#C29B4A] hover:bg-[#EDEBE4]/5 transition-colors"
       aria-label="toggle theme"
       title={theme === 'dark' ? 'الوضع الفاتح' : 'الوضع الداكن'}
     >

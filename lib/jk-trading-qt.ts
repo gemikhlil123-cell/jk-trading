@@ -10,10 +10,10 @@
 import type { Lesson, SectionMeta } from './jk-trading-content'
 
 export const QT_SECTIONS: SectionMeta[] = [
-  { id: 'qt-foundation',  title: 'نظرية الأرباع — الأساس',        subtitle: 'ليش الوقت أهم من السعر، وكيف تبدأ',        icon: '◷', accent: '#D4AF37' },
+  { id: 'qt-foundation',  title: 'نظرية الأرباع — الأساس',        subtitle: 'ليش الوقت أهم من السعر، وكيف تبدأ',        icon: '◷', accent: '#C29B4A' },
   { id: 'qt-time',        title: 'بنية الوقت والدورات الفركتلية',  subtitle: 'السوق بيتنفّس بالوقت على كل الأطر',         icon: '⏣', accent: '#FFC857' },
   { id: 'qt-quarters',    title: 'وظائف الأرباع — AMDX',          subtitle: 'تراكم، تلاعب، توزيع، استمرار',             icon: '◔', accent: '#06B6D4' },
-  { id: 'qt-true-opens',  title: 'الافتتاحات الحقيقية',           subtitle: 'نقطة العدل بين البريميوم والديسكاونت',     icon: '⊕', accent: '#10B981' },
+  { id: 'qt-true-opens',  title: 'الافتتاحات الحقيقية',           subtitle: 'نقطة العدل بين البريميوم والديسكاونت',     icon: '⊕', accent: '#4E9E7A' },
   { id: 'qt-smt',         title: 'الشرخ في الارتباط — SMT و PSP', subtitle: 'كيف تكشف التلاعب قبل ما يصير',             icon: '⇌', accent: '#9333EA' },
 ]
 

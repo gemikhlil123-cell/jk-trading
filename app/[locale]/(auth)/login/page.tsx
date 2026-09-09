@@ -10,7 +10,7 @@ export default function LoginPage() {
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 30% 30%, rgba(212,175,55,0.05) 0%, transparent 60%), radial-gradient(ellipse at 70% 70%, rgba(212,175,55,0.03) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse at 30% 30%, rgba(194,155,74,0.05) 0%, transparent 60%), radial-gradient(ellipse at 70% 70%, rgba(194,155,74,0.03) 0%, transparent 60%)',
         }}
       />
       <div className="w-full max-w-[400px] relative z-10">

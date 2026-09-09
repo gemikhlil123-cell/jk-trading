@@ -96,9 +96,9 @@ export function PlanEditor({ initialPlan }: { initialPlan: Record<string, unknow
           className="anim-fade-up"
           style={{
             padding: '10px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-            background: msg.t === 'ok' ? 'rgba(29,185,84,0.1)' : 'rgba(231,76,60,0.1)',
-            border: `1px solid ${msg.t === 'ok' ? 'rgba(29,185,84,0.3)' : 'rgba(231,76,60,0.3)'}`,
-            color: msg.t === 'ok' ? '#1DB954' : '#E74C3C',
+            background: msg.t === 'ok' ? 'rgba(78,158,122,0.1)' : 'rgba(187,91,91,0.1)',
+            border: `1px solid ${msg.t === 'ok' ? 'rgba(78,158,122,0.3)' : 'rgba(187,91,91,0.3)'}`,
+            color: msg.t === 'ok' ? '#4E9E7A' : '#BB5B5B',
           }}
         >
           {msg.s}
@@ -169,7 +169,7 @@ export function PlanEditor({ initialPlan }: { initialPlan: Record<string, unknow
                 key={i}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10,
-                  background: '#0E1828', border: '1px solid rgba(212,175,55,0.12)',
+                  background: '#0E1828', border: '1px solid rgba(194,155,74,0.12)',
                   opacity: r.active ? 1 : 0.5,
                 }}
               >
@@ -177,9 +177,9 @@ export function PlanEditor({ initialPlan }: { initialPlan: Record<string, unknow
                   onClick={() => toggleRule(i)}
                   style={{
                     width: 20, height: 20, borderRadius: 6, flexShrink: 0, cursor: 'pointer',
-                    background: r.active ? 'rgba(29,185,84,0.18)' : 'transparent',
-                    border: `1px solid ${r.active ? '#1DB954' : '#4A5A7A'}`,
-                    color: '#1DB954', fontSize: 12, lineHeight: '18px',
+                    background: r.active ? 'rgba(78,158,122,0.18)' : 'transparent',
+                    border: `1px solid ${r.active ? '#4E9E7A' : '#4A5A7A'}`,
+                    color: '#4E9E7A', fontSize: 12, lineHeight: '18px',
                   }}
                 >
                   {r.active ? '✓' : ''}
@@ -187,7 +187,7 @@ export function PlanEditor({ initialPlan }: { initialPlan: Record<string, unknow
                 <span style={{ flex: 1, fontSize: 13, color: '#C8D8EE', textDecoration: r.active ? 'none' : 'line-through' }}>
                   {r.text}
                 </span>
-                <button onClick={() => removeRule(i)} style={{ color: '#E74C3C', fontSize: 16, cursor: 'pointer', background: 'none', border: 'none' }}>
+                <button onClick={() => removeRule(i)} style={{ color: '#BB5B5B', fontSize: 16, cursor: 'pointer', background: 'none', border: 'none' }}>
                   ×
                 </button>
               </div>

@@ -11,10 +11,10 @@ const SEVERITY_STYLES: Record<
   MindsetTip['severity'],
   { bg: string; border: string; fg: string }
 > = {
-  CRITICAL: { bg: 'rgba(231,76,60,0.10)', border: '#E74C3C', fg: '#E74C3C' },
+  CRITICAL: { bg: 'rgba(187,91,91,0.10)', border: '#BB5B5B', fg: '#BB5B5B' },
   WARNING: { bg: 'rgba(255,180,70,0.08)', border: '#FFB446', fg: '#FFB446' },
-  SUCCESS: { bg: 'rgba(29,185,84,0.08)', border: '#1DB954', fg: '#1DB954' },
-  INFO: { bg: '#111D2E', border: 'rgba(212,175,55,0.18)', fg: '#C9A84C' },
+  SUCCESS: { bg: 'rgba(78,158,122,0.08)', border: '#4E9E7A', fg: '#4E9E7A' },
+  INFO: { bg: '#111D2E', border: 'rgba(194,155,74,0.18)', fg: '#C29B4A' },
 }
 
 const CATEGORY_LABELS: Record<MindsetTip['category'], string> = {
@@ -57,8 +57,8 @@ function TipCard({ tip }: { tip: MindsetTip }) {
               fontWeight: 700,
               padding: '2px 8px',
               borderRadius: 99,
-              background: 'rgba(212,175,55,0.14)',
-              color: '#C9A84C',
+              background: 'rgba(194,155,74,0.14)',
+              color: '#C29B4A',
             }}
           >
             مخصص لك
@@ -101,7 +101,7 @@ export function MindsetView({ tips, checklist }: Props) {
                 fontSize: 13,
                 color: '#C8D8EE',
                 padding: '8px 0',
-                borderBottom: i < checklist.length - 1 ? '1px solid rgba(212,175,55,0.08)' : 'none',
+                borderBottom: i < checklist.length - 1 ? '1px solid rgba(194,155,74,0.08)' : 'none',
                 lineHeight: 1.6,
               }}
             >

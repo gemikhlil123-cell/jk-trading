@@ -30,7 +30,7 @@ export default async function StrategyPage({
     <div style={{ padding: '14px 14px 100px', direction: 'rtl' }}>
       <AnalyticsSubnav locale={locale} />
       <div style={{ marginBottom: 12 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#D4AF37' }}>استراتيجيتك</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#C29B4A' }}>استراتيجيتك</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           استراتيجية مولّدة تلقائياً من بياناتك — متى تدخل، متى تتجنّب، وكيف تدير حجمك.
         </p>

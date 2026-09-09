@@ -74,11 +74,11 @@ export default async function TradeDetailPage({
       <div className="flex items-center justify-between mt-4 mb-3">
         <Link
           href={`/${locale}/trades`}
-          className="text-[#D4AF37] text-xs font-bold flex items-center gap-1"
+          className="text-[#C29B4A] text-xs font-bold flex items-center gap-1"
         >
           ← الرجوع للسجل
         </Link>
-        <h1 className="text-[#D4AF37] text-sm font-bold tracking-wide">تفاصيل الصفقة</h1>
+        <h1 className="text-[#C29B4A] text-sm font-bold tracking-wide">تفاصيل الصفقة</h1>
       </div>
       <TradeDetailView trade={serialized} locale={locale} />
     </div>

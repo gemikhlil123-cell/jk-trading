@@ -129,9 +129,9 @@ export function ChartImages({ value, onChange }: Props) {
             top: -36,
             left: '50%',
             transform: 'translateX(-50%)',
-            background: 'rgba(212,175,55,0.15)',
-            border: '1px solid rgba(212,175,55,0.4)',
-            color: '#D4AF37',
+            background: 'rgba(194,155,74,0.15)',
+            border: '1px solid rgba(194,155,74,0.4)',
+            color: '#C29B4A',
             fontSize: 11,
             fontWeight: 700,
             padding: '5px 14px',
@@ -160,8 +160,8 @@ export function ChartImages({ value, onChange }: Props) {
                 overflow: 'hidden',
                 cursor: 'pointer',
                 border: isActive
-                  ? '1px solid #D4AF37'
-                  : '1px dashed rgba(212,175,55,0.3)',
+                  ? '1px solid #C29B4A'
+                  : '1px dashed rgba(194,155,74,0.3)',
                 background: '#0D1520',
                 transition: 'border-color 0.2s',
                 display: 'flex',
@@ -170,12 +170,12 @@ export function ChartImages({ value, onChange }: Props) {
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  ;(e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(212,175,55,0.65)'
+                  ;(e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(194,155,74,0.65)'
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  ;(e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(212,175,55,0.3)'
+                  ;(e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(194,155,74,0.3)'
                 }
               }}
             >
@@ -197,7 +197,7 @@ export function ChartImages({ value, onChange }: Props) {
                       position: 'absolute',
                       top: 5,
                       right: 5,
-                      background: 'rgba(231,76,60,0.85)',
+                      background: 'rgba(187,91,91,0.85)',
                       border: 'none',
                       borderRadius: '50%',
                       width: 22,
@@ -225,7 +225,7 @@ export function ChartImages({ value, onChange }: Props) {
                       padding: '6px 8px 5px',
                       fontSize: 10,
                       fontWeight: 700,
-                      color: '#D4AF37',
+                      color: '#C29B4A',
                     }}
                   >
                     {slot.label}
@@ -242,7 +242,7 @@ export function ChartImages({ value, onChange }: Props) {
                     pointerEvents: 'none',
                   }}
                 >
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,55,0.45)" strokeWidth="1.8">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(194,155,74,0.45)" strokeWidth="1.8">
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
@@ -275,7 +275,7 @@ export function ChartImages({ value, onChange }: Props) {
       </div>
 
       {pendingImage && (
-        <p style={{ fontSize: 11, color: '#D4AF37', textAlign: 'center', marginTop: 6, opacity: 0.8 }}>
+        <p style={{ fontSize: 11, color: '#C29B4A', textAlign: 'center', marginTop: 6, opacity: 0.8 }}>
           صورة في الحافظة — انقر على الإطار المطلوب لوضعها
         </p>
       )}

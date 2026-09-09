@@ -179,7 +179,7 @@ export function TradeEditForm({
   return (
     <div className="space-y-3">
       <div className="card-dark p-4">
-        <p className="text-[#D4AF37] text-[11px] font-bold mb-3">✏️ تعديل الصفقة</p>
+        <p className="text-[#C29B4A] text-[11px] font-bold mb-3">✏️ تعديل الصفقة</p>
 
         {/* Symbol + direction */}
         <div className="grid grid-cols-2 gap-2 mb-3">
@@ -331,7 +331,7 @@ export function TradeEditForm({
       {/* Entry reasons */}
       {allReasons.length > 0 && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold mb-2">
+          <p className="text-[#C29B4A] text-[11px] font-bold mb-2">
             🎯 أسباب الدخول ({form.entryReasonIds.length})
           </p>
           <div className="space-y-3 max-h-64 overflow-y-auto">
@@ -348,9 +348,9 @@ export function TradeEditForm({
                         onClick={() => toggleReason(r.id)}
                         className="text-[10px] px-2 py-1 rounded-full border transition-all"
                         style={{
-                          background: selected ? 'rgba(212,175,55,0.18)' : '#0D1520',
-                          borderColor: selected ? '#D4AF37' : 'rgba(212,175,55,0.15)',
-                          color: selected ? '#D4AF37' : '#8899BB',
+                          background: selected ? 'rgba(194,155,74,0.18)' : '#0D1520',
+                          borderColor: selected ? '#C29B4A' : 'rgba(194,155,74,0.15)',
+                          color: selected ? '#C29B4A' : '#8899BB',
                           fontWeight: selected ? 700 : 400,
                         }}
                       >
@@ -370,9 +370,9 @@ export function TradeEditForm({
         <div
           className="text-[11px] p-2 rounded-lg border"
           style={{
-            background: 'rgba(231,76,60,0.08)',
-            borderColor: 'rgba(231,76,60,0.3)',
-            color: '#E74C3C',
+            background: 'rgba(187,91,91,0.08)',
+            borderColor: 'rgba(187,91,91,0.3)',
+            color: '#BB5B5B',
           }}
         >
           {error}
@@ -388,7 +388,7 @@ export function TradeEditForm({
           className="py-3 rounded-xl text-xs font-bold border"
           style={{
             background: 'transparent',
-            borderColor: 'rgba(212,175,55,0.2)',
+            borderColor: 'rgba(194,155,74,0.2)',
             color: '#8899BB',
           }}
         >
@@ -400,7 +400,7 @@ export function TradeEditForm({
           disabled={saving}
           className="py-3 rounded-xl text-xs font-black disabled:opacity-50"
           style={{
-            background: 'linear-gradient(90deg, #A07D1C, #D4AF37)',
+            background: 'linear-gradient(90deg, #8A6A1F, #C29B4A)',
             color: '#0A192F',
           }}
         >
@@ -414,10 +414,10 @@ export function TradeEditForm({
 // ─── Subcomponents ─────────────────────────────────────────────────────────
 
 const inputCls =
-  'w-full bg-[#0D1520] border border-[rgba(212,175,55,0.15)] rounded-lg px-2 py-2 text-xs text-[#C8D8EE] focus:border-[#D4AF37] outline-none'
+  'w-full bg-[#0D1520] border border-[rgba(194,155,74,0.15)] rounded-lg px-2 py-2 text-xs text-[#C8D8EE] focus:border-[#C29B4A] outline-none'
 const selectCls = inputCls
 const textareaCls =
-  'w-full bg-[#0D1520] border border-[rgba(212,175,55,0.15)] rounded-lg px-3 py-2 text-xs text-[#C8D8EE] focus:border-[#D4AF37] outline-none leading-relaxed resize-y'
+  'w-full bg-[#0D1520] border border-[rgba(194,155,74,0.15)] rounded-lg px-3 py-2 text-xs text-[#C8D8EE] focus:border-[#C29B4A] outline-none leading-relaxed resize-y'
 
 // Normalize Arabic-Indic (٠-٩) & Persian-Indic (۰-۹) digits + Arabic decimal markers (٫ ،) to ASCII
 function normalizeDigits(s: string): string {

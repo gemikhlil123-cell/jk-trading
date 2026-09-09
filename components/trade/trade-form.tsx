@@ -128,7 +128,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
   }
 
   const ic = 'form-input-dark'
-  const lc = 'block text-[11px] font-bold text-[#D4AF37] tracking-wide mb-1.5'
+  const lc = 'block text-[11px] font-bold text-[#C29B4A] tracking-wide mb-1.5'
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-1 pb-2">
@@ -148,7 +148,7 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
           </div>
         ) : (
           <div className="flex items-end pb-2">
-            <span className="text-[#D4AF37] font-black text-xl">{sessionSymbol}</span>
+            <span className="text-[#C29B4A] font-black text-xl">{sessionSymbol}</span>
           </div>
         )}
         <div>
@@ -160,9 +160,9 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
                   'flex-1 rounded-xl border text-sm font-bold transition-all',
                   direction === d
                     ? d === 'LONG'
-                      ? 'bg-[rgba(29,185,84,0.15)] border-[rgba(29,185,84,0.5)] text-[#1DB954]'
-                      : 'bg-[rgba(231,76,60,0.15)] border-[rgba(231,76,60,0.5)] text-[#E74C3C]'
-                    : 'bg-[#162035] border-[rgba(212,175,55,0.12)] text-[#4A5A7A]',
+                      ? 'bg-[rgba(78,158,122,0.15)] border-[rgba(78,158,122,0.5)] text-[#4E9E7A]'
+                      : 'bg-[rgba(187,91,91,0.15)] border-[rgba(187,91,91,0.5)] text-[#BB5B5B]'
+                    : 'bg-[#162035] border-[rgba(194,155,74,0.12)] text-[#4A5A7A]',
                 ].join(' ')}>
                 {d === 'LONG' ? '▲ شراء' : '▼ بيع'}
               </button>
@@ -193,23 +193,23 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
       <div className="grid grid-cols-2 gap-2 mt-1">
         <button type="button" onClick={() => setResult(result === 'WIN' ? null : 'WIN')}
           className={['py-3 rounded-xl border font-bold text-sm transition-all',
-            result === 'WIN' ? 'bg-[rgba(29,185,84,0.15)] border-[rgba(29,185,84,0.5)] text-[#1DB954]' : 'bg-[#162035] border-[rgba(212,175,55,0.12)] text-[#4A5A7A]'].join(' ')}>
+            result === 'WIN' ? 'bg-[rgba(78,158,122,0.15)] border-[rgba(78,158,122,0.5)] text-[#4E9E7A]' : 'bg-[#162035] border-[rgba(194,155,74,0.12)] text-[#4A5A7A]'].join(' ')}>
           ✓ رابح (Win)
         </button>
         <button type="button" onClick={() => setResult(result === 'LOSS' ? null : 'LOSS')}
           className={['py-3 rounded-xl border font-bold text-sm transition-all',
-            result === 'LOSS' ? 'bg-[rgba(231,76,60,0.15)] border-[rgba(231,76,60,0.5)] text-[#E74C3C]' : 'bg-[#162035] border-[rgba(212,175,55,0.12)] text-[#4A5A7A]'].join(' ')}>
+            result === 'LOSS' ? 'bg-[rgba(187,91,91,0.15)] border-[rgba(187,91,91,0.5)] text-[#BB5B5B]' : 'bg-[#162035] border-[rgba(194,155,74,0.12)] text-[#4A5A7A]'].join(' ')}>
           ✕ خاسر (Loss)
         </button>
       </div>
 
       <div className="sec-title">شروط الدخول</div>
       <div className="card-dark p-3.5">
-        <p className="text-[11px] font-bold text-[#D4AF37] tracking-wide mb-2.5">True Opens</p>
+        <p className="text-[11px] font-bold text-[#C29B4A] tracking-wide mb-2.5">True Opens</p>
         <div className="grid grid-cols-3 gap-2">
           {(['TWO', 'TDO', 'Session'] as TOKey[]).map(key => (
-            <div key={key} className="bg-[#0D1520] rounded-xl p-2.5 text-center border border-[rgba(212,175,55,0.1)]">
-              <p className="text-[#D4AF37] text-[10px] font-bold mb-2">{key}</p>
+            <div key={key} className="bg-[#0D1520] rounded-xl p-2.5 text-center border border-[rgba(194,155,74,0.1)]">
+              <p className="text-[#C29B4A] text-[10px] font-bold mb-2">{key}</p>
               <div className="flex gap-1">
                 {(['above', 'below'] as TODir[]).map(dir => (
                   <button key={dir} type="button" onClick={() => toggleTO(key, dir)}
@@ -217,9 +217,9 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
                       'flex-1 py-1 rounded-lg text-[10px] font-semibold border transition-all',
                       trueOpens[key] === dir
                         ? dir === 'above'
-                          ? 'bg-[rgba(29,185,84,0.15)] border-[rgba(29,185,84,0.4)] text-[#1DB954]'
-                          : 'bg-[rgba(231,76,60,0.15)] border-[rgba(231,76,60,0.4)] text-[#E74C3C]'
-                        : 'bg-[#162035] border-[rgba(212,175,55,0.1)] text-[#4A5A7A]',
+                          ? 'bg-[rgba(78,158,122,0.15)] border-[rgba(78,158,122,0.4)] text-[#4E9E7A]'
+                          : 'bg-[rgba(187,91,91,0.15)] border-[rgba(187,91,91,0.4)] text-[#BB5B5B]'
+                        : 'bg-[#162035] border-[rgba(194,155,74,0.1)] text-[#4A5A7A]',
                     ].join(' ')}>
                     {dir === 'above' ? '▲' : '▼'}
                   </button>
@@ -228,13 +228,13 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
             </div>
           ))}
         </div>
-        <p className="text-[11px] font-bold text-[#D4AF37] tracking-wide mt-3.5 mb-2">تأكيدات الدخول</p>
+        <p className="text-[11px] font-bold text-[#C29B4A] tracking-wide mt-3.5 mb-2">تأكيدات الدخول</p>
         <div className="flex flex-wrap gap-1.5">
           {CONFIRMATIONS.map(c => (
             <button key={c.id} type="button" onClick={() => toggleConfirm(c.id)}
               className={['pill-toggle', confirmations.includes(c.id) ? 'active' : ''].join(' ')}>
               <span className={['w-2 h-2 rounded-full border transition-all flex-shrink-0',
-                confirmations.includes(c.id) ? 'bg-[#D4AF37] border-[#D4AF37]' : 'border-[#4A5A7A]'].join(' ')} />
+                confirmations.includes(c.id) ? 'bg-[#C29B4A] border-[#C29B4A]' : 'border-[#4A5A7A]'].join(' ')} />
               {c.label}
             </button>
           ))}
@@ -250,21 +250,21 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
       <div className="sec-title">التقييم الذاتي</div>
       <div className="card-dark p-3.5 space-y-3">
         <div>
-          <p className="text-[11px] font-bold text-[#D4AF37] tracking-wide mb-2">تقييم الصفقة (1–10)</p>
+          <p className="text-[11px] font-bold text-[#C29B4A] tracking-wide mb-2">تقييم الصفقة (1–10)</p>
           <div className="flex gap-1.5">
             {[1,2,3,4,5,6,7,8,9,10].map(n => (
               <button key={n} type="button" onClick={() => setSelfRating(selfRating === n ? null : n)}
                 className="flex-1 py-1.5 rounded-lg text-xs font-bold border transition-all"
                 style={selfRating === n
-                  ? { background: 'rgba(201,168,76,0.2)', borderColor: '#D4AF37', color: '#D4AF37' }
-                  : { background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(212,175,55,0.12)', color: '#4A5A7A' }}>
+                  ? { background: 'rgba(194,155,74,0.2)', borderColor: '#C29B4A', color: '#C29B4A' }
+                  : { background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(194,155,74,0.12)', color: '#4A5A7A' }}>
                 {n}
               </button>
             ))}
           </div>
         </div>
         <div>
-          <p className="text-[11px] font-bold text-[#D4AF37] tracking-wide mb-2">الحالة النفسية</p>
+          <p className="text-[11px] font-bold text-[#C29B4A] tracking-wide mb-2">الحالة النفسية</p>
           <div className="flex flex-wrap gap-1.5">
             {[
               { id: 'calm',       label: '😌 هادئ' },
@@ -280,8 +280,8 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
                 onClick={() => setEmotionalState(emotionalState === e.id ? '' : e.id)}
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all"
                 style={emotionalState === e.id
-                  ? { background: 'rgba(201,168,76,0.15)', borderColor: 'rgba(201,168,76,0.4)', color: '#D4AF37' }
-                  : { background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(212,175,55,0.1)', color: '#4A5A7A' }}>
+                  ? { background: 'rgba(194,155,74,0.15)', borderColor: 'rgba(194,155,74,0.4)', color: '#C29B4A' }
+                  : { background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(194,155,74,0.1)', color: '#4A5A7A' }}>
                 {e.label}
               </button>
             ))}
@@ -295,10 +295,10 @@ export function TradeForm({ isBacktest = false, backtestSessionId, sessionSymbol
         className="form-input-dark resize-none leading-relaxed" />
 
       {error && !error.includes('سبب') && (
-        <div className="bg-[rgba(231,76,60,0.1)] border border-[rgba(231,76,60,0.3)] rounded-xl p-3 text-[#E74C3C] text-xs">{error}</div>
+        <div className="bg-[rgba(187,91,91,0.1)] border border-[rgba(187,91,91,0.3)] rounded-xl p-3 text-[#BB5B5B] text-xs">{error}</div>
       )}
       {saved && (
-        <div className="bg-[rgba(29,185,84,0.1)] border border-[rgba(29,185,84,0.3)] rounded-xl p-3 text-[#1DB954] text-sm text-center font-bold">
+        <div className="bg-[rgba(78,158,122,0.1)] border border-[rgba(78,158,122,0.3)] rounded-xl p-3 text-[#4E9E7A] text-sm text-center font-bold">
           ✓ تم حفظ الصفقة بنجاح
         </div>
       )}

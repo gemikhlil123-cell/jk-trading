@@ -92,10 +92,10 @@ export function BacktestTradeRow({ trade }: Props) {
   return (
     <>
       <tr className="border-b border-[#1D3461]/50 hover:bg-[#112240]/50 transition-colors">
-        <td className="px-4 py-3 text-[#F5F5DC]/70 text-xs">
+        <td className="px-4 py-3 text-[#EDEBE4]/70 text-xs">
           {new Date(trade.entryTime).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric', timeZone: 'Asia/Jerusalem' })}
           <br />
-          <span className="text-[#F5F5DC]/40">
+          <span className="text-[#EDEBE4]/40">
             {new Date(trade.entryTime).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
           </span>
         </td>
@@ -112,11 +112,11 @@ export function BacktestTradeRow({ trade }: Props) {
           </span>
         </td>
 
-        <td className="px-4 py-3 text-[#F5F5DC]/80 text-xs font-mono">
+        <td className="px-4 py-3 text-[#EDEBE4]/80 text-xs font-mono">
           {Number(trade.entryPrice).toFixed(2)}
         </td>
 
-        <td className="px-4 py-3 text-[#F5F5DC]/80 text-xs font-mono">
+        <td className="px-4 py-3 text-[#EDEBE4]/80 text-xs font-mono">
           {trade.exitPrice !== null ? Number(trade.exitPrice).toFixed(2) : '—'}
         </td>
 
@@ -136,7 +136,7 @@ export function BacktestTradeRow({ trade }: Props) {
           ) : '—'}
         </td>
 
-        <td className="px-4 py-3 text-xs text-[#F5F5DC]/50">
+        <td className="px-4 py-3 text-xs text-[#EDEBE4]/50">
           {trade.killzone ? killzoneLabels[trade.killzone] ?? trade.killzone : '—'}
         </td>
 
@@ -144,7 +144,7 @@ export function BacktestTradeRow({ trade }: Props) {
           <div className="flex items-center gap-1">
             <button
               onClick={() => setEditing(true)}
-              className="p-1.5 rounded text-[#F5F5DC]/30 hover:text-[#D4AF37] hover:bg-[rgba(212,175,55,0.1)] transition-colors"
+              className="p-1.5 rounded text-[#EDEBE4]/30 hover:text-[#C29B4A] hover:bg-[rgba(194,155,74,0.1)] transition-colors"
               title="تعديل"
             >
               <Pencil size={13} />
@@ -152,7 +152,7 @@ export function BacktestTradeRow({ trade }: Props) {
             <button
               onClick={handleDelete}
               disabled={deleting}
-              className="p-1.5 rounded text-[#F5F5DC]/20 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+              className="p-1.5 rounded text-[#EDEBE4]/20 hover:text-red-400 hover:bg-red-500/10 transition-colors"
               title="حذف"
             >
               <Trash2 size={13} />
@@ -176,7 +176,7 @@ export function BacktestTradeRow({ trade }: Props) {
                 type="button"
                 onClick={() => setEditing(false)}
                 className="absolute -top-2 -left-2 z-10 w-9 h-9 rounded-full text-white flex items-center justify-center"
-                style={{ background: 'rgba(231,76,60,0.9)' }}
+                style={{ background: 'rgba(187,91,91,0.9)' }}
                 title="إغلاق"
               >
                 <X size={18} />

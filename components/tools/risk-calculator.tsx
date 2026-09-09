@@ -105,23 +105,23 @@ export function RiskCalculator() {
       {/* Results */}
       {hasInputs ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 2 }}>
-          <div style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.3)', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
+          <div style={{ background: 'rgba(194,155,74,0.08)', border: '1px solid rgba(194,155,74,0.3)', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
             <p style={{ fontSize: 11, color: '#8899BB', fontWeight: 700 }}>عدد العقود المسموح</p>
-            <p className="ltr-num" style={{ fontSize: 34, fontWeight: 900, color: '#D4AF37', lineHeight: 1.1 }}>{r.contracts}</p>
+            <p className="ltr-num" style={{ fontSize: 34, fontWeight: 900, color: '#C29B4A', lineHeight: 1.1 }}>{r.contracts}</p>
             <p className="ltr-num" style={{ fontSize: 11, color: '#8899BB' }}>
               المسافة للوقف: {r.stopDist.toFixed(2)} نقطة · ${r.riskPerContract.toFixed(2)} لكل عقد
             </p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <Result label="المخاطرة المستهدفة" value={`$${r.riskAmount.toFixed(0)}`} color="#E74C3C" />
-            <Result label="المخاطرة الفعلية" value={`$${r.actualRisk.toFixed(0)}`} color="#E74C3C" />
-            {r.rMultiple > 0 && <Result label="نسبة R:R" value={`${r.rMultiple.toFixed(2)} : 1`} color="#D4AF37" />}
-            {r.rewardAtTarget > 0 && <Result label="الربح عند الهدف" value={`+$${r.rewardAtTarget.toFixed(0)}`} color="#1DB954" />}
+            <Result label="المخاطرة المستهدفة" value={`$${r.riskAmount.toFixed(0)}`} color="#BB5B5B" />
+            <Result label="المخاطرة الفعلية" value={`$${r.actualRisk.toFixed(0)}`} color="#BB5B5B" />
+            {r.rMultiple > 0 && <Result label="نسبة R:R" value={`${r.rMultiple.toFixed(2)} : 1`} color="#C29B4A" />}
+            {r.rewardAtTarget > 0 && <Result label="الربح عند الهدف" value={`+$${r.rewardAtTarget.toFixed(0)}`} color="#4E9E7A" />}
           </div>
 
           {r.contracts === 0 && (
-            <p style={{ fontSize: 11, color: '#E74C3C', textAlign: 'center', fontWeight: 700 }}>
+            <p style={{ fontSize: 11, color: '#BB5B5B', textAlign: 'center', fontWeight: 700 }}>
               المسافة للوقف كبيرة جداً على مخاطرتك — صغّر الوقف أو زد نسبة المخاطرة.
             </p>
           )}
@@ -137,7 +137,7 @@ export function RiskCalculator() {
 
 function Result({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(212,175,55,0.12)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(194,155,74,0.12)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
       <p style={{ fontSize: 10, color: '#8899BB', marginBottom: 4 }}>{label}</p>
       <p className="ltr-num" style={{ fontSize: 18, fontWeight: 900, color, margin: 0 }}>{value}</p>
     </div>

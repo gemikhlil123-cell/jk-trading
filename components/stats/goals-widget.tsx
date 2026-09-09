@@ -16,7 +16,7 @@ export function GoalsWidget({ goals, locale }: { goals: WidgetGoal[]; locale: st
   return (
     <div className="card-vibrant anim-fade-up" style={{ padding: 16, marginTop: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-        <span style={{ fontSize: 13, fontWeight: 800, color: '#D4AF37' }}>🎯 أهدافي</span>
+        <span style={{ fontSize: 13, fontWeight: 800, color: '#C29B4A' }}>🎯 أهدافي</span>
         <Link href={`/${locale}/goals`} style={{ fontSize: 11, color: '#8899BB', textDecoration: 'none' }}>
           إدارة ←
         </Link>
@@ -28,7 +28,7 @@ export function GoalsWidget({ goals, locale }: { goals: WidgetGoal[]; locale: st
               <span style={{ color: '#C8D8EE', fontWeight: 600 }}>
                 {METRIC_LABELS[g.metric] || g.metric} <span style={{ color: '#4A5A7A' }}>· {PERIOD_LABELS[g.period]}</span>
               </span>
-              <span className="ltr-num" style={{ color: g.achieved ? '#D4AF37' : '#1DB954', fontWeight: 700 }}>
+              <span className="ltr-num" style={{ color: g.achieved ? '#C29B4A' : '#4E9E7A', fontWeight: 700 }}>
                 {g.current.toFixed(g.metric === 'TRADE_COUNT' ? 0 : 1)}{g.unit} / {Number(g.target).toLocaleString()}
               </span>
             </div>
@@ -38,8 +38,8 @@ export function GoalsWidget({ goals, locale }: { goals: WidgetGoal[]; locale: st
                 style={{
                   width: `${g.pct}%`,
                   background: g.achieved
-                    ? 'linear-gradient(90deg, #D4AF37, #F5E6A3)'
-                    : 'linear-gradient(90deg, #A07D1C, #D4AF37)',
+                    ? 'linear-gradient(90deg, #C29B4A, #E4CE9B)'
+                    : 'linear-gradient(90deg, #8A6A1F, #C29B4A)',
                 }}
               />
             </div>

@@ -16,9 +16,9 @@ const config: Config = {
           lighter: '#1D3461',
         },
         cream: {
-          DEFAULT: '#F5F5DC',
-          dark: '#E8E8C0',
-          muted: '#C8C8A0',
+          DEFAULT: '#EDEBE4',
+          dark: '#DEDAD0',
+          muted: '#B9B4A8',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

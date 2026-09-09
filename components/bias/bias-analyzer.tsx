@@ -40,16 +40,16 @@ function BiasButton({
         'flex-1 flex flex-col items-center gap-2 py-4 rounded-xl border transition-all active:scale-[0.97]',
         selected
           ? isBull
-            ? 'bg-[rgba(29,185,84,0.12)] border-[rgba(29,185,84,0.5)]'
-            : 'bg-[rgba(231,76,60,0.12)] border-[rgba(231,76,60,0.5)]'
-          : 'bg-[#162035] border-[rgba(212,175,55,0.12)]',
+            ? 'bg-[rgba(78,158,122,0.12)] border-[rgba(78,158,122,0.5)]'
+            : 'bg-[rgba(187,91,91,0.12)] border-[rgba(187,91,91,0.5)]'
+          : 'bg-[#162035] border-[rgba(194,155,74,0.12)]',
       ].join(' ')}
     >
       <span className="text-2xl">{isBull ? '🟢' : '🔴'}</span>
       <span className={[
         'text-sm font-bold',
         selected
-          ? isBull ? 'text-[#1DB954]' : 'text-[#E74C3C]'
+          ? isBull ? 'text-[#4E9E7A]' : 'text-[#BB5B5B]'
           : 'text-[#8899BB]',
       ].join(' ')}>
         {label}
@@ -65,16 +65,16 @@ function TOCard({ label, value, onChange }: {
   onChange: (v: 'above' | 'below') => void
 }) {
   return (
-    <div className="bg-[#162035] border border-[rgba(212,175,55,0.12)] rounded-xl p-3 text-center">
-      <p className="text-[#D4AF37] text-xs font-bold mb-2">{label}</p>
+    <div className="bg-[#162035] border border-[rgba(194,155,74,0.12)] rounded-xl p-3 text-center">
+      <p className="text-[#C29B4A] text-xs font-bold mb-2">{label}</p>
       <div className="flex gap-1.5">
         <button
           onClick={() => onChange('above')}
           className={[
             'flex-1 py-1.5 rounded-lg text-xs font-semibold border transition-all',
             value === 'above'
-              ? 'bg-[rgba(29,185,84,0.15)] border-[rgba(29,185,84,0.5)] text-[#1DB954]'
-              : 'bg-[#111D2E] border-[rgba(212,175,55,0.12)] text-[#4A5A7A]',
+              ? 'bg-[rgba(78,158,122,0.15)] border-[rgba(78,158,122,0.5)] text-[#4E9E7A]'
+              : 'bg-[#111D2E] border-[rgba(194,155,74,0.12)] text-[#4A5A7A]',
           ].join(' ')}
         >
           أعلى ▲
@@ -84,8 +84,8 @@ function TOCard({ label, value, onChange }: {
           className={[
             'flex-1 py-1.5 rounded-lg text-xs font-semibold border transition-all',
             value === 'below'
-              ? 'bg-[rgba(231,76,60,0.15)] border-[rgba(231,76,60,0.5)] text-[#E74C3C]'
-              : 'bg-[#111D2E] border-[rgba(212,175,55,0.12)] text-[#4A5A7A]',
+              ? 'bg-[rgba(187,91,91,0.15)] border-[rgba(187,91,91,0.5)] text-[#BB5B5B]'
+              : 'bg-[#111D2E] border-[rgba(194,155,74,0.12)] text-[#4A5A7A]',
           ].join(' ')}
         >
           أسفل ▼
@@ -153,17 +153,17 @@ export function BiasAnalyzer() {
         <div className={[
           'mt-4 p-5 rounded-2xl border text-center',
           result === 'BULLISH'
-            ? 'bg-[rgba(29,185,84,0.1)] border-[rgba(29,185,84,0.4)]'
+            ? 'bg-[rgba(78,158,122,0.1)] border-[rgba(78,158,122,0.4)]'
             : result === 'BEARISH'
-            ? 'bg-[rgba(231,76,60,0.1)] border-[rgba(231,76,60,0.4)]'
-            : 'bg-[rgba(212,175,55,0.08)] border-[rgba(212,175,55,0.3)]',
+            ? 'bg-[rgba(187,91,91,0.1)] border-[rgba(187,91,91,0.4)]'
+            : 'bg-[rgba(194,155,74,0.08)] border-[rgba(194,155,74,0.3)]',
         ].join(' ')}>
           <div className="text-3xl mb-2">
             {result === 'BULLISH' ? '📈' : result === 'BEARISH' ? '📉' : '⚖️'}
           </div>
           <p className={[
             'text-xl font-black tracking-wide',
-            result === 'BULLISH' ? 'text-[#1DB954]' : result === 'BEARISH' ? 'text-[#E74C3C]' : 'text-[#D4AF37]',
+            result === 'BULLISH' ? 'text-[#4E9E7A]' : result === 'BEARISH' ? 'text-[#BB5B5B]' : 'text-[#C29B4A]',
           ].join(' ')}>
             {result === 'BULLISH' ? 'صعودي' : result === 'BEARISH' ? 'هبوطي' : 'محايد'}
           </p>
@@ -179,7 +179,7 @@ export function BiasAnalyzer() {
       {hasData && (
         <button
           onClick={reset}
-          className="w-full mt-3 py-3 rounded-xl border border-[rgba(212,175,55,0.18)] bg-transparent text-[#4A5A7A] text-sm hover:text-[#8899BB] transition-colors"
+          className="w-full mt-3 py-3 rounded-xl border border-[rgba(194,155,74,0.18)] bg-transparent text-[#4A5A7A] text-sm hover:text-[#8899BB] transition-colors"
         >
           إعادة تعيين التحيز
         </button>

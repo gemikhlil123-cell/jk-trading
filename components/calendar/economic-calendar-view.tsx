@@ -38,8 +38,8 @@ function dayLabel(iso: string): string {
 }
 
 const IMPACT_STYLE: Record<string, { color: string; bg: string; border: string; label: string }> = {
-  HIGH:   { color: '#E74C3C', bg: 'rgba(231,76,60,0.08)',  border: 'rgba(231,76,60,0.3)',  label: 'تأثير عالٍ' },
-  MEDIUM: { color: '#D4AF37', bg: 'rgba(212,175,55,0.06)', border: 'rgba(212,175,55,0.25)', label: 'متوسط' },
+  HIGH:   { color: '#BB5B5B', bg: 'rgba(187,91,91,0.08)',  border: 'rgba(187,91,91,0.3)',  label: 'تأثير عالٍ' },
+  MEDIUM: { color: '#C29B4A', bg: 'rgba(194,155,74,0.06)', border: 'rgba(194,155,74,0.25)', label: 'متوسط' },
   LOW:    { color: '#8899BB', bg: 'rgba(136,153,187,0.06)', border: 'rgba(136,153,187,0.2)', label: 'منخفض' },
 }
 
@@ -67,14 +67,14 @@ export function EconomicCalendarView({ events, source }: { events: CalendarEvent
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {source === 'fallback' && (
-        <div style={{ fontSize: 11, color: '#C9A84C', background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.18)', borderRadius: 8, padding: '8px 12px' }}>
+        <div style={{ fontSize: 11, color: '#C29B4A', background: 'rgba(194,155,74,0.06)', border: '1px solid rgba(194,155,74,0.18)', borderRadius: 8, padding: '8px 12px' }}>
           ⓘ يتم عرض الأحداث المتكررة المعروفة (تقريبية). للحصول على بيانات حيّة دقيقة، يلزم تفعيل مصدر التقويم.
         </div>
       )}
 
       {groups.map((g) => (
         <div key={g.key} className="card-vibrant" style={{ padding: 14 }}>
-          <div style={{ fontSize: 12, fontWeight: 800, color: '#D4AF37', marginBottom: 10 }}>{dayLabel(g.iso)}</div>
+          <div style={{ fontSize: 12, fontWeight: 800, color: '#C29B4A', marginBottom: 10 }}>{dayLabel(g.iso)}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {g.events.map((e, i) => {
               const st = IMPACT_STYLE[e.impact] ?? IMPACT_STYLE.MEDIUM

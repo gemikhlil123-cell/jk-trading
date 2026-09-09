@@ -12,7 +12,7 @@ export default async function ToolsPage({ params }: { params: Promise<{ locale: 
   return (
     <div style={{ padding: '16px 16px 100px', direction: 'rtl', fontFamily: 'Cairo, sans-serif' }}>
       <div className="anim-fade-up" style={{ marginBottom: 16 }}>
-        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#D4AF37' }}>حاسبة المخاطرة</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#C29B4A' }}>حاسبة المخاطرة</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           إدارة المخاطر هي أساس الربحية. احسب حجم صفقتك الصحيح قبل كل دخول — لا تخاطر أبداً بأكثر من خطتك.
         </p>

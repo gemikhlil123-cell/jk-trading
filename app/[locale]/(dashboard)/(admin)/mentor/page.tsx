@@ -53,7 +53,7 @@ export default async function MentorOverviewPage({
 
   return (
     <div dir="rtl" style={{ fontFamily: 'Cairo, sans-serif', padding: '20px 16px 100px' }}>
-      <h1 style={{ fontSize: 22, fontWeight: 900, color: '#D4AF37', marginBottom: 6 }}>لوحة المدرب</h1>
+      <h1 style={{ fontSize: 22, fontWeight: 900, color: '#C29B4A', marginBottom: 6 }}>لوحة المدرب</h1>
       <p style={{ fontSize: 12, color: '#8899BB', marginBottom: 18 }}>
         إحصائيات جميع طلابك في مكان واحد — اضغط على اسم الطالب لعرض صفقاته والتعليق عليها.
       </p>
@@ -61,7 +61,7 @@ export default async function MentorOverviewPage({
       <div
         style={{
           background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(212,175,55,0.15)',
+          border: '1px solid rgba(194,155,74,0.15)',
           borderRadius: 14,
           overflow: 'hidden',
         }}
@@ -71,10 +71,10 @@ export default async function MentorOverviewPage({
             display: 'grid',
             gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1.4fr',
             padding: '10px 12px',
-            background: 'rgba(212,175,55,0.06)',
-            borderBottom: '1px solid rgba(212,175,55,0.1)',
+            background: 'rgba(194,155,74,0.06)',
+            borderBottom: '1px solid rgba(194,155,74,0.1)',
             fontSize: 11,
-            color: '#D4AF37',
+            color: '#C29B4A',
             fontWeight: 700,
           }}
         >

@@ -57,7 +57,7 @@ export default async function PricingPage({
   return (
     <div dir="rtl" style={{ fontFamily: 'Cairo, sans-serif', padding: '24px 16px 120px' }}>
       <div style={{ textAlign: 'center', marginBottom: 24 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#D4AF37', marginBottom: 8 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#C29B4A', marginBottom: 8 }}>
           استثمر في أدائك
         </h1>
         <p style={{ fontSize: 13, color: '#8899BB', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
@@ -69,15 +69,15 @@ export default async function PricingPage({
       {me?.subscriptionStatus === 'trial' && trialDaysLeft !== null && (
         <div
           style={{
-            background: 'linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04))',
-            border: '1px solid rgba(212,175,55,0.3)',
+            background: 'linear-gradient(135deg, rgba(194,155,74,0.12), rgba(194,155,74,0.04))',
+            border: '1px solid rgba(194,155,74,0.3)',
             borderRadius: 14,
             padding: '14px 16px',
             marginBottom: 20,
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: 13, color: '#D4AF37', fontWeight: 800, marginBottom: 2 }}>
+          <div style={{ fontSize: 13, color: '#C29B4A', fontWeight: 800, marginBottom: 2 }}>
             أنت في التجربة المجانية
           </div>
           <div style={{ fontSize: 11, color: '#8899BB' }}>
@@ -88,15 +88,15 @@ export default async function PricingPage({
       {me?.subscriptionStatus === 'active' && (
         <div
           style={{
-            background: 'linear-gradient(135deg, rgba(29,185,84,0.1), rgba(29,185,84,0.03))',
-            border: '1px solid rgba(29,185,84,0.3)',
+            background: 'linear-gradient(135deg, rgba(78,158,122,0.1), rgba(78,158,122,0.03))',
+            border: '1px solid rgba(78,158,122,0.3)',
             borderRadius: 14,
             padding: '14px 16px',
             marginBottom: 20,
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: 13, color: '#1DB954', fontWeight: 800 }}>✦ اشتراكك فعّال</div>
+          <div style={{ fontSize: 13, color: '#4E9E7A', fontWeight: 800 }}>✦ اشتراكك فعّال</div>
         </div>
       )}
 
@@ -115,15 +115,15 @@ export default async function PricingPage({
             key={p.id}
             style={{
               background: p.highlight
-                ? 'linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02))'
+                ? 'linear-gradient(135deg, rgba(194,155,74,0.08), rgba(194,155,74,0.02))'
                 : 'rgba(255,255,255,0.03)',
               border: p.highlight
-                ? '1px solid rgba(212,175,55,0.4)'
-                : '1px solid rgba(212,175,55,0.15)',
+                ? '1px solid rgba(194,155,74,0.4)'
+                : '1px solid rgba(194,155,74,0.15)',
               borderRadius: 18,
               padding: '24px 20px',
               position: 'relative',
-              boxShadow: p.highlight ? '0 8px 32px rgba(212,175,55,0.12)' : 'none',
+              boxShadow: p.highlight ? '0 8px 32px rgba(194,155,74,0.12)' : 'none',
             }}
           >
             {p.badge && (
@@ -132,7 +132,7 @@ export default async function PricingPage({
                   position: 'absolute',
                   top: -10,
                   right: 20,
-                  background: 'linear-gradient(135deg, #A07D1C, #D4AF37)',
+                  background: 'linear-gradient(135deg, #8A6A1F, #C29B4A)',
                   color: '#080C14',
                   fontSize: 10,
                   fontWeight: 800,
@@ -144,7 +144,7 @@ export default async function PricingPage({
               </div>
             )}
 
-            <div style={{ fontSize: 14, color: '#D4AF37', fontWeight: 800, marginBottom: 8 }}>
+            <div style={{ fontSize: 14, color: '#C29B4A', fontWeight: 800, marginBottom: 8 }}>
               {p.name}
             </div>
 
@@ -164,10 +164,10 @@ export default async function PricingPage({
                   width: '100%',
                   padding: '12px',
                   background: p.highlight
-                    ? 'linear-gradient(135deg, #A07D1C, #D4AF37)'
-                    : 'rgba(212,175,55,0.1)',
-                  color: p.highlight ? '#080C14' : '#D4AF37',
-                  border: p.highlight ? 'none' : '1px solid rgba(212,175,55,0.35)',
+                    ? 'linear-gradient(135deg, #8A6A1F, #C29B4A)'
+                    : 'rgba(194,155,74,0.1)',
+                  color: p.highlight ? '#080C14' : '#C29B4A',
+                  border: p.highlight ? 'none' : '1px solid rgba(194,155,74,0.35)',
                   borderRadius: 12,
                   fontSize: 13,
                   fontWeight: 800,
@@ -186,20 +186,20 @@ export default async function PricingPage({
       <div
         style={{
           background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(212,175,55,0.1)',
+          border: '1px solid rgba(194,155,74,0.1)',
           borderRadius: 14,
           padding: 20,
           maxWidth: 720,
           margin: '0 auto',
         }}
       >
-        <h2 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37', marginBottom: 14 }}>
+        <h2 style={{ fontSize: 14, fontWeight: 800, color: '#C29B4A', marginBottom: 14 }}>
           ما تحصل عليه في كل خطة
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 10 }}>
           {FEATURES.map((f) => (
             <div key={f} style={{ display: 'flex', alignItems: 'start', gap: 8, fontSize: 12, color: '#C8D8EE' }}>
-              <span style={{ color: '#D4AF37', fontSize: 14, lineHeight: 1 }}>✓</span>
+              <span style={{ color: '#C29B4A', fontSize: 14, lineHeight: 1 }}>✓</span>
               <span>{f}</span>
             </div>
           ))}

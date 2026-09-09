@@ -848,13 +848,13 @@ export interface SectionMeta {
 }
 
 export const SECTIONS_META: SectionMeta[] = [
-  { id: 'jkfm-foundation',   title: 'أساسيات نموذج JK Fractal',          subtitle: 'الأساس الذي تُبنى عليه كل الاستراتيجية', icon: '◇', accent: '#D4AF37' },
+  { id: 'jkfm-foundation',   title: 'أساسيات نموذج JK Fractal',          subtitle: 'الأساس الذي تُبنى عليه كل الاستراتيجية', icon: '◇', accent: '#C29B4A' },
   { id: 'daily-bias',        title: 'التحيّز اليومي وتحليل الأطر',         subtitle: 'كيف تحدد اتجاه اليوم قبل افتتاح الجلسة',  icon: '◈', accent: '#FFC857' },
   { id: 'candle-strategies', title: 'استراتيجيات الشموع المحدّدة',          subtitle: 'لكل شمعة في النموذج وظيفة مختلفة',        icon: '▤', accent: '#B8943C' },
   { id: 'entries-management',title: 'الدخول وإدارة الصفقة',                 subtitle: 'الدخول الدقيق والوقف المحمي',             icon: '◆', accent: '#E8C95A' },
-  { id: 'continuations',     title: 'صفقات الاستمرار',                      subtitle: 'الاستمرار بعد التصحيح',                   icon: '➤', accent: '#10B981' },
+  { id: 'continuations',     title: 'صفقات الاستمرار',                      subtitle: 'الاستمرار بعد التصحيح',                   icon: '➤', accent: '#4E9E7A' },
   { id: 'advanced-pa',       title: 'تحليل حركة السعر المتقدّم',            subtitle: 'القراءة العميقة — SMT، CISD، الإبطال',    icon: '◉', accent: '#9333EA' },
-  { id: 'reversals',         title: 'صفقات الانعكاس',                       subtitle: 'انقلابات السوق الحادّة',                  icon: '↺', accent: '#EF4444' },
+  { id: 'reversals',         title: 'صفقات الانعكاس',                       subtitle: 'انقلابات السوق الحادّة',                  icon: '↺', accent: '#BB5B5B' },
   { id: 'multi-tf',          title: 'توافق الأطر الزمنية المتعددة',          subtitle: 'من الديلي للدقيقة',                       icon: '≡', accent: '#3B82F6' },
   { id: 'models',            title: 'نماذج تداول محدّدة',                   subtitle: 'سكالبينج، سوينج، Power of 3',             icon: '◧', accent: '#06B6D4' },
   { id: 'projections',       title: 'الإسقاطات والأدوات الفنية',            subtitle: 'أهداف الحركة المتوقّعة',                  icon: '◮', accent: '#F59E0B' },

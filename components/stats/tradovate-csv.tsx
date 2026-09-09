@@ -194,7 +194,7 @@ function generateAnalysis(r: ParsedResult) {
 /* ─── Sub-components ──────────────────────────────────────── */
 function StatCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color: string }) {
   return (
-    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(212,175,55,0.12)', borderRadius: 14, padding: '14px 12px' }}>
+    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(194,155,74,0.12)', borderRadius: 14, padding: '14px 12px' }}>
       <p style={{ fontSize: 10, color: '#4A5A7A', fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>{label}</p>
       <p style={{ fontSize: 22, fontWeight: 900, color, lineHeight: 1, margin: 0 }}>{value}</p>
       {sub && <p style={{ fontSize: 10, color: '#4A5A7A', marginTop: 4 }}>{sub}</p>}
@@ -205,16 +205,16 @@ function StatCard({ label, value, sub, color }: { label: string; value: string; 
 function DailyChart({ days }: { days: DayResult[] }) {
   const data = days.slice(-60).map(d => ({ date: d.date.slice(5), pnl: d.pnl }))
   return (
-    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(212,175,55,0.1)', borderRadius: 14, padding: '14px 12px' }}>
-      <p style={{ fontSize: 11, color: '#D4AF37', fontWeight: 700, marginBottom: 10 }}>ربح وخسارة كل يوم</p>
+    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(194,155,74,0.1)', borderRadius: 14, padding: '14px 12px' }}>
+      <p style={{ fontSize: 11, color: '#C29B4A', fontWeight: 700, marginBottom: 10 }}>ربح وخسارة كل يوم</p>
       <ResponsiveContainer width="100%" height={130}>
         <BarChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
           <XAxis dataKey="date" tick={{ fontSize: 8, fill: '#4A5A7A' }} interval="preserveStartEnd" />
           <YAxis tick={{ fontSize: 8, fill: '#4A5A7A' }} />
           <Tooltip formatter={(v: unknown) => [fmt(Number(v)||0), 'P&L']}
-            contentStyle={{ background: '#0D1520', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 8, fontSize: 11 }} />
+            contentStyle={{ background: '#0D1520', border: '1px solid rgba(194,155,74,0.2)', borderRadius: 8, fontSize: 11 }} />
           <Bar dataKey="pnl" radius={[3,3,0,0]}>
-            {data.map((d, i) => <Cell key={i} fill={d.pnl >= 0 ? '#1DB954' : '#E74C3C'} />)}
+            {data.map((d, i) => <Cell key={i} fill={d.pnl >= 0 ? '#4E9E7A' : '#BB5B5B'} />)}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
@@ -245,11 +245,11 @@ function MiniCalendar({ days }: { days: DayResult[] }) {
   const mWin = monthDays.filter(d=>d.pnl>0).length
 
   return (
-    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(212,175,55,0.1)', borderRadius: 14, padding: '14px 12px' }}>
+    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(194,155,74,0.1)', borderRadius: 14, padding: '14px 12px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-        <button onClick={() => setOffset(o => o-1)} style={{ background: 'none', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 6, color: '#D4AF37', cursor: 'pointer', padding: '2px 10px', fontSize: 16 }}>‹</button>
-        <p style={{ fontSize: 13, fontWeight: 800, color: '#D4AF37', margin: 0 }}>{label}</p>
-        <button onClick={() => setOffset(o => o+1)} style={{ background: 'none', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 6, color: '#D4AF37', cursor: 'pointer', padding: '2px 10px', fontSize: 16 }}>›</button>
+        <button onClick={() => setOffset(o => o-1)} style={{ background: 'none', border: '1px solid rgba(194,155,74,0.2)', borderRadius: 6, color: '#C29B4A', cursor: 'pointer', padding: '2px 10px', fontSize: 16 }}>‹</button>
+        <p style={{ fontSize: 13, fontWeight: 800, color: '#C29B4A', margin: 0 }}>{label}</p>
+        <button onClick={() => setOffset(o => o+1)} style={{ background: 'none', border: '1px solid rgba(194,155,74,0.2)', borderRadius: 6, color: '#C29B4A', cursor: 'pointer', padding: '2px 10px', fontSize: 16 }}>›</button>
       </div>
       {/* Day headers */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 2, marginBottom: 4 }}>
@@ -265,12 +265,12 @@ function MiniCalendar({ days }: { days: DayResult[] }) {
           return (
             <div key={i} style={{
               borderRadius: 6, padding: '4px 2px', textAlign: 'center', minHeight: 40,
-              background: pnl === undefined ? 'rgba(255,255,255,0.02)' : pnl > 0 ? 'rgba(29,185,84,0.15)' : 'rgba(231,76,60,0.15)',
-              border: isToday ? '1px solid #D4AF37' : '1px solid rgba(255,255,255,0.04)',
+              background: pnl === undefined ? 'rgba(255,255,255,0.02)' : pnl > 0 ? 'rgba(78,158,122,0.15)' : 'rgba(187,91,91,0.15)',
+              border: isToday ? '1px solid #C29B4A' : '1px solid rgba(255,255,255,0.04)',
             }}>
               <p style={{ fontSize: 9, color: '#8899BB', margin: 0 }}>{day}</p>
               {pnl !== undefined && (
-                <p style={{ fontSize: 9, fontWeight: 800, color: pnl > 0 ? '#1DB954' : '#E74C3C', margin: '2px 0 0', lineHeight: 1 }}>
+                <p style={{ fontSize: 9, fontWeight: 800, color: pnl > 0 ? '#4E9E7A' : '#BB5B5B', margin: '2px 0 0', lineHeight: 1 }}>
                   {pnl > 0 ? '+' : ''}{Math.round(pnl)}
                 </p>
               )}
@@ -282,8 +282,8 @@ function MiniCalendar({ days }: { days: DayResult[] }) {
       {monthDays.length > 0 && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginTop: 10 }}>
           {[
-            { l: 'إجمالي الشهر', v: fmt(mPnl), c: mPnl>=0?'#1DB954':'#E74C3C' },
-            { l: 'أيام رابحة', v: String(mWin), c: '#1DB954' },
+            { l: 'إجمالي الشهر', v: fmt(mPnl), c: mPnl>=0?'#4E9E7A':'#BB5B5B' },
+            { l: 'أيام رابحة', v: String(mWin), c: '#4E9E7A' },
             { l: 'أيام تداول', v: String(monthDays.length), c: '#C8D8EE' },
           ].map(s => (
             <div key={s.l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: '8px 4px' }}>
@@ -302,18 +302,18 @@ function AnalysisSection({ result }: { result: ParsedResult }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {/* Weaknesses */}
-      <div style={{ background: 'rgba(231,76,60,0.06)', border: '1px solid rgba(231,76,60,0.2)', borderRadius: 14, padding: '14px 16px' }}>
-        <p style={{ fontSize: 13, fontWeight: 900, color: '#E74C3C', marginBottom: 10 }}>⚠️ نقاط الضعف</p>
+      <div style={{ background: 'rgba(187,91,91,0.06)', border: '1px solid rgba(187,91,91,0.2)', borderRadius: 14, padding: '14px 16px' }}>
+        <p style={{ fontSize: 13, fontWeight: 900, color: '#BB5B5B', marginBottom: 10 }}>⚠️ نقاط الضعف</p>
         {weaknesses.map((w, i) => (
           <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start' }}>
-            <span style={{ color: '#E74C3C', fontSize: 12, flexShrink: 0, marginTop: 1 }}>•</span>
+            <span style={{ color: '#BB5B5B', fontSize: 12, flexShrink: 0, marginTop: 1 }}>•</span>
             <p style={{ fontSize: 12, color: '#C8D8EE', margin: 0, lineHeight: 1.6 }}>{w}</p>
           </div>
         ))}
       </div>
 
       {/* Stop doing */}
-      <div style={{ background: 'rgba(231,76,60,0.04)', border: '1px solid rgba(231,76,60,0.15)', borderRadius: 14, padding: '14px 16px' }}>
+      <div style={{ background: 'rgba(187,91,91,0.04)', border: '1px solid rgba(187,91,91,0.15)', borderRadius: 14, padding: '14px 16px' }}>
         <p style={{ fontSize: 13, fontWeight: 900, color: '#E8A87C', marginBottom: 10 }}>🚫 توقف فوراً عن هذا</p>
         {stopDoing.map((s, i) => (
           <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start' }}>
@@ -324,11 +324,11 @@ function AnalysisSection({ result }: { result: ParsedResult }) {
       </div>
 
       {/* Improve */}
-      <div style={{ background: 'rgba(29,185,84,0.05)', border: '1px solid rgba(29,185,84,0.18)', borderRadius: 14, padding: '14px 16px' }}>
-        <p style={{ fontSize: 13, fontWeight: 900, color: '#1DB954', marginBottom: 10 }}>✦ ركز على هذا للتطور</p>
+      <div style={{ background: 'rgba(78,158,122,0.05)', border: '1px solid rgba(78,158,122,0.18)', borderRadius: 14, padding: '14px 16px' }}>
+        <p style={{ fontSize: 13, fontWeight: 900, color: '#4E9E7A', marginBottom: 10 }}>✦ ركز على هذا للتطور</p>
         {improve.map((s, i) => (
           <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start' }}>
-            <span style={{ color: '#1DB954', fontSize: 12, flexShrink: 0, marginTop: 1 }}>→</span>
+            <span style={{ color: '#4E9E7A', fontSize: 12, flexShrink: 0, marginTop: 1 }}>→</span>
             <p style={{ fontSize: 12, color: '#C8D8EE', margin: 0, lineHeight: 1.6 }}>{s}</p>
           </div>
         ))}
@@ -388,24 +388,24 @@ export function TradovateCSV() {
     <div style={{ marginBottom: 8, direction: 'rtl', fontFamily: 'Cairo, sans-serif' }}>
       {/* Upload Row */}
       <div style={{
-        background: 'linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.04))',
-        border: '1px solid rgba(212,175,55,0.25)', borderRadius: 14, padding: '12px 16px',
+        background: 'linear-gradient(135deg,rgba(194,155,74,0.1),rgba(194,155,74,0.04))',
+        border: '1px solid rgba(194,155,74,0.25)', borderRadius: 14, padding: '12px 16px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap',
       }}>
         <div>
-          <p style={{ fontSize: 12, fontWeight: 800, color: '#D4AF37', marginBottom: 2 }}>استيراد من Tradovate ✦</p>
+          <p style={{ fontSize: 12, fontWeight: 800, color: '#C29B4A', marginBottom: 2 }}>استيراد من Tradovate ✦</p>
           <p style={{ fontSize: 10, color: '#4A5A7A' }}>Tradovate → Activity → Account Balance History → Export</p>
           {result?.fileName && <p style={{ fontSize: 10, color: '#8899BB', marginTop: 2 }}>✓ {result.fileName}</p>}
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {result && (
             <button type="button" onClick={clearResult}
-              style={{ background: 'rgba(231,76,60,0.1)', border: '1px solid rgba(231,76,60,0.3)', borderRadius: 8, padding: '8px 14px', color: '#E74C3C', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+              style={{ background: 'rgba(187,91,91,0.1)', border: '1px solid rgba(187,91,91,0.3)', borderRadius: 8, padding: '8px 14px', color: '#BB5B5B', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
               🗑 مسح البيانات
             </button>
           )}
           <button type="button" onClick={() => fileRef.current?.click()}
-            style={{ background: 'linear-gradient(135deg,#D4AF37,#B8960C)', border: 'none', borderRadius: 8, padding: '9px 18px', color: '#080C14', fontSize: 12, fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ background: 'linear-gradient(135deg,#C29B4A,#B8960C)', border: 'none', borderRadius: 8, padding: '9px 18px', color: '#080C14', fontSize: 12, fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {result ? '↺ تغيير الملف' : 'اختر ملف CSV'}
           </button>
         </div>
@@ -414,7 +414,7 @@ export function TradovateCSV() {
       </div>
 
       {error && (
-        <div style={{ marginTop: 8, background: 'rgba(231,76,60,0.08)', border: '1px solid rgba(231,76,60,0.3)', borderRadius: 10, padding: '10px 14px', fontSize: 11, color: '#E74C3C' }}>
+        <div style={{ marginTop: 8, background: 'rgba(187,91,91,0.08)', border: '1px solid rgba(187,91,91,0.3)', borderRadius: 10, padding: '10px 14px', fontSize: 11, color: '#BB5B5B' }}>
           {error}
         </div>
       )}
@@ -425,39 +425,39 @@ export function TradovateCSV() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
             <StatCard label="أيام رابحة" value={`${result.winRate.toFixed(0)}%`}
               sub={`${result.winDays} من أصل ${result.totalTradingDays} يوم`}
-              color={result.winRate >= 50 ? '#1DB954' : '#E74C3C'} />
+              color={result.winRate >= 50 ? '#4E9E7A' : '#BB5B5B'} />
             <StatCard label="نسبة النجاح" value={`${result.winRate.toFixed(1)}%`}
               sub={`${result.winDays} ربح · ${result.lossDays} خسارة`}
-              color={result.winRate >= 50 ? '#1DB954' : '#E74C3C'} />
+              color={result.winRate >= 50 ? '#4E9E7A' : '#BB5B5B'} />
             <StatCard label="نسبة ربح/خسارة"
               value={result.avgWinLossRatio > 0 ? result.avgWinLossRatio.toFixed(2) : '—'}
               sub={`عامل الربح: ${result.profitFactor >= 999 ? '∞' : result.profitFactor.toFixed(2)}`}
-              color={result.avgWinLossRatio >= 1 ? '#1DB954' : '#E74C3C'} />
+              color={result.avgWinLossRatio >= 1 ? '#4E9E7A' : '#BB5B5B'} />
             <StatCard label="إجمالي P&L" value={fmt(result.totalPnl)}
               sub={`${result.totalTradingDays} يوم تداول`}
-              color={result.totalPnl >= 0 ? '#1DB954' : '#E74C3C'} />
+              color={result.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B'} />
           </div>
 
           {/* Extra stats */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
-            <StatCard label="متوسط يوم رابح"  value={fmt(result.avgWin)}  color="#1DB954" />
-            <StatCard label="متوسط يوم خاسر"  value={fmt(result.avgLoss)} color="#E74C3C" />
-            <StatCard label="أقصى انسحاب"     value={`$${Math.round(result.maxDrawdown).toLocaleString()}`} color="#E74C3C" />
+            <StatCard label="متوسط يوم رابح"  value={fmt(result.avgWin)}  color="#4E9E7A" />
+            <StatCard label="متوسط يوم خاسر"  value={fmt(result.avgLoss)} color="#BB5B5B" />
+            <StatCard label="أقصى انسحاب"     value={`$${Math.round(result.maxDrawdown).toLocaleString()}`} color="#BB5B5B" />
           </div>
 
           {/* Best / Worst */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
             {result.bestDay && (
-              <div style={{ background: 'rgba(29,185,84,0.07)', border: '1px solid rgba(29,185,84,0.2)', borderRadius: 14, padding: '12px 14px' }}>
+              <div style={{ background: 'rgba(78,158,122,0.07)', border: '1px solid rgba(78,158,122,0.2)', borderRadius: 14, padding: '12px 14px' }}>
                 <p style={{ fontSize: 10, color: '#4A5A7A', marginBottom: 4 }}>🏆 أفضل يوم</p>
-                <p style={{ fontSize: 20, fontWeight: 900, color: '#1DB954', margin: 0 }}>{fmt(result.bestDay.pnl)}</p>
+                <p style={{ fontSize: 20, fontWeight: 900, color: '#4E9E7A', margin: 0 }}>{fmt(result.bestDay.pnl)}</p>
                 <p style={{ fontSize: 10, color: '#4A5A7A', marginTop: 3 }}>{result.bestDay.date}</p>
               </div>
             )}
             {result.worstDay && (
-              <div style={{ background: 'rgba(231,76,60,0.07)', border: '1px solid rgba(231,76,60,0.2)', borderRadius: 14, padding: '12px 14px' }}>
+              <div style={{ background: 'rgba(187,91,91,0.07)', border: '1px solid rgba(187,91,91,0.2)', borderRadius: 14, padding: '12px 14px' }}>
                 <p style={{ fontSize: 10, color: '#4A5A7A', marginBottom: 4 }}>📉 أسوأ يوم</p>
-                <p style={{ fontSize: 20, fontWeight: 900, color: '#E74C3C', margin: 0 }}>{fmt(result.worstDay.pnl)}</p>
+                <p style={{ fontSize: 20, fontWeight: 900, color: '#BB5B5B', margin: 0 }}>{fmt(result.worstDay.pnl)}</p>
                 <p style={{ fontSize: 10, color: '#4A5A7A', marginTop: 3 }}>{result.worstDay.date}</p>
               </div>
             )}
@@ -470,21 +470,21 @@ export function TradovateCSV() {
           <MiniCalendar days={result.days} />
 
           {/* Last 10 days */}
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(212,175,55,0.1)', borderRadius: 14, overflow: 'hidden' }}>
-            <div style={{ padding: '12px 14px', borderBottom: '1px solid rgba(212,175,55,0.1)' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: '#D4AF37', margin: 0 }}>آخر أيام التداول</p>
+          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(194,155,74,0.1)', borderRadius: 14, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', borderBottom: '1px solid rgba(194,155,74,0.1)' }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: '#C29B4A', margin: 0 }}>آخر أيام التداول</p>
             </div>
             {[...result.days].reverse().slice(0, 10).map((d, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
                 <span style={{ fontSize: 12, color: '#C8D8EE' }}>{d.date}</span>
-                <span style={{ fontSize: 13, fontWeight: 800, color: d.pnl >= 0 ? '#1DB954' : '#E74C3C' }}>{fmt(d.pnl)}</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: d.pnl >= 0 ? '#4E9E7A' : '#BB5B5B' }}>{fmt(d.pnl)}</span>
               </div>
             ))}
           </div>
 
           {/* AI Analysis */}
-          <div style={{ background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 14, padding: '14px 16px' }}>
-            <p style={{ fontSize: 14, fontWeight: 900, color: '#D4AF37', marginBottom: 12 }}>🧠 تحليل الأداء</p>
+          <div style={{ background: 'rgba(194,155,74,0.04)', border: '1px solid rgba(194,155,74,0.15)', borderRadius: 14, padding: '14px 16px' }}>
+            <p style={{ fontSize: 14, fontWeight: 900, color: '#C29B4A', marginBottom: 12 }}>🧠 تحليل الأداء</p>
             <AnalysisSection result={result} />
           </div>
 

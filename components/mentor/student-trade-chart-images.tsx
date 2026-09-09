@@ -46,7 +46,7 @@ export function StudentTradeChartImages({ raw }: Props) {
             onClick={() => setLightbox(src)}
             style={{
               position: 'relative',
-              border: '1px solid rgba(212,175,55,0.25)',
+              border: '1px solid rgba(194,155,74,0.25)',
               borderRadius: 8,
               overflow: 'hidden',
               padding: 0,
@@ -68,7 +68,7 @@ export function StudentTradeChartImages({ raw }: Props) {
                 left: 0,
                 right: 0,
                 background: 'linear-gradient(to top, rgba(0,0,0,0.75), transparent)',
-                color: '#D4AF37',
+                color: '#C29B4A',
                 fontSize: 9,
                 fontWeight: 800,
                 padding: '4px 6px',

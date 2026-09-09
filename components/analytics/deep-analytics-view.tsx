@@ -17,7 +17,7 @@ function renderBold(text: string): React.ReactNode[] {
   const parts = text.split(/\*\*(.+?)\*\*/g)
   return parts.map((p, i) =>
     i % 2 === 1 ? (
-      <span key={i} style={{ color: '#D4AF37', fontWeight: 800 }}>
+      <span key={i} style={{ color: '#C29B4A', fontWeight: 800 }}>
         {p}
       </span>
     ) : (
@@ -28,11 +28,11 @@ function renderBold(text: string): React.ReactNode[] {
 
 function NarrativeCard({ n }: { n: TraderNarrative }) {
   const sections: { title: string; icon: string; items: string[]; accent: string }[] = [
-    { title: 'الكومبوهات (٣ نقاط) التي تكررت ونجحت معك', icon: '✦', items: n.bestCombos, accent: '#D4AF37' },
-    { title: 'نقاط الدخول التي اشتغلت معك', icon: '✓', items: n.workingReasons, accent: '#1DB954' },
-    { title: 'نقاط الدخول التي ما اشتغلت معك', icon: '✕', items: n.losingReasons, accent: '#E74C3C' },
-    { title: 'أفضل ساعاتك (بتوقيت القدس — نفس ما تكتبه)', icon: '🕐', items: n.bestHours, accent: '#C9A84C' },
-    { title: 'أفضل أيام الأسبوع عندك', icon: '📅', items: n.bestDays, accent: '#C9A84C' },
+    { title: 'الكومبوهات (٣ نقاط) التي تكررت ونجحت معك', icon: '✦', items: n.bestCombos, accent: '#C29B4A' },
+    { title: 'نقاط الدخول التي اشتغلت معك', icon: '✓', items: n.workingReasons, accent: '#4E9E7A' },
+    { title: 'نقاط الدخول التي ما اشتغلت معك', icon: '✕', items: n.losingReasons, accent: '#BB5B5B' },
+    { title: 'أفضل ساعاتك (بتوقيت القدس — نفس ما تكتبه)', icon: '🕐', items: n.bestHours, accent: '#C29B4A' },
+    { title: 'أفضل أيام الأسبوع عندك', icon: '📅', items: n.bestDays, accent: '#C29B4A' },
   ]
 
   const sessionItems: string[] = []
@@ -47,14 +47,14 @@ function NarrativeCard({ n }: { n: TraderNarrative }) {
       style={{
         margin: '14px',
         padding: '16px 14px',
-        background: 'linear-gradient(180deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.02) 100%)',
-        border: '1px solid rgba(212,175,55,0.3)',
+        background: 'linear-gradient(180deg, rgba(194,155,74,0.08) 0%, rgba(194,155,74,0.02) 100%)',
+        border: '1px solid rgba(194,155,74,0.3)',
         borderRadius: 14,
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
         <span style={{ fontSize: 18 }}>🧠</span>
-        <h3 style={{ fontSize: 14, fontWeight: 800, color: '#D4AF37', margin: 0 }}>
+        <h3 style={{ fontSize: 14, fontWeight: 800, color: '#C29B4A', margin: 0 }}>
           تحليل شخصي — ما الذي يعمل معك؟
         </h3>
       </div>
@@ -139,11 +139,11 @@ function NarrativeCard({ n }: { n: TraderNarrative }) {
         style={{
           marginTop: 14,
           padding: '10px 12px',
-          background: 'rgba(212,175,55,0.08)',
-          border: '1px solid rgba(212,175,55,0.2)',
+          background: 'rgba(194,155,74,0.08)',
+          border: '1px solid rgba(194,155,74,0.2)',
           borderRadius: 10,
           fontSize: 12,
-          color: '#C9A84C',
+          color: '#C29B4A',
           lineHeight: 1.7,
           fontWeight: 600,
         }}
@@ -164,9 +164,9 @@ const CAT_COLORS: Record<string, string> = {
 
 function StatusPill({ status }: { status: BreakdownRow['status'] }) {
   const map = {
-    STRONG: { bg: 'rgba(29,185,84,0.18)', fg: '#1DB954', label: 'قوي' },
-    WEAK: { bg: 'rgba(231,76,60,0.18)', fg: '#E74C3C', label: 'ضعيف' },
-    NEUTRAL: { bg: 'rgba(201,168,76,0.14)', fg: '#C9A84C', label: 'محايد' },
+    STRONG: { bg: 'rgba(78,158,122,0.18)', fg: '#4E9E7A', label: 'قوي' },
+    WEAK: { bg: 'rgba(187,91,91,0.18)', fg: '#BB5B5B', label: 'ضعيف' },
+    NEUTRAL: { bg: 'rgba(194,155,74,0.14)', fg: '#C29B4A', label: 'محايد' },
     INSUFFICIENT: { bg: 'rgba(74,90,122,0.18)', fg: '#8899BB', label: 'بيانات قليلة' },
   }
   const s = map[status]
@@ -233,19 +233,19 @@ function BreakdownTable({
                   }}
                 >
                   <span>{r.trades} صفقة</span>
-                  <span style={{ color: '#1DB954' }}>ربح: {r.wins}</span>
-                  <span style={{ color: '#E74C3C' }}>خسارة: {r.losses}</span>
+                  <span style={{ color: '#4E9E7A' }}>ربح: {r.wins}</span>
+                  <span style={{ color: '#BB5B5B' }}>خسارة: {r.losses}</span>
                 </div>
               </div>
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: 14, fontWeight: 800, color: '#C9A84C' }}>
+                <div style={{ fontSize: 14, fontWeight: 800, color: '#C29B4A' }}>
                   {(r.winRate * 100).toFixed(0)}%
                 </div>
                 <div
                   style={{
                     fontSize: 11,
                     fontWeight: 700,
-                    color: pnlPositive ? '#1DB954' : '#E74C3C',
+                    color: pnlPositive ? '#4E9E7A' : '#BB5B5B',
                   }}
                 >
                   {pnlPositive ? '+' : ''}
@@ -286,7 +286,7 @@ function ReasonsTable({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {rows.map((r) => {
           const barPct = positive ? r.winRate * 100 : (1 - r.winRate) * 100
-          const barColor = positive ? '#1DB954' : '#E74C3C'
+          const barColor = positive ? '#4E9E7A' : '#BB5B5B'
           return (
             <div
               key={r.key}
@@ -303,7 +303,7 @@ function ReasonsTable({
                       width: 8,
                       height: 8,
                       borderRadius: '50%',
-                      background: CAT_COLORS[r.category] ?? '#C9A84C',
+                      background: CAT_COLORS[r.category] ?? '#C29B4A',
                       flexShrink: 0,
                     }}
                   />
@@ -343,11 +343,11 @@ function ReasonsTable({
                 }}
               >
                 <span>{r.trades} ظهور</span>
-                <span style={{ color: '#1DB954' }}>ربح: {r.wins}</span>
-                <span style={{ color: '#E74C3C' }}>خسارة: {r.losses}</span>
+                <span style={{ color: '#4E9E7A' }}>ربح: {r.wins}</span>
+                <span style={{ color: '#BB5B5B' }}>خسارة: {r.losses}</span>
                 <span>
                   إجمالي:{' '}
-                  <span style={{ color: r.totalPnl >= 0 ? '#1DB954' : '#E74C3C', fontWeight: 700 }}>
+                  <span style={{ color: r.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B', fontWeight: 700 }}>
                     {r.totalPnl >= 0 ? '+' : ''}
                     {r.totalPnl.toFixed(0)}
                   </span>
@@ -377,12 +377,12 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
               flex: 1,
               padding: '10px',
               borderRadius: 12,
-              background: mode === 'LIVE' ? 'rgba(212,175,55,0.18)' : '#162035',
+              background: mode === 'LIVE' ? 'rgba(194,155,74,0.18)' : '#162035',
               border:
                 mode === 'LIVE'
-                  ? '1px solid rgba(212,175,55,0.5)'
-                  : '1px solid rgba(212,175,55,0.14)',
-              color: mode === 'LIVE' ? '#D4AF37' : '#8899BB',
+                  ? '1px solid rgba(194,155,74,0.5)'
+                  : '1px solid rgba(194,155,74,0.14)',
+              color: mode === 'LIVE' ? '#C29B4A' : '#8899BB',
               fontWeight: 700,
               fontSize: 12,
               cursor: 'pointer',
@@ -397,12 +397,12 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
               padding: '10px',
               borderRadius: 12,
               background:
-                mode === 'BACKTEST' ? 'rgba(212,175,55,0.18)' : '#162035',
+                mode === 'BACKTEST' ? 'rgba(194,155,74,0.18)' : '#162035',
               border:
                 mode === 'BACKTEST'
-                  ? '1px solid rgba(212,175,55,0.5)'
-                  : '1px solid rgba(212,175,55,0.14)',
-              color: mode === 'BACKTEST' ? '#D4AF37' : '#8899BB',
+                  ? '1px solid rgba(194,155,74,0.5)'
+                  : '1px solid rgba(194,155,74,0.14)',
+              color: mode === 'BACKTEST' ? '#C29B4A' : '#8899BB',
               fontWeight: 700,
               fontSize: 12,
               cursor: 'pointer',
@@ -437,7 +437,7 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
               style={{
                 fontSize: 20,
                 fontWeight: 800,
-                color: data.winRate >= 0.5 ? '#1DB954' : '#E74C3C',
+                color: data.winRate >= 0.5 ? '#4E9E7A' : '#BB5B5B',
               }}
             >
               {(data.winRate * 100).toFixed(0)}%
@@ -449,7 +449,7 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
               style={{
                 fontSize: 20,
                 fontWeight: 800,
-                color: data.totalPnl >= 0 ? '#1DB954' : '#E74C3C',
+                color: data.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B',
               }}
             >
               {data.totalPnl >= 0 ? '+' : ''}
@@ -462,7 +462,7 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
               style={{
                 fontSize: 16,
                 fontWeight: 800,
-                color: data.profitFactor >= 1.5 ? '#1DB954' : data.profitFactor >= 1 ? '#C9A84C' : '#E74C3C',
+                color: data.profitFactor >= 1.5 ? '#4E9E7A' : data.profitFactor >= 1 ? '#C29B4A' : '#BB5B5B',
               }}
             >
               {data.profitFactor.toFixed(2)}
@@ -470,13 +470,13 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
           </div>
           <div className="stat-card">
             <span style={{ fontSize: 10, color: '#4A5A7A' }}>متوسط الربح</span>
-            <span style={{ fontSize: 16, fontWeight: 800, color: '#1DB954' }}>
+            <span style={{ fontSize: 16, fontWeight: 800, color: '#4E9E7A' }}>
               +{data.avgWin.toFixed(0)}
             </span>
           </div>
           <div className="stat-card">
             <span style={{ fontSize: 10, color: '#4A5A7A' }}>متوسط الخسارة</span>
-            <span style={{ fontSize: 16, fontWeight: 800, color: '#E74C3C' }}>
+            <span style={{ fontSize: 16, fontWeight: 800, color: '#BB5B5B' }}>
               -{data.avgLoss.toFixed(0)}
             </span>
           </div>
@@ -562,9 +562,9 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
                     fontWeight: 800,
                     color:
                       data.streak.currentStreakType === 'WIN'
-                        ? '#1DB954'
+                        ? '#4E9E7A'
                         : data.streak.currentStreakType === 'LOSS'
-                        ? '#E74C3C'
+                        ? '#BB5B5B'
                         : '#8899BB',
                   }}
                 >
@@ -578,13 +578,13 @@ export function DeepAnalyticsView({ live, backtest, liveNarrative, backtestNarra
               </div>
               <div className="stat-card">
                 <span style={{ fontSize: 10, color: '#4A5A7A' }}>أطول ربح</span>
-                <span style={{ fontSize: 18, fontWeight: 800, color: '#1DB954' }}>
+                <span style={{ fontSize: 18, fontWeight: 800, color: '#4E9E7A' }}>
                   {data.streak.longestWinStreak}
                 </span>
               </div>
               <div className="stat-card">
                 <span style={{ fontSize: 10, color: '#4A5A7A' }}>أطول خسارة</span>
-                <span style={{ fontSize: 18, fontWeight: 800, color: '#E74C3C' }}>
+                <span style={{ fontSize: 18, fontWeight: 800, color: '#BB5B5B' }}>
                   {data.streak.longestLossStreak}
                 </span>
               </div>

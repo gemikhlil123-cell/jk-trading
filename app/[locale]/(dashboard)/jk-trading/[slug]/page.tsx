@@ -33,7 +33,7 @@ export default async function LessonPage({
     <article style={{ padding: '14px 14px 100px', direction: 'rtl', maxWidth: 780, margin: '0 auto' }}>
       {/* Breadcrumb */}
       <nav style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14, fontSize: 12, color: '#8899BB', flexWrap: 'wrap' }}>
-        <Link href={`/${locale}/jk-trading`} style={{ color: '#D4AF37', textDecoration: 'none' }}>
+        <Link href={`/${locale}/jk-trading`} style={{ color: '#C29B4A', textDecoration: 'none' }}>
           مركز JK TRADING
         </Link>
         <span>›</span>
@@ -162,7 +162,7 @@ export default async function LessonPage({
         style={{
           marginTop: 30,
           background: 'linear-gradient(135deg, #0F1A2F 0%, #112240 100%)',
-          border: '1px solid rgba(212,175,55,0.35)',
+          border: '1px solid rgba(194,155,74,0.35)',
           borderRadius: 14,
           padding: '20px 22px',
         }}
@@ -173,8 +173,8 @@ export default async function LessonPage({
               width: 32,
               height: 32,
               borderRadius: 10,
-              background: 'rgba(212,175,55,0.15)',
-              border: '1px solid rgba(212,175,55,0.4)',
+              background: 'rgba(194,155,74,0.15)',
+              border: '1px solid rgba(194,155,74,0.4)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -183,7 +183,7 @@ export default async function LessonPage({
           >
             ⚡
           </div>
-          <h3 style={{ fontSize: 16, fontWeight: 800, color: '#D4AF37' }}>
+          <h3 style={{ fontSize: 16, fontWeight: 800, color: '#C29B4A' }}>
             النقاط المفتاحية
           </h3>
         </div>
@@ -200,7 +200,7 @@ export default async function LessonPage({
                 alignItems: 'flex-start',
               }}
             >
-              <span style={{ color: '#D4AF37', fontWeight: 800, marginTop: 1 }}>✓</span>
+              <span style={{ color: '#C29B4A', fontWeight: 800, marginTop: 1 }}>✓</span>
               <span>{point}</span>
             </li>
           ))}
@@ -528,16 +528,16 @@ function PrevNextNav({ locale, lesson }: { locale: string; lesson: Lesson }) {
           style={{
             padding: '14px 16px',
             background: '#0F1A2F',
-            border: '1px solid rgba(212,175,55,0.3)',
+            border: '1px solid rgba(194,155,74,0.3)',
             borderRadius: 10,
             textDecoration: 'none',
-            color: '#D4AF37',
+            color: '#C29B4A',
             display: 'block',
             textAlign: 'end',
           }}
         >
           <div style={{ fontSize: 10, color: '#8899BB', marginBottom: 4 }}>التالي ←</div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#D4AF37' }}>الدرس التالي</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#C29B4A' }}>الدرس التالي</div>
         </Link>
       ) : <div />}
     </div>
@@ -547,11 +547,11 @@ function PrevNextNav({ locale, lesson }: { locale: string; lesson: Lesson }) {
 // ─── Palettes ────────────────────────────────────────────────────────────
 
 const BADGE_COLORS: Record<string, { bg: string; fg: string }> = {
-  'فيديو': { bg: 'rgba(212,175,55,0.15)', fg: '#D4AF37' },
-  'PDF':   { bg: 'rgba(239,68,68,0.15)',  fg: '#FF6B6B' },
+  'فيديو': { bg: 'rgba(194,155,74,0.15)', fg: '#C29B4A' },
+  'PDF':   { bg: 'rgba(187,91,91,0.15)',  fg: '#FF6B6B' },
   'دليل':  { bg: 'rgba(59,130,246,0.15)', fg: '#60A5FA' },
   'مهم':   { bg: 'rgba(255,193,7,0.18)',  fg: '#FFC857' },
-  'جديد':  { bg: 'rgba(16,185,129,0.15)', fg: '#10B981' },
+  'جديد':  { bg: 'rgba(78,158,122,0.15)', fg: '#4E9E7A' },
 }
 
 const CALLOUT_PALETTE: Record<CalloutVariant, {
@@ -559,7 +559,7 @@ const CALLOUT_PALETTE: Record<CalloutVariant, {
 }> = {
   info:    { bg: 'rgba(59,130,246,0.08)',  border: 'rgba(59,130,246,0.3)',  accent: '#60A5FA', icon: 'ℹ️' },
   warn:    { bg: 'rgba(255,193,7,0.10)',   border: 'rgba(255,193,7,0.35)',  accent: '#FFC857', icon: '⚠️' },
-  success: { bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.3)',  accent: '#10B981', icon: '✓' },
-  gold:    { bg: 'rgba(212,175,55,0.10)',  border: 'rgba(212,175,55,0.4)',  accent: '#D4AF37', icon: '◆' },
-  danger:  { bg: 'rgba(239,68,68,0.10)',   border: 'rgba(239,68,68,0.35)',  accent: '#F87171', icon: '✕' },
+  success: { bg: 'rgba(78,158,122,0.08)',  border: 'rgba(78,158,122,0.3)',  accent: '#4E9E7A', icon: '✓' },
+  gold:    { bg: 'rgba(194,155,74,0.10)',  border: 'rgba(194,155,74,0.4)',  accent: '#C29B4A', icon: '◆' },
+  danger:  { bg: 'rgba(187,91,91,0.10)',   border: 'rgba(187,91,91,0.35)',  accent: '#C87676', icon: '✕' },
 }

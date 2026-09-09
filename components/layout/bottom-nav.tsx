@@ -96,7 +96,7 @@ export function BottomNav({ locale, role }: BottomNavProps) {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0D1520] border-t border-[rgba(212,175,55,0.15)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0D1520] border-t border-[rgba(194,155,74,0.15)]">
       <div className="flex">
         {tabs.map((tab) => {
           const isActive =
@@ -116,12 +116,12 @@ export function BottomNav({ locale, role }: BottomNavProps) {
               href={tab.href}
               className={cn(
                 'flex-1 flex flex-col items-center gap-1 py-2.5 px-1 transition-colors',
-                isActive ? 'text-[#D4AF37]' : 'text-[#4A5A7A] hover:text-[#8899BB]'
+                isActive ? 'text-[#C29B4A]' : 'text-[#4A5A7A] hover:text-[#8899BB]'
               )}
             >
               <span
                 className="transition-transform duration-200"
-                style={isActive ? { transform: 'scale(1.12)', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.55))' } : undefined}
+                style={isActive ? { transform: 'scale(1.12)', filter: 'drop-shadow(0 0 6px rgba(194,155,74,0.55))' } : undefined}
               >
                 {tab.icon(isActive)}
               </span>
@@ -129,7 +129,7 @@ export function BottomNav({ locale, role }: BottomNavProps) {
               <span
                 className={cn(
                   'w-1 h-1 rounded-full transition-opacity',
-                  isActive ? 'bg-[#D4AF37] opacity-100' : 'opacity-0'
+                  isActive ? 'bg-[#C29B4A] opacity-100' : 'opacity-0'
                 )}
               />
             </Link>
@@ -139,7 +139,7 @@ export function BottomNav({ locale, role }: BottomNavProps) {
         {/* Logout */}
         <button
           onClick={() => signOut({ callbackUrl: `/${locale}/login` })}
-          className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1 text-[#4A5A7A] hover:text-[#E74C3C] transition-colors"
+          className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1 text-[#4A5A7A] hover:text-[#BB5B5B] transition-colors"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>

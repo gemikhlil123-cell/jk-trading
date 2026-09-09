@@ -51,14 +51,14 @@ export function PerformanceRadar({
         <div
           style={{
             background: '#0D1827',
-            border: '1px solid rgba(212,175,55,0.2)',
+            border: '1px solid rgba(194,155,74,0.2)',
             borderRadius: 8,
             padding: '8px 12px',
             fontSize: 12,
             color: '#C8D8EE',
           }}
         >
-          <div style={{ color: '#D4AF37', fontWeight: 700, marginBottom: 2 }}>{item.subject}</div>
+          <div style={{ color: '#C29B4A', fontWeight: 700, marginBottom: 2 }}>{item.subject}</div>
           <div>{item.value}/100</div>
         </div>
       )
@@ -66,14 +66,14 @@ export function PerformanceRadar({
     return null
   }
 
-  const scoreColor = score >= 70 ? '#1DB954' : score >= 40 ? '#D4AF37' : '#E74C3C'
+  const scoreColor = score >= 70 ? '#4E9E7A' : score >= 40 ? '#C29B4A' : '#BB5B5B'
 
   return (
     <div style={{ position: 'relative' }}>
       <ResponsiveContainer width="100%" height={220}>
         <RadarChart data={data} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
           <PolarGrid
-            stroke="rgba(212,175,55,0.15)"
+            stroke="rgba(194,155,74,0.15)"
             gridType="polygon"
           />
           <PolarAngleAxis
@@ -84,8 +84,8 @@ export function PerformanceRadar({
           <Radar
             name="الأداء"
             dataKey="value"
-            stroke="#C9A84C"
-            fill="#C9A84C"
+            stroke="#C29B4A"
+            fill="#C29B4A"
             fillOpacity={0.25}
             strokeWidth={2}
           />

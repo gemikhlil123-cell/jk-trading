@@ -43,7 +43,7 @@ export default async function TradesPage({
             </Link>
             <Link
               href={`/${locale}/trades/import`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm border border-[#1F2D4A] text-[#A7B3CC] hover:text-[#D4AF37] hover:border-[#D4AF37]/40 transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm border border-[#1F2D4A] text-[#A7B3CC] hover:text-[#C29B4A] hover:border-[#C29B4A]/40 transition"
             >
               📥 استيراد CSV
             </Link>
@@ -56,11 +56,11 @@ export default async function TradesPage({
   return (
     <div className="px-4 relative z-[1]">
       <div className="flex items-center justify-between mt-4 mb-3">
-        <h1 className="text-[#D4AF37] text-sm font-bold tracking-wide">سجل الصفقات ({trades.length})</h1>
+        <h1 className="text-[#C29B4A] text-sm font-bold tracking-wide">سجل الصفقات ({trades.length})</h1>
         <div className="flex items-center gap-2">
           <Link
             href={`/${locale}/trades/import`}
-            className="px-3 py-2 rounded-xl text-xs border border-[#1F2D4A] text-[#A7B3CC] hover:text-[#D4AF37] hover:border-[#D4AF37]/40 transition"
+            className="px-3 py-2 rounded-xl text-xs border border-[#1F2D4A] text-[#A7B3CC] hover:text-[#C29B4A] hover:border-[#C29B4A]/40 transition"
           >
             📥 استيراد CSV
           </Link>
@@ -83,7 +83,7 @@ export default async function TradesPage({
             <Link
               key={trade.id}
               href={`/${locale}/trades/${trade.id}`}
-              className="card-dark p-4 block hover:border-[rgba(212,175,55,0.4)] transition-colors"
+              className="card-dark p-4 block hover:border-[rgba(194,155,74,0.4)] transition-colors"
             >
               {/* Header */}
               <div className="flex items-start justify-between mb-3">
@@ -91,7 +91,7 @@ export default async function TradesPage({
                   <span className="text-[#4A5A7A] text-[10px]">#{trades.length - i}</span>
                   <span className="text-[#C8D8EE] font-bold">{trade.symbol}</span>
                   {pnl !== null && (
-                    <span className={`text-sm font-black ${isWin ? 'text-[#1DB954]' : 'text-[#E74C3C]'}`}>
+                    <span className={`text-sm font-black ${isWin ? 'text-[#4E9E7A]' : 'text-[#BB5B5B]'}`}>
                       {isWin ? '+' : ''}{pnl.toFixed(0)} نقطة
                     </span>
                   )}
@@ -106,8 +106,8 @@ export default async function TradesPage({
                 <span className={[
                   'text-[10px] font-bold px-2.5 py-1 rounded-full',
                   trade.direction === 'LONG'
-                    ? 'bg-[rgba(29,185,84,0.12)] text-[#1DB954]'
-                    : 'bg-[rgba(231,76,60,0.12)] text-[#E74C3C]',
+                    ? 'bg-[rgba(78,158,122,0.12)] text-[#4E9E7A]'
+                    : 'bg-[rgba(187,91,91,0.12)] text-[#BB5B5B]',
                 ].join(' ')}>
                   {trade.direction === 'LONG' ? '▲ شراء' : '▼ بيع'}
                 </span>
@@ -116,15 +116,15 @@ export default async function TradesPage({
                   <span className={[
                     'text-[10px] px-2.5 py-1 rounded-full border',
                     rr >= 1
-                      ? 'bg-[rgba(29,185,84,0.08)] border-[rgba(29,185,84,0.3)] text-[#1DB954]'
-                      : 'bg-[rgba(231,76,60,0.08)] border-[rgba(231,76,60,0.3)] text-[#E74C3C]',
+                      ? 'bg-[rgba(78,158,122,0.08)] border-[rgba(78,158,122,0.3)] text-[#4E9E7A]'
+                      : 'bg-[rgba(187,91,91,0.08)] border-[rgba(187,91,91,0.3)] text-[#BB5B5B]',
                   ].join(' ')}>
                     {rr.toFixed(2)}R
                   </span>
                 )}
 
                 {trade.killzone && (
-                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-[rgba(212,175,55,0.08)] border border-[rgba(212,175,55,0.2)] text-[#D4AF37]">
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-[rgba(194,155,74,0.08)] border border-[rgba(194,155,74,0.2)] text-[#C29B4A]">
                     {KILLZONE_AR[trade.killzone] ?? trade.killzone}
                   </span>
                 )}

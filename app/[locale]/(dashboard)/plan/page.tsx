@@ -31,7 +31,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
   return (
     <div style={{ padding: '16px 16px 24px', direction: 'rtl', fontFamily: 'Cairo, sans-serif' }}>
       <div className="anim-fade-up" style={{ marginBottom: 16 }}>
-        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#D4AF37' }}>خطة التداول</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#C29B4A' }}>خطة التداول</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           الانضباط يبدأ بخطة مكتوبة. حدّد متى وكيف تتداول — والتزم بها.
         </p>

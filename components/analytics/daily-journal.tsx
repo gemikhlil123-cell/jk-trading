@@ -80,7 +80,7 @@ export function DailyJournal({ initialJournals }: { initialJournals: JournalRow[
         <div className="sec-title" style={{ marginTop: 0 }}>سجل اليوم النفسي</div>
 
         {msg && (
-          <div style={{ fontSize: 12, color: msg.includes('تم') ? '#1DB954' : '#E74C3C', marginBottom: 10, fontWeight: 700 }}>{msg}</div>
+          <div style={{ fontSize: 12, color: msg.includes('تم') ? '#4E9E7A' : '#BB5B5B', marginBottom: 10, fontWeight: 700 }}>{msg}</div>
         )}
 
         {/* Discipline rating */}
@@ -92,9 +92,9 @@ export function DailyJournal({ initialJournals }: { initialJournals: JournalRow[
               onClick={() => setRating(n)}
               style={{
                 flex: 1, height: 40, borderRadius: 10, fontSize: 16, fontWeight: 800, cursor: 'pointer',
-                background: rating >= n ? 'rgba(212,175,55,0.18)' : '#0E1828',
-                border: `1px solid ${rating >= n ? '#D4AF37' : 'rgba(212,175,55,0.12)'}`,
-                color: rating >= n ? '#D4AF37' : '#4A5A7A',
+                background: rating >= n ? 'rgba(194,155,74,0.18)' : '#0E1828',
+                border: `1px solid ${rating >= n ? '#C29B4A' : 'rgba(194,155,74,0.12)'}`,
+                color: rating >= n ? '#C29B4A' : '#4A5A7A',
                 transition: 'all 0.15s',
               }}
             >
@@ -145,11 +145,11 @@ export function DailyJournal({ initialJournals }: { initialJournals: JournalRow[
               <XAxis dataKey="label" tick={{ fill: 'rgba(200,216,238,0.4)', fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis domain={[0, 5]} ticks={[1, 2, 3, 4, 5]} tick={{ fill: 'rgba(200,216,238,0.4)', fontSize: 10 }} axisLine={false} tickLine={false} orientation="right" />
               <Tooltip
-                contentStyle={{ background: '#0D1827', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 8, fontSize: 12 }}
+                contentStyle={{ background: '#0D1827', border: '1px solid rgba(194,155,74,0.2)', borderRadius: 8, fontSize: 12 }}
                 labelStyle={{ color: '#8899BB' }}
               />
-              <ReferenceLine y={3} stroke="rgba(212,175,55,0.2)" strokeDasharray="4 4" />
-              <Line type="monotone" dataKey="rating" stroke="#D4AF37" strokeWidth={2.5} dot={{ r: 3, fill: '#D4AF37' }} activeDot={{ r: 5 }} />
+              <ReferenceLine y={3} stroke="rgba(194,155,74,0.2)" strokeDasharray="4 4" />
+              <Line type="monotone" dataKey="rating" stroke="#C29B4A" strokeWidth={2.5} dot={{ r: 3, fill: '#C29B4A' }} activeDot={{ r: 5 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -174,9 +174,9 @@ function YesNo({ label, value, onChange, goodWhenTrue }: { label: string; value:
               onClick={() => onChange(v)}
               style={{
                 flex: 1, height: 36, borderRadius: 9, fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                background: selected ? (good ? 'rgba(29,185,84,0.16)' : 'rgba(231,76,60,0.16)') : '#0E1828',
-                border: `1px solid ${selected ? (good ? '#1DB954' : '#E74C3C') : 'rgba(212,175,55,0.12)'}`,
-                color: selected ? (good ? '#1DB954' : '#E74C3C') : '#8899BB',
+                background: selected ? (good ? 'rgba(78,158,122,0.16)' : 'rgba(187,91,91,0.16)') : '#0E1828',
+                border: `1px solid ${selected ? (good ? '#4E9E7A' : '#BB5B5B') : 'rgba(194,155,74,0.12)'}`,
+                color: selected ? (good ? '#4E9E7A' : '#BB5B5B') : '#8899BB',
               }}
             >
               {v ? 'نعم' : 'لا'}

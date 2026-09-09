@@ -77,7 +77,7 @@ export function GoalsManager({ initialGoals }: { initialGoals: GoalRow[] }) {
             {busy ? '...' : 'إضافة'}
           </button>
         </div>
-        {msg && <p style={{ color: '#E74C3C', fontSize: 11, marginTop: 8 }}>{msg}</p>}
+        {msg && <p style={{ color: '#BB5B5B', fontSize: 11, marginTop: 8 }}>{msg}</p>}
       </div>
 
       {/* Goals list */}
@@ -105,18 +105,18 @@ export function GoalsManager({ initialGoals }: { initialGoals: GoalRow[] }) {
                 style={{
                   width: `${g.progress.pct}%`,
                   background: g.progress.achieved
-                    ? 'linear-gradient(90deg, #D4AF37, #F5E6A3)'
-                    : 'linear-gradient(90deg, #A07D1C, #D4AF37)',
+                    ? 'linear-gradient(90deg, #C29B4A, #E4CE9B)'
+                    : 'linear-gradient(90deg, #8A6A1F, #C29B4A)',
                 }}
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 11 }}>
               <span style={{ color: '#8899BB' }}>
-                المحقق: <b style={{ color: g.progress.achieved ? '#D4AF37' : '#1DB954' }} className="ltr-num">
+                المحقق: <b style={{ color: g.progress.achieved ? '#C29B4A' : '#4E9E7A' }} className="ltr-num">
                   {g.progress.current.toFixed(g.metric === 'TRADE_COUNT' ? 0 : 1)}{g.progress.unit}
                 </b>
               </span>
-              <span style={{ color: g.progress.achieved ? '#D4AF37' : '#4A5A7A', fontWeight: 700 }}>
+              <span style={{ color: g.progress.achieved ? '#C29B4A' : '#4A5A7A', fontWeight: 700 }}>
                 {g.progress.achieved ? '🏆 تحقق!' : `${g.progress.pct.toFixed(0)}%`}
               </span>
             </div>

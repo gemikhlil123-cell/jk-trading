@@ -181,7 +181,7 @@ export function AdvancedStats({ trades }: Props) {
           <div className="card-dark p-3">
             {topReasons.length > 0 && (
               <>
-                <p style={{ fontSize: 10, fontWeight: 700, color: '#1DB954', marginBottom: 8, letterSpacing: '0.06em' }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: '#4E9E7A', marginBottom: 8, letterSpacing: '0.06em' }}>
                   ⭐ نجوم الدخول
                 </p>
                 <div className="space-y-1.5">
@@ -189,8 +189,8 @@ export function AdvancedStats({ trades }: Props) {
                     <div
                       key={r.name}
                       style={{
-                        background: 'rgba(29,185,84,0.07)',
-                        border: '1px solid rgba(29,185,84,0.2)',
+                        background: 'rgba(78,158,122,0.07)',
+                        border: '1px solid rgba(78,158,122,0.2)',
                         borderRadius: 8,
                         padding: '7px 10px',
                         display: 'flex',
@@ -200,9 +200,9 @@ export function AdvancedStats({ trades }: Props) {
                       }}
                     >
                       <span style={{ fontSize: 11, fontWeight: 700, color: '#C8D8EE', flex: 1 }}>{r.name}</span>
-                      <span style={{ fontSize: 10, color: '#1DB954', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
+                      <span style={{ fontSize: 10, color: '#4E9E7A', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
                       <span style={{ fontSize: 10, color: '#8899BB' }}>{r.total} صفقة</span>
-                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#1DB954' : '#E74C3C', fontWeight: 700 }}>
+                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#4E9E7A' : '#BB5B5B', fontWeight: 700 }}>
                         {fmt(r.avgPnl)}
                       </span>
                     </div>
@@ -213,7 +213,7 @@ export function AdvancedStats({ trades }: Props) {
 
             {worstReasons.length > 0 && (
               <>
-                <p style={{ fontSize: 10, fontWeight: 700, color: '#E74C3C', marginTop: 12, marginBottom: 8, letterSpacing: '0.06em' }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: '#BB5B5B', marginTop: 12, marginBottom: 8, letterSpacing: '0.06em' }}>
                   ⚠ تجنب هذه — أسباب خاسرة
                 </p>
                 <div className="space-y-1.5">
@@ -221,8 +221,8 @@ export function AdvancedStats({ trades }: Props) {
                     <div
                       key={r.name}
                       style={{
-                        background: 'rgba(231,76,60,0.07)',
-                        border: '1px solid rgba(231,76,60,0.2)',
+                        background: 'rgba(187,91,91,0.07)',
+                        border: '1px solid rgba(187,91,91,0.2)',
                         borderRadius: 8,
                         padding: '7px 10px',
                         display: 'flex',
@@ -232,9 +232,9 @@ export function AdvancedStats({ trades }: Props) {
                       }}
                     >
                       <span style={{ fontSize: 11, fontWeight: 700, color: '#C8D8EE', flex: 1 }}>{r.name}</span>
-                      <span style={{ fontSize: 10, color: '#E74C3C', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
+                      <span style={{ fontSize: 10, color: '#BB5B5B', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
                       <span style={{ fontSize: 10, color: '#8899BB' }}>{r.total} صفقة</span>
-                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#1DB954' : '#E74C3C', fontWeight: 700 }}>
+                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#4E9E7A' : '#BB5B5B', fontWeight: 700 }}>
                         {fmt(r.avgPnl)}
                       </span>
                     </div>
@@ -245,7 +245,7 @@ export function AdvancedStats({ trades }: Props) {
 
             {neutralReasons.length > 0 && (
               <>
-                <p style={{ fontSize: 10, fontWeight: 700, color: '#C9A84C', marginTop: 12, marginBottom: 8, letterSpacing: '0.06em' }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: '#C29B4A', marginTop: 12, marginBottom: 8, letterSpacing: '0.06em' }}>
                   🔍 تحتاج بيانات أكثر
                 </p>
                 <div className="space-y-1.5">
@@ -253,8 +253,8 @@ export function AdvancedStats({ trades }: Props) {
                     <div
                       key={r.name}
                       style={{
-                        background: 'rgba(212,175,55,0.05)',
-                        border: '1px solid rgba(212,175,55,0.18)',
+                        background: 'rgba(194,155,74,0.05)',
+                        border: '1px solid rgba(194,155,74,0.18)',
                         borderRadius: 8,
                         padding: '7px 10px',
                         display: 'flex',
@@ -264,9 +264,9 @@ export function AdvancedStats({ trades }: Props) {
                       }}
                     >
                       <span style={{ fontSize: 11, fontWeight: 700, color: '#C8D8EE', flex: 1 }}>{r.name}</span>
-                      <span style={{ fontSize: 10, color: '#C9A84C', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
+                      <span style={{ fontSize: 10, color: '#C29B4A', fontWeight: 800 }}>{r.winRate.toFixed(0)}%</span>
                       <span style={{ fontSize: 10, color: '#8899BB' }}>{r.total} صفقة</span>
-                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#1DB954' : '#E74C3C', fontWeight: 700 }}>
+                      <span style={{ fontSize: 10, color: r.avgPnl >= 0 ? '#4E9E7A' : '#BB5B5B', fontWeight: 700 }}>
                         {fmt(r.avgPnl)}
                       </span>
                     </div>
@@ -290,16 +290,16 @@ export function AdvancedStats({ trades }: Props) {
         {kzStats.map((kz) => {
           const good = kz.winRate >= 50
           const borderColor = kz.total === 0
-            ? 'rgba(212,175,55,0.12)'
+            ? 'rgba(194,155,74,0.12)'
             : good
-            ? 'rgba(29,185,84,0.3)'
-            : 'rgba(231,76,60,0.3)'
+            ? 'rgba(78,158,122,0.3)'
+            : 'rgba(187,91,91,0.3)'
           const bgColor = kz.total === 0
             ? 'transparent'
             : good
-            ? 'rgba(29,185,84,0.05)'
-            : 'rgba(231,76,60,0.05)'
-          const mainColor = kz.total === 0 ? '#4A5A7A' : good ? '#1DB954' : '#E74C3C'
+            ? 'rgba(78,158,122,0.05)'
+            : 'rgba(187,91,91,0.05)'
+          const mainColor = kz.total === 0 ? '#4A5A7A' : good ? '#4E9E7A' : '#BB5B5B'
 
           return (
             <div
@@ -307,7 +307,7 @@ export function AdvancedStats({ trades }: Props) {
               className="card-dark p-3"
               style={{ border: `1px solid ${borderColor}`, background: bgColor }}
             >
-              <p style={{ fontSize: 10, fontWeight: 700, color: '#D4AF37', letterSpacing: '0.05em', marginBottom: 4 }}>
+              <p style={{ fontSize: 10, fontWeight: 700, color: '#C29B4A', letterSpacing: '0.05em', marginBottom: 4 }}>
                 {kz.label}
               </p>
               {kz.total === 0 ? (
@@ -320,7 +320,7 @@ export function AdvancedStats({ trades }: Props) {
                   <p style={{ fontSize: 10, color: '#8899BB', marginTop: 2 }}>
                     {kz.total} صفقة
                   </p>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: kz.pnlSum >= 0 ? '#1DB954' : '#E74C3C', marginTop: 2 }}>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: kz.pnlSum >= 0 ? '#4E9E7A' : '#BB5B5B', marginTop: 2 }}>
                     {fmt(kz.pnlSum)}
                   </p>
                 </>
@@ -343,10 +343,10 @@ export function AdvancedStats({ trades }: Props) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
                     <span style={{ fontSize: 11, fontWeight: 700, color: '#C8D8EE' }}>{d.label}</span>
                     <span style={{ fontSize: 10, color: '#8899BB' }}>{d.total} صفقة</span>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: good ? '#1DB954' : '#E74C3C' }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: good ? '#4E9E7A' : '#BB5B5B' }}>
                       {d.winRate.toFixed(0)}%
                     </span>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: d.pnlSum >= 0 ? '#1DB954' : '#E74C3C' }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: d.pnlSum >= 0 ? '#4E9E7A' : '#BB5B5B' }}>
                       {fmt(d.pnlSum)}
                     </span>
                   </div>
@@ -355,7 +355,7 @@ export function AdvancedStats({ trades }: Props) {
                       style={{
                         height: '100%',
                         width: barW,
-                        background: good ? '#1DB954' : '#E74C3C',
+                        background: good ? '#4E9E7A' : '#BB5B5B',
                         borderRadius: 2,
                         transition: 'width 0.4s',
                       }}
@@ -379,12 +379,12 @@ export function AdvancedStats({ trades }: Props) {
               return (
                 <div key={s.sym}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3, gap: 8 }}>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: '#D4AF37', flex: 1 }}>{s.sym}</span>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: '#C29B4A', flex: 1 }}>{s.sym}</span>
                     <span style={{ fontSize: 10, color: '#8899BB' }}>{s.total} صفقة</span>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: good ? '#1DB954' : '#E74C3C' }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: good ? '#4E9E7A' : '#BB5B5B' }}>
                       {s.winRate.toFixed(0)}%
                     </span>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: s.pnlSum >= 0 ? '#1DB954' : '#E74C3C' }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: s.pnlSum >= 0 ? '#4E9E7A' : '#BB5B5B' }}>
                       {fmt(s.pnlSum)}
                     </span>
                   </div>
@@ -393,7 +393,7 @@ export function AdvancedStats({ trades }: Props) {
                       style={{
                         height: '100%',
                         width: barW,
-                        background: good ? '#1DB954' : '#E74C3C',
+                        background: good ? '#4E9E7A' : '#BB5B5B',
                         borderRadius: 2,
                         transition: 'width 0.4s',
                       }}
@@ -413,8 +413,8 @@ export function AdvancedStats({ trades }: Props) {
           <div
             style={{
               flex: 1,
-              background: maxStreak >= 3 ? 'rgba(231,76,60,0.08)' : 'rgba(212,175,55,0.05)',
-              border: `1px solid ${maxStreak >= 3 ? 'rgba(231,76,60,0.25)' : 'rgba(212,175,55,0.15)'}`,
+              background: maxStreak >= 3 ? 'rgba(187,91,91,0.08)' : 'rgba(194,155,74,0.05)',
+              border: `1px solid ${maxStreak >= 3 ? 'rgba(187,91,91,0.25)' : 'rgba(194,155,74,0.15)'}`,
               borderRadius: 8,
               padding: '8px 12px',
             }}
@@ -422,7 +422,7 @@ export function AdvancedStats({ trades }: Props) {
             <p style={{ fontSize: 9, fontWeight: 700, color: '#8899BB', letterSpacing: '0.06em', marginBottom: 2 }}>
               أعلى سلسلة خسائر متتالية
             </p>
-            <p style={{ fontSize: 24, fontWeight: 900, color: maxStreak >= 3 ? '#E74C3C' : '#D4AF37', lineHeight: 1 }}>
+            <p style={{ fontSize: 24, fontWeight: 900, color: maxStreak >= 3 ? '#BB5B5B' : '#C29B4A', lineHeight: 1 }}>
               {maxStreak}
             </p>
             <p style={{ fontSize: 10, color: '#8899BB', marginTop: 2 }}>صفقات</p>
@@ -431,8 +431,8 @@ export function AdvancedStats({ trades }: Props) {
           <div
             style={{
               flex: 1,
-              background: 'rgba(212,175,55,0.05)',
-              border: '1px solid rgba(212,175,55,0.15)',
+              background: 'rgba(194,155,74,0.05)',
+              border: '1px solid rgba(194,155,74,0.15)',
               borderRadius: 8,
               padding: '8px 12px',
             }}
@@ -440,7 +440,7 @@ export function AdvancedStats({ trades }: Props) {
             <p style={{ fontSize: 9, fontWeight: 700, color: '#8899BB', letterSpacing: '0.06em', marginBottom: 2 }}>
               مرات التسلسل (2+)
             </p>
-            <p style={{ fontSize: 24, fontWeight: 900, color: '#D4AF37', lineHeight: 1 }}>{timesTwo}</p>
+            <p style={{ fontSize: 24, fontWeight: 900, color: '#C29B4A', lineHeight: 1 }}>{timesTwo}</p>
             <p style={{ fontSize: 10, color: '#8899BB', marginTop: 2 }}>مرة</p>
           </div>
         </div>
@@ -449,8 +449,8 @@ export function AdvancedStats({ trades }: Props) {
           <div
             style={{
               marginTop: 10,
-              background: 'rgba(231,76,60,0.1)',
-              border: '1px solid rgba(231,76,60,0.35)',
+              background: 'rgba(187,91,91,0.1)',
+              border: '1px solid rgba(187,91,91,0.35)',
               borderRadius: 8,
               padding: '8px 12px',
               display: 'flex',
@@ -460,7 +460,7 @@ export function AdvancedStats({ trades }: Props) {
           >
             <span style={{ fontSize: 16 }}>⚠️</span>
             <div>
-              <p style={{ fontSize: 11, fontWeight: 800, color: '#E74C3C' }}>تحذير: تداول الانتقام</p>
+              <p style={{ fontSize: 11, fontWeight: 800, color: '#BB5B5B' }}>تحذير: تداول الانتقام</p>
               <p style={{ fontSize: 10, color: '#8899BB', marginTop: 2 }}>
                 سُجِّل {timesThreePlus} مرة تسلسل خسائر بـ 3 أو أكثر — راجع إدارة المخاطر
               </p>

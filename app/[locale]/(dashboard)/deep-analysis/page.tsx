@@ -36,11 +36,11 @@ export default async function DeepAnalysisPage({
         <div
           style={{
             background: '#111D2E',
-            border: '1px solid rgba(231,76,60,0.3)',
+            border: '1px solid rgba(187,91,91,0.3)',
             borderRadius: 12,
             padding: 20,
             textAlign: 'center',
-            color: '#E74C3C',
+            color: '#BB5B5B',
             fontSize: 13,
             fontFamily: 'Cairo, sans-serif',
           }}
@@ -80,7 +80,7 @@ export default async function DeepAnalysisPage({
     <div style={{ padding: '14px 14px 100px', direction: 'rtl' }}>
       <AnalyticsSubnav locale={locale} />
       <div style={{ marginBottom: 12 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#D4AF37' }}>التحليل العميق</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#C29B4A' }}>التحليل العميق</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           تحليل ذكي للملاحظات (عربي / عبري / إنجليزي) — يستخرج الفريمات، الـ confluences، الجلسات،
           والأوقات التي تستخدمها فعلاً.
@@ -90,9 +90,9 @@ export default async function DeepAnalysisPage({
       {!hasApiKey && (
         <div
           style={{
-            background: 'rgba(231,76,60,0.08)',
-            border: '1px solid rgba(231,76,60,0.3)',
-            color: '#E74C3C',
+            background: 'rgba(187,91,91,0.08)',
+            border: '1px solid rgba(187,91,91,0.3)',
+            color: '#BB5B5B',
             fontSize: 11,
             padding: '8px 10px',
             borderRadius: 8,
@@ -106,7 +106,7 @@ export default async function DeepAnalysisPage({
             href="https://aistudio.google.com/app/apikey"
             target="_blank"
             rel="noopener"
-            style={{ color: '#D4AF37', textDecoration: 'underline' }}
+            style={{ color: '#C29B4A', textDecoration: 'underline' }}
           >
             Google AI Studio
           </a>
@@ -117,8 +117,8 @@ export default async function DeepAnalysisPage({
       {hasApiKey && (
         <div
           style={{
-            background: 'rgba(29,185,84,0.06)',
-            border: '1px solid rgba(29,185,84,0.2)',
+            background: 'rgba(78,158,122,0.06)',
+            border: '1px solid rgba(78,158,122,0.2)',
             color: '#8899BB',
             fontSize: 10,
             padding: '6px 10px',
@@ -126,7 +126,7 @@ export default async function DeepAnalysisPage({
             marginBottom: 10,
           }}
         >
-          🤖 المزوّد: <b style={{ color: '#1DB954' }}>
+          🤖 المزوّد: <b style={{ color: '#4E9E7A' }}>
             {provider === 'gemini' ? 'Gemini 2.5 Flash (مجاني)' : 'Claude Opus 4.7'}
           </b>
         </div>

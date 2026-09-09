@@ -63,7 +63,7 @@ export default async function BacktestPage({
             const avgRR = s.avgRR ? Number(s.avgRR).toFixed(2) : null
 
             return (
-              <div key={s.id} className="card-navy p-5 space-y-4 hover:border-[#F5F5DC]/20 border border-transparent transition-colors">
+              <div key={s.id} className="card-navy p-5 space-y-4 hover:border-[#EDEBE4]/20 border border-transparent transition-colors">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <h3 className="font-semibold text-[#C8D8EE] truncate">{s.name}</h3>
@@ -96,7 +96,7 @@ export default async function BacktestPage({
 
                 <Link
                   href={`/${locale}/backtest/${s.id}`}
-                  className="flex items-center justify-center gap-2 w-full border border-[rgba(212,175,55,0.18)] hover:border-[#F5F5DC]/30 text-[#C8D8EE]/70 hover:text-[#C8D8EE] rounded-lg py-2 text-sm transition-colors"
+                  className="flex items-center justify-center gap-2 w-full border border-[rgba(194,155,74,0.18)] hover:border-[#EDEBE4]/30 text-[#C8D8EE]/70 hover:text-[#C8D8EE] rounded-lg py-2 text-sm transition-colors"
                 >
                   عرض الجلسة
                   <ChevronLeft size={14} />

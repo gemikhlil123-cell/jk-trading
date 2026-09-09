@@ -89,7 +89,7 @@ export default async function PrepPage({ params }: { params: Promise<{ locale: s
   return (
     <div style={{ padding: '16px 16px 100px', direction: 'rtl', fontFamily: 'Cairo, sans-serif' }}>
       <div className="anim-fade-up" style={{ marginBottom: 18 }}>
-        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#D4AF37' }}>مركز التحضير اليومي</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#C29B4A' }}>مركز التحضير اليومي</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           المتداول المحترف يستعدّ قبل أن يضغط على الزر. ابدأ يومك من هنا.
         </p>
@@ -103,7 +103,7 @@ export default async function PrepPage({ params }: { params: Promise<{ locale: s
             className={`card-vibrant card-hover-lift anim-fade-up anim-delay-${i + 1}`}
             style={{ padding: 16, textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}
           >
-            <span style={{ color: '#D4AF37' }}>{l.icon}</span>
+            <span style={{ color: '#C29B4A' }}>{l.icon}</span>
             <span style={{ fontSize: 14, fontWeight: 800, color: '#C8D8EE' }}>{l.title}</span>
             <span style={{ fontSize: 11, color: '#8899BB', lineHeight: 1.5 }}>{l.desc}</span>
           </Link>

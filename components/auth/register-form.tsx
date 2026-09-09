@@ -45,44 +45,44 @@ export function RegisterForm() {
   return (
     <div className="w-full max-w-sm mx-auto">
       <div className="text-center mb-8">
-        <div className="w-12 h-12 rounded-xl bg-[#F5F5DC] flex items-center justify-center mx-auto mb-4">
+        <div className="w-12 h-12 rounded-xl bg-[#EDEBE4] flex items-center justify-center mx-auto mb-4">
           <span className="text-[#0A192F] font-bold text-lg">JK</span>
         </div>
-        <h1 className="text-2xl font-bold text-[#F5F5DC]">إنشاء حساب</h1>
-        <p className="text-[#F5F5DC]/60 text-sm mt-1">JK Trading Journal</p>
+        <h1 className="text-2xl font-bold text-[#EDEBE4]">إنشاء حساب</h1>
+        <p className="text-[#EDEBE4]/60 text-sm mt-1">JK Trading Journal</p>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <label className="text-[#F5F5DC]/80 text-sm block">الاسم</label>
+          <label className="text-[#EDEBE4]/80 text-sm block">الاسم</label>
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="اسمك الكامل"
-            className="w-full bg-[#112240] border border-[#1D3461] text-[#F5F5DC] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F5F5DC]/50 placeholder:text-[#F5F5DC]/30"
+            className="w-full bg-[#112240] border border-[#1D3461] text-[#EDEBE4] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#EDEBE4]/50 placeholder:text-[#EDEBE4]/30"
           />
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-[#F5F5DC]/80 text-sm block">البريد الإلكتروني</label>
+          <label className="text-[#EDEBE4]/80 text-sm block">البريد الإلكتروني</label>
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="trader@example.com"
-            className="w-full bg-[#112240] border border-[#1D3461] text-[#F5F5DC] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F5F5DC]/50 placeholder:text-[#F5F5DC]/30"
+            className="w-full bg-[#112240] border border-[#1D3461] text-[#EDEBE4] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#EDEBE4]/50 placeholder:text-[#EDEBE4]/30"
           />
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-[#F5F5DC]/80 text-sm block">كلمة المرور</label>
+          <label className="text-[#EDEBE4]/80 text-sm block">كلمة المرور</label>
           <input
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full bg-[#112240] border border-[#1D3461] text-[#F5F5DC] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F5F5DC]/50 placeholder:text-[#F5F5DC]/30"
+            className="w-full bg-[#112240] border border-[#1D3461] text-[#EDEBE4] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#EDEBE4]/50 placeholder:text-[#EDEBE4]/30"
           />
         </div>
 
@@ -95,15 +95,15 @@ export function RegisterForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#F5F5DC] text-[#0A192F] hover:bg-[#E8E8C0] font-semibold py-2.5 rounded-lg transition-colors disabled:opacity-60"
+          className="w-full bg-[#EDEBE4] text-[#0A192F] hover:bg-[#DEDAD0] font-semibold py-2.5 rounded-lg transition-colors disabled:opacity-60"
         >
           {loading ? 'جاري الإنشاء...' : 'إنشاء حساب'}
         </button>
       </form>
 
-      <p className="text-center text-[#F5F5DC]/50 text-sm mt-6">
+      <p className="text-center text-[#EDEBE4]/50 text-sm mt-6">
         لديك حساب؟{' '}
-        <Link href={`/${locale}/login`} className="text-[#F5F5DC] hover:underline">
+        <Link href={`/${locale}/login`} className="text-[#EDEBE4] hover:underline">
           تسجيل الدخول
         </Link>
       </p>

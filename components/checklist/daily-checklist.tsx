@@ -78,9 +78,9 @@ export function DailyChecklist() {
   return (
     <div className="space-y-0">
       {/* Oath card */}
-      <div className="relative overflow-hidden rounded-2xl border border-[rgba(212,175,55,0.35)] bg-[#162035] p-5 mt-4 mb-1">
+      <div className="relative overflow-hidden rounded-2xl border border-[rgba(194,155,74,0.35)] bg-[#162035] p-5 mt-4 mb-1">
         <div
-          className="absolute top-0 right-3 text-[90px] leading-none font-serif text-[#D4AF37] select-none pointer-events-none"
+          className="absolute top-0 right-3 text-[90px] leading-none font-serif text-[#C29B4A] select-none pointer-events-none"
           style={{ opacity: 0.06 }}
         >
           &ldquo;
@@ -88,20 +88,20 @@ export function DailyChecklist() {
         <p className="text-[#8899BB] text-[13px] leading-8 italic whitespace-pre-line relative z-10">
           {OATH}
         </p>
-        <p className="text-[#D4AF37] text-xs font-bold mt-3 relative z-10">— عهد المتداول المنضبط</p>
+        <p className="text-[#C29B4A] text-xs font-bold mt-3 relative z-10">— عهد المتداول المنضبط</p>
       </div>
 
       {/* Progress */}
       <div className="card-dark p-4 mt-3">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[#D4AF37] text-xs font-bold tracking-wide">تقدم اليوم</span>
+          <span className="text-[#C29B4A] text-xs font-bold tracking-wide">تقدم اليوم</span>
           <span className="text-[#8899BB] text-xs">{done}/{total} — {pct}%</span>
         </div>
         <div className="progress-track">
           <div className="progress-fill" style={{ width: `${pct}%` }} />
         </div>
         {allDone && (
-          <div className="mt-3 text-center bg-[rgba(29,185,84,0.1)] border border-[rgba(29,185,84,0.3)] rounded-xl py-2.5 text-[#1DB954] text-sm font-bold">
+          <div className="mt-3 text-center bg-[rgba(78,158,122,0.1)] border border-[rgba(78,158,122,0.3)] rounded-xl py-2.5 text-[#4E9E7A] text-sm font-bold">
             ✓ أكملتَ الشيكلست — الآن تداول بثقة
           </div>
         )}
@@ -120,16 +120,16 @@ export function DailyChecklist() {
                 className={[
                   'w-full flex items-center gap-3 p-3.5 rounded-xl border mb-1.5 text-right transition-all active:scale-[0.98]',
                   isDone
-                    ? 'bg-[rgba(29,185,84,0.08)] border-[rgba(29,185,84,0.3)]'
+                    ? 'bg-[rgba(78,158,122,0.08)] border-[rgba(78,158,122,0.3)]'
                     : item.stop
-                    ? 'bg-[#162035] border-[rgba(231,76,60,0.25)]'
-                    : 'bg-[#162035] border-[rgba(212,175,55,0.12)]',
+                    ? 'bg-[#162035] border-[rgba(187,91,91,0.25)]'
+                    : 'bg-[#162035] border-[rgba(194,155,74,0.12)]',
                 ].join(' ')}
               >
                 {/* Checkbox */}
                 <div className={[
                   'w-[22px] h-[22px] rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                  isDone ? 'bg-[#1DB954] border-[#1DB954]' : 'border-[#4A5A7A]',
+                  isDone ? 'bg-[#4E9E7A] border-[#4E9E7A]' : 'border-[#4A5A7A]',
                 ].join(' ')}>
                   {isDone && (
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -141,7 +141,7 @@ export function DailyChecklist() {
                 {/* Text */}
                 <span className={[
                   'flex-1 text-[13px] text-right leading-snug transition-all',
-                  isDone ? 'text-[#1DB954] line-through opacity-70' : 'text-[#C8D8EE]',
+                  isDone ? 'text-[#4E9E7A] line-through opacity-70' : 'text-[#C8D8EE]',
                 ].join(' ')}>
                   {item.text}
                 </span>
@@ -151,8 +151,8 @@ export function DailyChecklist() {
                   <span className={[
                     'text-[10px] px-2 py-0.5 rounded-lg border flex-shrink-0',
                     isDone
-                      ? 'bg-[rgba(29,185,84,0.12)] text-[#1DB954] border-[rgba(29,185,84,0.3)]'
-                      : 'bg-[rgba(231,76,60,0.1)] text-[#E74C3C] border-[rgba(231,76,60,0.3)]',
+                      ? 'bg-[rgba(78,158,122,0.12)] text-[#4E9E7A] border-[rgba(78,158,122,0.3)]'
+                      : 'bg-[rgba(187,91,91,0.1)] text-[#BB5B5B] border-[rgba(187,91,91,0.3)]',
                   ].join(' ')}>
                     حد
                   </span>
@@ -167,14 +167,14 @@ export function DailyChecklist() {
       {mounted && done > 0 && (
         <button
           onClick={reset}
-          className="w-full mt-2 py-3 rounded-xl border border-[rgba(212,175,55,0.18)] bg-transparent text-[#4A5A7A] text-sm hover:text-[#8899BB] hover:bg-[rgba(255,255,255,0.03)] transition-colors"
+          className="w-full mt-2 py-3 rounded-xl border border-[rgba(194,155,74,0.18)] bg-transparent text-[#4A5A7A] text-sm hover:text-[#8899BB] hover:bg-[rgba(255,255,255,0.03)] transition-colors"
         >
           إعادة تعيين الشيكلست
         </button>
       )}
 
       <p className="text-center text-[10px] text-[#2A3A5A] mt-4 pb-2">
-        © 2026 <span className="text-[#D4AF37]">JK Trading</span> — جميع الحقوق محفوظة
+        © 2026 <span className="text-[#C29B4A]">JK Trading</span> — جميع الحقوق محفوظة
       </p>
     </div>
   )

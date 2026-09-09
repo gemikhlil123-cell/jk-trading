@@ -69,7 +69,7 @@ export function DailyPnlChart({ trades }: DailyPnlChartProps) {
         <div
           style={{
             background: '#0D1827',
-            border: '1px solid rgba(212,175,55,0.2)',
+            border: '1px solid rgba(194,155,74,0.2)',
             borderRadius: 8,
             padding: '8px 12px',
             fontSize: 12,
@@ -77,7 +77,7 @@ export function DailyPnlChart({ trades }: DailyPnlChartProps) {
           }}
         >
           <div style={{ color: '#8899BB', marginBottom: 2 }}>{label}</div>
-          <div style={{ color: val >= 0 ? '#1DB954' : '#E74C3C', fontWeight: 700 }}>
+          <div style={{ color: val >= 0 ? '#4E9E7A' : '#BB5B5B', fontWeight: 700 }}>
             {val >= 0 ? '+' : ''}${val.toFixed(2)}
           </div>
         </div>
@@ -109,7 +109,7 @@ export function DailyPnlChart({ trades }: DailyPnlChartProps) {
           {data.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={entry.pnl >= 0 ? 'rgba(29,185,84,0.8)' : 'rgba(231,76,60,0.8)'}
+              fill={entry.pnl >= 0 ? 'rgba(78,158,122,0.8)' : 'rgba(187,91,91,0.8)'}
             />
           ))}
         </Bar>

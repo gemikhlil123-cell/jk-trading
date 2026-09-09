@@ -38,7 +38,7 @@ export function MentorCommentForm({ tradeId }: { tradeId: string }) {
         style={{
           flex: 1,
           background: 'rgba(0,0,0,0.25)',
-          border: '1px solid rgba(212,175,55,0.15)',
+          border: '1px solid rgba(194,155,74,0.15)',
           borderRadius: 8,
           padding: '8px 10px',
           color: '#C8D8EE',
@@ -52,7 +52,7 @@ export function MentorCommentForm({ tradeId }: { tradeId: string }) {
         disabled={loading || !text.trim()}
         style={{
           padding: '8px 14px',
-          background: 'linear-gradient(135deg, #A07D1C, #D4AF37)',
+          background: 'linear-gradient(135deg, #8A6A1F, #C29B4A)',
           color: '#080C14',
           border: 'none',
           borderRadius: 8,

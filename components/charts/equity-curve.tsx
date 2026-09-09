@@ -46,7 +46,7 @@ export function EquityCurve({ trades }: EquityCurveProps) {
 
   if (data.length === 0) {
     return (
-      <div className="h-[200px] flex items-center justify-center text-[#F5F5DC]/40 text-sm">
+      <div className="h-[200px] flex items-center justify-center text-[#EDEBE4]/40 text-sm">
         لا توجد صفقات مغلقة بعد
       </div>
     )
@@ -60,12 +60,12 @@ export function EquityCurve({ trades }: EquityCurveProps) {
         <CartesianGrid strokeDasharray="3 3" stroke="#1D3461" vertical={false} />
         <XAxis
           dataKey="date"
-          tick={{ fill: '#F5F5DC50', fontSize: 11 }}
+          tick={{ fill: '#EDEBE450', fontSize: 11 }}
           axisLine={false}
           tickLine={false}
         />
         <YAxis
-          tick={{ fill: '#F5F5DC50', fontSize: 11 }}
+          tick={{ fill: '#EDEBE450', fontSize: 11 }}
           axisLine={false}
           tickLine={false}
           orientation="right"
@@ -75,21 +75,21 @@ export function EquityCurve({ trades }: EquityCurveProps) {
             background: '#112240',
             border: '1px solid #1D3461',
             borderRadius: '8px',
-            color: '#F5F5DC',
+            color: '#EDEBE4',
           }}
           formatter={(value) => [
             `$${Number(value).toLocaleString()}`,
             'رأس المال',
           ]}
         />
-        <ReferenceLine y={0} stroke="#F5F5DC20" strokeDasharray="3 3" />
+        <ReferenceLine y={0} stroke="#EDEBE420" strokeDasharray="3 3" />
         <Line
           type="monotone"
           dataKey="equity"
-          stroke={isPositive ? '#22c55e' : '#ef4444'}
+          stroke={isPositive ? '#4E9E7A' : '#BB5B5B'}
           strokeWidth={2}
           dot={false}
-          activeDot={{ r: 4, fill: isPositive ? '#22c55e' : '#ef4444' }}
+          activeDot={{ r: 4, fill: isPositive ? '#4E9E7A' : '#BB5B5B' }}
         />
       </LineChart>
     </ResponsiveContainer>

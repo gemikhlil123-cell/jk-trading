@@ -9,10 +9,10 @@
 import type { Lesson, SectionMeta } from './jk-trading-content'
 
 export const JKM_SECTIONS: SectionMeta[] = [
-  { id: 'jkm-foundation',  title: 'JK METHOD — الأساس',        subtitle: 'النموذج الفركتلي ورقصة النِرّات الأربعة', icon: '❖', accent: '#D4AF37' },
+  { id: 'jkm-foundation',  title: 'JK METHOD — الأساس',        subtitle: 'النموذج الفركتلي ورقصة النِرّات الأربعة', icon: '❖', accent: '#C29B4A' },
   { id: 'jkm-timeframes',  title: 'الأطر المرتبطة',            subtitle: 'القراءة من الأعلى للأسفل',              icon: '≣', accent: '#3B82F6' },
   { id: 'jkm-liquidity',   title: 'السيولة والإعداد',          subtitle: 'أخذ السيولة، الانعكاس، والتوزيع',        icon: '⇌', accent: '#9333EA' },
-  { id: 'jkm-execution',   title: 'التنفيذ — CISD',            subtitle: 'نقطة الدخول، الوقف، والهدف',            icon: '◆', accent: '#10B981' },
+  { id: 'jkm-execution',   title: 'التنفيذ — CISD',            subtitle: 'نقطة الدخول، الوقف، والهدف',            icon: '◆', accent: '#4E9E7A' },
   { id: 'jkm-confirmation',title: 'التأكيد — SMT',             subtitle: 'الشرخ بين الأصول المترابطة',            icon: '◉', accent: '#06B6D4' },
   { id: 'jkm-time-risk',   title: 'الوقت وإدارة المخاطر',      subtitle: 'متى تتداول وكم تخاطر',                  icon: '◷', accent: '#F59E0B' },
 ]

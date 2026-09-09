@@ -33,10 +33,10 @@ export default async function SettingsPage({
   return (
     <div className="px-4 relative z-[1] pb-20">
       <div className="mt-4 mb-5">
-        <h1 className="text-[#C9A84C] text-base font-black tracking-widest uppercase">
+        <h1 className="text-[#C29B4A] text-base font-black tracking-widest uppercase">
           الإعدادات
         </h1>
-        <p className="text-[11px] mt-1" style={{ color: 'rgba(201,168,76,0.5)' }}>
+        <p className="text-[11px] mt-1" style={{ color: 'rgba(194,155,74,0.5)' }}>
           اربط حسابك في Tradovate لاستيراد الصفقات تلقائياً
         </p>
       </div>

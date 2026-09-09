@@ -77,10 +77,10 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
         <button
           onClick={nextMonth}
           style={{
-            background: 'rgba(212,175,55,0.1)',
-            border: '1px solid rgba(212,175,55,0.2)',
+            background: 'rgba(194,155,74,0.1)',
+            border: '1px solid rgba(194,155,74,0.2)',
             borderRadius: 6,
-            color: '#D4AF37',
+            color: '#C29B4A',
             width: 28,
             height: 28,
             cursor: 'pointer',
@@ -102,10 +102,10 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
         <button
           onClick={prevMonth}
           style={{
-            background: 'rgba(212,175,55,0.1)',
-            border: '1px solid rgba(212,175,55,0.2)',
+            background: 'rgba(194,155,74,0.1)',
+            border: '1px solid rgba(194,155,74,0.2)',
             borderRadius: 6,
-            color: '#D4AF37',
+            color: '#C29B4A',
             width: 28,
             height: 28,
             cursor: 'pointer',
@@ -157,18 +157,18 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
 
           if (pnl !== undefined) {
             if (pnl > 0) {
-              bg = 'rgba(29,185,84,0.12)'
-              border = '1px solid rgba(29,185,84,0.25)'
-              textColor = '#1DB954'
+              bg = 'rgba(78,158,122,0.12)'
+              border = '1px solid rgba(78,158,122,0.25)'
+              textColor = '#4E9E7A'
             } else {
-              bg = 'rgba(231,76,60,0.12)'
-              border = '1px solid rgba(231,76,60,0.25)'
-              textColor = '#E74C3C'
+              bg = 'rgba(187,91,91,0.12)'
+              border = '1px solid rgba(187,91,91,0.25)'
+              textColor = '#BB5B5B'
             }
           }
 
           if (isToday) {
-            border = '1px solid rgba(212,175,55,0.5)'
+            border = '1px solid rgba(194,155,74,0.5)'
           }
 
           return (
@@ -190,7 +190,7 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
               <span
                 style={{
                   fontSize: 10,
-                  color: isToday ? '#D4AF37' : 'rgba(200,216,238,0.5)',
+                  color: isToday ? '#C29B4A' : 'rgba(200,216,238,0.5)',
                   fontWeight: isToday ? 700 : 400,
                   alignSelf: 'flex-start',
                   paddingRight: 2,
@@ -223,7 +223,7 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
           gap: 8,
           marginTop: 12,
           paddingTop: 10,
-          borderTop: '1px solid rgba(212,175,55,0.08)',
+          borderTop: '1px solid rgba(194,155,74,0.08)',
         }}
       >
         <div style={{ flex: 1, textAlign: 'center' }}>
@@ -231,7 +231,7 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
           <div style={{ fontSize: 9, color: 'rgba(200,216,238,0.4)', marginTop: 1 }}>يوم تداول</div>
         </div>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div style={{ fontSize: 16, fontWeight: 900, color: '#1DB954' }}>{monthWinDays}</div>
+          <div style={{ fontSize: 16, fontWeight: 900, color: '#4E9E7A' }}>{monthWinDays}</div>
           <div style={{ fontSize: 9, color: 'rgba(200,216,238,0.4)', marginTop: 1 }}>يوم رابح</div>
         </div>
         <div style={{ flex: 1, textAlign: 'center' }}>
@@ -239,7 +239,7 @@ export function TradingCalendar({ trades }: TradingCalendarProps) {
             style={{
               fontSize: 16,
               fontWeight: 900,
-              color: monthTotalPnl >= 0 ? '#1DB954' : '#E74C3C',
+              color: monthTotalPnl >= 0 ? '#4E9E7A' : '#BB5B5B',
             }}
           >
             {monthTotalPnl >= 0 ? '+' : ''}${monthTotalPnl.toFixed(0)}

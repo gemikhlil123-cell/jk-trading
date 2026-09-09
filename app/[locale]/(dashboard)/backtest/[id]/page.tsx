@@ -107,7 +107,7 @@ export default async function BacktestSessionPage({
 
       {/* Add trade form */}
       <div className="card-navy p-4">
-        <h2 className="text-[#D4AF37] text-xs font-bold tracking-wide mb-3 flex items-center gap-2">
+        <h2 className="text-[#C29B4A] text-xs font-bold tracking-wide mb-3 flex items-center gap-2">
           <Plus size={14} />
           إضافة صفقة للجلسة
         </h2>
@@ -120,7 +120,7 @@ export default async function BacktestSessionPage({
 
       {/* Trades table */}
       <div className="card-navy overflow-hidden">
-        <div className="p-4 border-b border-[rgba(212,175,55,0.18)]">
+        <div className="p-4 border-b border-[rgba(194,155,74,0.18)]">
           <h2 className="text-[#C8D8EE] font-semibold">صفقات الجلسة ({bs.trades.length})</h2>
         </div>
 
@@ -132,7 +132,7 @@ export default async function BacktestSessionPage({
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[rgba(212,175,55,0.18)]">
+                <tr className="border-b border-[rgba(194,155,74,0.18)]">
                   <th className="text-right px-4 py-3 text-[#C8D8EE]/50 font-medium">الوقت</th>
                   <th className="text-right px-4 py-3 text-[#C8D8EE]/50 font-medium">الاتجاه</th>
                   <th className="text-right px-4 py-3 text-[#C8D8EE]/50 font-medium">دخول</th>

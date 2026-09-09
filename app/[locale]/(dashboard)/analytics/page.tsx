@@ -32,7 +32,7 @@ export default async function AnalyticsPage({
     <div style={{ padding: '14px 14px 100px', direction: 'rtl' }}>
       <AnalyticsSubnav locale={locale} />
       <div style={{ marginBottom: 12 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#D4AF37' }}>التحليل الشامل</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#C29B4A' }}>التحليل الشامل</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           تحليل شخصي مبني على تفاصيل صفقاتك الفعلية — نفس الساعات والأسباب التي أدخلتها.
         </p>

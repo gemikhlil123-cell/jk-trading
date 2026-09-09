@@ -15,7 +15,7 @@ export default async function CalendarPage({ params }: { params: Promise<{ local
   return (
     <div style={{ padding: '16px 16px 100px', direction: 'rtl', fontFamily: 'Cairo, sans-serif' }}>
       <div className="anim-fade-up" style={{ marginBottom: 16 }}>
-        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#D4AF37' }}>التقويم الاقتصادي</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 900, color: '#C29B4A' }}>التقويم الاقتصادي</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           الأخبار عالية التأثير تحرّك السوق. تجنّب الدخول قبل صدورها بدقائق وراقب التقلّب.
         </p>

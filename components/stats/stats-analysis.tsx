@@ -47,13 +47,13 @@ export function StatsAnalysis({ trades }: Props) {
       <div className="sec-title">تحليل الأداء</div>
 
       {keep.length > 0 && (
-        <div className="rounded-2xl border border-[rgba(29,185,84,0.3)] bg-[rgba(29,185,84,0.06)] p-4">
-          <p className="text-[#1DB954] text-xs font-bold mb-2 flex items-center gap-1.5">
+        <div className="rounded-2xl border border-[rgba(78,158,122,0.3)] bg-[rgba(78,158,122,0.06)] p-4">
+          <p className="text-[#4E9E7A] text-xs font-bold mb-2 flex items-center gap-1.5">
             <span>✦</span> استمر في هذا
           </p>
           {keep.map((item, i) => (
             <p key={i} className="text-[#8899BB] text-xs mt-1.5 flex gap-2">
-              <span className="text-[#1DB954] flex-shrink-0">✓</span>
+              <span className="text-[#4E9E7A] flex-shrink-0">✓</span>
               {item}
             </p>
           ))}
@@ -61,13 +61,13 @@ export function StatsAnalysis({ trades }: Props) {
       )}
 
       {fix.length > 0 && (
-        <div className="rounded-2xl border border-[rgba(212,175,55,0.3)] bg-[rgba(212,175,55,0.06)] p-4">
-          <p className="text-[#D4AF37] text-xs font-bold mb-2 flex items-center gap-1.5">
+        <div className="rounded-2xl border border-[rgba(194,155,74,0.3)] bg-[rgba(194,155,74,0.06)] p-4">
+          <p className="text-[#C29B4A] text-xs font-bold mb-2 flex items-center gap-1.5">
             <span>◈</span> يجب تحسينه
           </p>
           {fix.map((item, i) => (
             <p key={i} className="text-[#8899BB] text-xs mt-1.5 flex gap-2">
-              <span className="text-[#D4AF37] flex-shrink-0">→</span>
+              <span className="text-[#C29B4A] flex-shrink-0">→</span>
               {item}
             </p>
           ))}
@@ -75,13 +75,13 @@ export function StatsAnalysis({ trades }: Props) {
       )}
 
       {stop.length > 0 && (
-        <div className="rounded-2xl border border-[rgba(231,76,60,0.3)] bg-[rgba(231,76,60,0.06)] p-4">
-          <p className="text-[#E74C3C] text-xs font-bold mb-2 flex items-center gap-1.5">
+        <div className="rounded-2xl border border-[rgba(187,91,91,0.3)] bg-[rgba(187,91,91,0.06)] p-4">
+          <p className="text-[#BB5B5B] text-xs font-bold mb-2 flex items-center gap-1.5">
             <span>✕</span> توقف عن هذا
           </p>
           {stop.map((item, i) => (
             <p key={i} className="text-[#8899BB] text-xs mt-1.5 flex gap-2">
-              <span className="text-[#E74C3C] flex-shrink-0">!</span>
+              <span className="text-[#BB5B5B] flex-shrink-0">!</span>
               {item}
             </p>
           ))}

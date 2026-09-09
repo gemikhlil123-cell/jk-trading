@@ -66,16 +66,16 @@ export function LucidChallenge({ currentPnl, target }: Props) {
     <div className="card-gold p-4 mt-4">
       <div className="flex items-center justify-between mb-3">
         <div>
-          <p className="text-[#D4AF37] text-xs font-bold tracking-wide">🎯 تقدم Lucid Challenge</p>
+          <p className="text-[#C29B4A] text-xs font-bold tracking-wide">🎯 تقدم Lucid Challenge</p>
           <p className="text-[#4A5A7A] text-[10px] mt-0.5">
-            الهدف: <span className="text-[#D4AF37] font-bold">${target.toLocaleString()}</span>
+            الهدف: <span className="text-[#C29B4A] font-bold">${target.toLocaleString()}</span>
             <span className="mx-1.5 text-[#2A3A5A]">•</span>
             <span className="text-[#8899BB]">
               المصدر: {source === 'csv' ? 'Tradovate CSV' : 'السجل اليدوي'}
             </span>
           </p>
         </div>
-        <p className={`text-2xl font-black ${achieved ? 'text-[#D4AF37]' : effectivePnl >= 0 ? 'text-[#1DB954]' : 'text-[#E74C3C]'}`}>
+        <p className={`text-2xl font-black ${achieved ? 'text-[#C29B4A]' : effectivePnl >= 0 ? 'text-[#4E9E7A]' : 'text-[#BB5B5B]'}`}>
           {pct.toFixed(1)}%
         </p>
       </div>
@@ -86,17 +86,17 @@ export function LucidChallenge({ currentPnl, target }: Props) {
           style={{
             width: `${pct}%`,
             background: achieved
-              ? 'linear-gradient(90deg, #D4AF37, #F5E6A3)'
+              ? 'linear-gradient(90deg, #C29B4A, #E4CE9B)'
               : effectivePnl >= 0
-              ? 'linear-gradient(90deg, #A07D1C, #D4AF37)'
-              : 'linear-gradient(90deg, #991B1B, #E74C3C)',
+              ? 'linear-gradient(90deg, #8A6A1F, #C29B4A)'
+              : 'linear-gradient(90deg, #991B1B, #BB5B5B)',
           }}
         />
       </div>
 
       <div className="flex justify-between text-xs mt-2">
         <span className="text-[#8899BB]">
-          المحقق: <b className={effectivePnl >= 0 ? 'text-[#1DB954]' : 'text-[#E74C3C]'}>
+          المحقق: <b className={effectivePnl >= 0 ? 'text-[#4E9E7A]' : 'text-[#BB5B5B]'}>
             {effectivePnl >= 0 ? '+' : ''}${effectivePnl.toFixed(0)}
           </b>
         </span>

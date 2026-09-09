@@ -6,11 +6,11 @@ import { LESSONS, SECTIONS_META, getLessonsBySection } from '@/lib/jk-trading-co
 export const dynamic = 'force-dynamic'
 
 const BADGE_COLORS: Record<string, { bg: string; fg: string }> = {
-  'فيديو': { bg: 'rgba(212,175,55,0.15)', fg: '#D4AF37' },
-  'PDF':   { bg: 'rgba(239,68,68,0.15)',  fg: '#FF6B6B' },
+  'فيديو': { bg: 'rgba(194,155,74,0.15)', fg: '#C29B4A' },
+  'PDF':   { bg: 'rgba(187,91,91,0.15)',  fg: '#FF6B6B' },
   'دليل':  { bg: 'rgba(59,130,246,0.15)', fg: '#60A5FA' },
   'مهم':   { bg: 'rgba(255,193,7,0.18)',  fg: '#FFC857' },
-  'جديد':  { bg: 'rgba(16,185,129,0.15)', fg: '#10B981' },
+  'جديد':  { bg: 'rgba(78,158,122,0.15)', fg: '#4E9E7A' },
 }
 
 export default async function JKTradingEducationPage({
@@ -35,7 +35,7 @@ export default async function JKTradingEducationPage({
           borderRadius: 16,
           padding: '28px 24px',
           marginBottom: 18,
-          border: '1px solid rgba(212,175,55,0.22)',
+          border: '1px solid rgba(194,155,74,0.22)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -48,7 +48,7 @@ export default async function JKTradingEducationPage({
             width: 180,
             height: 180,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(194,155,74,0.18) 0%, transparent 70%)',
           }}
         />
         <div style={{ position: 'relative' }}>
@@ -57,10 +57,10 @@ export default async function JKTradingEducationPage({
               display: 'inline-block',
               padding: '4px 10px',
               borderRadius: 999,
-              background: 'rgba(212,175,55,0.12)',
-              border: '1px solid rgba(212,175,55,0.3)',
+              background: 'rgba(194,155,74,0.12)',
+              border: '1px solid rgba(194,155,74,0.3)',
               fontSize: 10,
-              color: '#D4AF37',
+              color: '#C29B4A',
               fontWeight: 700,
               letterSpacing: 1,
               marginBottom: 12,
@@ -72,7 +72,7 @@ export default async function JKTradingEducationPage({
             style={{
               fontSize: 28,
               fontWeight: 900,
-              background: 'linear-gradient(90deg, #D4AF37 0%, #FFC857 50%, #D4AF37 100%)',
+              background: 'linear-gradient(90deg, #C29B4A 0%, #FFC857 50%, #C29B4A 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -231,13 +231,13 @@ export default async function JKTradingEducationPage({
         style={{
           marginTop: 32,
           background: 'linear-gradient(135deg, #0A192F 0%, #112240 100%)',
-          border: '1px solid rgba(212,175,55,0.25)',
+          border: '1px solid rgba(194,155,74,0.25)',
           borderRadius: 14,
           padding: 22,
           textAlign: 'center',
         }}
       >
-        <div style={{ fontSize: 14, color: '#D4AF37', fontWeight: 700, marginBottom: 6 }}>
+        <div style={{ fontSize: 14, color: '#C29B4A', fontWeight: 700, marginBottom: 6 }}>
           📚 المنهج يُحدّث باستمرار
         </div>
         <p style={{ fontSize: 12, color: '#8899BB', lineHeight: 1.7 }}>
@@ -255,14 +255,14 @@ function Stat({ label, value }: { label: string; value: string }) {
     <div
       style={{
         background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(212,175,55,0.18)',
+        border: '1px solid rgba(194,155,74,0.18)',
         borderRadius: 8,
         padding: '8px 14px',
         minWidth: 100,
       }}
     >
       <div style={{ fontSize: 9, color: '#8899BB', marginBottom: 2 }}>{label}</div>
-      <div style={{ fontSize: 14, fontWeight: 700, color: '#D4AF37' }}>{value}</div>
+      <div style={{ fontSize: 14, fontWeight: 700, color: '#C29B4A' }}>{value}</div>
     </div>
   )
 }

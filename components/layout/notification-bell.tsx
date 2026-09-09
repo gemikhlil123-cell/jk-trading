@@ -47,12 +47,12 @@ export function NotificationBell() {
     <div className="relative">
       <button
         onClick={openPanel}
-        className="relative p-1.5 rounded-lg text-[#F5F5DC]/50 hover:text-[#F5F5DC] hover:bg-[#F5F5DC]/5 transition-colors"
+        className="relative p-1.5 rounded-lg text-[#EDEBE4]/50 hover:text-[#EDEBE4] hover:bg-[#EDEBE4]/5 transition-colors"
         aria-label="notifications"
       >
         <Bell size={18} />
         {unread > 0 && (
-          <span className="absolute -top-0.5 -end-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-[#E74C3C] text-white text-[9px] font-bold flex items-center justify-center">
+          <span className="absolute -top-0.5 -end-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-[#BB5B5B] text-white text-[9px] font-bold flex items-center justify-center">
             {unread > 9 ? '9+' : unread}
           </span>
         )}
@@ -63,13 +63,13 @@ export function NotificationBell() {
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div
             dir="rtl"
-            className="absolute top-full end-0 mt-2 w-80 max-h-96 overflow-y-auto rounded-xl bg-[#0D1520] border border-[rgba(212,175,55,0.25)] shadow-2xl z-50"
+            className="absolute top-full end-0 mt-2 w-80 max-h-96 overflow-y-auto rounded-xl bg-[#0D1520] border border-[rgba(194,155,74,0.25)] shadow-2xl z-50"
             style={{ fontFamily: 'Cairo, sans-serif' }}
           >
-            <div className="px-4 py-3 border-b border-[rgba(212,175,55,0.15)] flex items-center justify-between">
-              <span className="text-[#D4AF37] font-bold text-sm">الإشعارات</span>
+            <div className="px-4 py-3 border-b border-[rgba(194,155,74,0.15)] flex items-center justify-between">
+              <span className="text-[#C29B4A] font-bold text-sm">الإشعارات</span>
               {alerts.length > 0 && (
-                <button onClick={markAllRead} className="text-[10px] text-[#8899BB] hover:text-[#D4AF37]">
+                <button onClick={markAllRead} className="text-[10px] text-[#8899BB] hover:text-[#C29B4A]">
                   تعليم الكل كمقروء
                 </button>
               )}
@@ -81,12 +81,12 @@ export function NotificationBell() {
                 {alerts.map(a => (
                   <div
                     key={a.id}
-                    className={`px-4 py-3 border-b border-[rgba(212,175,55,0.06)] ${
-                      !a.isRead ? 'bg-[rgba(212,175,55,0.05)]' : ''
+                    className={`px-4 py-3 border-b border-[rgba(194,155,74,0.06)] ${
+                      !a.isRead ? 'bg-[rgba(194,155,74,0.05)]' : ''
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[rgba(212,175,55,0.15)] text-[#D4AF37]">
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[rgba(194,155,74,0.15)] text-[#C29B4A]">
                         {a.type === 'MENTOR_COMMENT' ? 'من المدرب' : a.type === 'BILLING' ? 'فوترة' : 'نظام'}
                       </span>
                       <span className="text-[9px] text-[#4A5A7A]">

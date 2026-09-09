@@ -28,12 +28,12 @@ export function LoginForm() {
     else { router.push(callbackUrl); router.refresh() }
   }
 
-  const ic = 'w-full bg-[#162035] border border-[rgba(212,175,55,0.2)] text-[#C8D8EE] rounded-xl px-4 py-3.5 text-sm font-[Cairo] outline-none transition-colors placeholder:text-[#4A5A7A] focus:border-[#D4AF37] mb-4 text-center direction-ltr'
+  const ic = 'w-full bg-[#162035] border border-[rgba(194,155,74,0.2)] text-[#C8D8EE] rounded-xl px-4 py-3.5 text-sm font-[Cairo] outline-none transition-colors placeholder:text-[#4A5A7A] focus:border-[#C29B4A] mb-4 text-center direction-ltr'
 
   return (
     <div
       className="rounded-3xl p-8 w-full"
-      style={{ background: '#0D1520', border: '1px solid rgba(212,175,55,0.25)' }}
+      style={{ background: '#0D1520', border: '1px solid rgba(194,155,74,0.25)' }}
     >
       {/* Logo */}
       <div className="text-center mb-7">
@@ -42,20 +42,20 @@ export function LoginForm() {
           src="/logo.png"
           alt="JK Trading"
           className="w-24 h-24 rounded-2xl mx-auto mb-3.5 object-contain"
-          style={{ filter: 'drop-shadow(0 0 16px rgba(201,168,76,0.5))', border: '1px solid rgba(201,168,76,0.2)' }}
+          style={{ filter: 'drop-shadow(0 0 16px rgba(194,155,74,0.5))', border: '1px solid rgba(194,155,74,0.2)' }}
         />
-        <h1 className="text-[22px] font-black text-[#D4AF37] tracking-widest">JK TRADING</h1>
+        <h1 className="text-[22px] font-black text-[#C29B4A] tracking-widest">JK TRADING</h1>
         <p className="text-[#4A5A7A] text-xs mt-1">سجّل، حلّل، تحسّن</p>
       </div>
 
       {registered && (
-        <div className="bg-[rgba(29,185,84,0.1)] border border-[rgba(29,185,84,0.3)] rounded-xl p-3 text-[#1DB954] text-xs text-center mb-5">
+        <div className="bg-[rgba(78,158,122,0.1)] border border-[rgba(78,158,122,0.3)] rounded-xl p-3 text-[#4E9E7A] text-xs text-center mb-5">
           تم إنشاء الحساب بنجاح — سجّل دخولك الآن
         </div>
       )}
 
       <form onSubmit={onSubmit}>
-        <label className="block text-[11px] font-bold text-[#D4AF37] tracking-widest mb-2">
+        <label className="block text-[11px] font-bold text-[#C29B4A] tracking-widest mb-2">
           البريد الإلكتروني
         </label>
         <input
@@ -67,7 +67,7 @@ export function LoginForm() {
           style={{ direction: 'ltr' }}
         />
 
-        <label className="block text-[11px] font-bold text-[#D4AF37] tracking-widest mb-2">
+        <label className="block text-[11px] font-bold text-[#C29B4A] tracking-widest mb-2">
           كلمة المرور
         </label>
         <input
@@ -80,7 +80,7 @@ export function LoginForm() {
         />
 
         {error && (
-          <div className="bg-[rgba(231,76,60,0.1)] border border-[rgba(231,76,60,0.3)] rounded-xl p-3 text-[#E74C3C] text-xs text-center mb-4">
+          <div className="bg-[rgba(187,91,91,0.1)] border border-[rgba(187,91,91,0.3)] rounded-xl p-3 text-[#BB5B5B] text-xs text-center mb-4">
             {error}
           </div>
         )}
@@ -88,7 +88,7 @@ export function LoginForm() {
         {loading && (
           <div className="flex justify-center gap-1.5 mb-4">
             {[0,1,2].map(i => (
-              <span key={i} className="w-2 h-2 rounded-full bg-[#D4AF37]"
+              <span key={i} className="w-2 h-2 rounded-full bg-[#C29B4A]"
                 style={{ animation: `pulse 1.2s ease-in-out ${i * 0.2}s infinite` }} />
             ))}
           </div>
@@ -105,13 +105,13 @@ export function LoginForm() {
 
       <p className="text-center text-[#4A5A7A] text-xs mt-6">
         ليس لديك حساب؟{' '}
-        <Link href={`/${locale}/register`} className="text-[#D4AF37] hover:underline font-semibold">
+        <Link href={`/${locale}/register`} className="text-[#C29B4A] hover:underline font-semibold">
           إنشاء حساب
         </Link>
       </p>
 
       <p className="text-center text-[10px] text-[#2A3A5A] mt-4">
-        © 2026 <span className="text-[#D4AF37]">JK Trading</span>
+        © 2026 <span className="text-[#C29B4A]">JK Trading</span>
       </p>
     </div>
   )

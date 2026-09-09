@@ -17,10 +17,10 @@ interface StudentRow {
 }
 
 const STATUS_LABEL: Record<string, { label: string; color: string; bg: string; border: string }> = {
-  trial:     { label: 'تجربة',  color: '#C9A84C', bg: 'rgba(201,168,76,0.1)', border: 'rgba(201,168,76,0.3)' },
-  active:    { label: '✦ مشترك', color: '#1DB954', bg: 'rgba(29,185,84,0.1)',  border: 'rgba(29,185,84,0.3)' },
-  expired:   { label: 'منتهي',  color: '#E74C3C', bg: 'rgba(231,76,60,0.1)',  border: 'rgba(231,76,60,0.3)' },
-  cancelled: { label: 'ملغي',   color: '#E74C3C', bg: 'rgba(231,76,60,0.1)',  border: 'rgba(231,76,60,0.3)' },
+  trial:     { label: 'تجربة',  color: '#C29B4A', bg: 'rgba(194,155,74,0.1)', border: 'rgba(194,155,74,0.3)' },
+  active:    { label: '✦ مشترك', color: '#4E9E7A', bg: 'rgba(78,158,122,0.1)',  border: 'rgba(78,158,122,0.3)' },
+  expired:   { label: 'منتهي',  color: '#BB5B5B', bg: 'rgba(187,91,91,0.1)',  border: 'rgba(187,91,91,0.3)' },
+  cancelled: { label: 'ملغي',   color: '#BB5B5B', bg: 'rgba(187,91,91,0.1)',  border: 'rgba(187,91,91,0.3)' },
 }
 
 export function StudentRow({ r, locale, first }: { r: StudentRow; locale: string; first: boolean }) {
@@ -58,7 +58,7 @@ export function StudentRow({ r, locale, first }: { r: StudentRow; locale: string
         display: 'grid',
         gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1.4fr',
         padding: '12px',
-        borderTop: first ? 'none' : '1px solid rgba(212,175,55,0.07)',
+        borderTop: first ? 'none' : '1px solid rgba(194,155,74,0.07)',
         fontSize: 12,
         color: '#C8D8EE',
         alignItems: 'center',
@@ -75,7 +75,7 @@ export function StudentRow({ r, locale, first }: { r: StudentRow; locale: string
       <div
         style={{
           textAlign: 'center',
-          color: r.winRate >= 50 ? '#1DB954' : '#E74C3C',
+          color: r.winRate >= 50 ? '#4E9E7A' : '#BB5B5B',
           fontWeight: 700,
         }}
       >
@@ -84,7 +84,7 @@ export function StudentRow({ r, locale, first }: { r: StudentRow; locale: string
       <div
         style={{
           textAlign: 'center',
-          color: r.totalPnl >= 0 ? '#1DB954' : '#E74C3C',
+          color: r.totalPnl >= 0 ? '#4E9E7A' : '#BB5B5B',
           fontWeight: 700,
         }}
       >
@@ -122,9 +122,9 @@ export function StudentRow({ r, locale, first }: { r: StudentRow; locale: string
             fontWeight: 700,
             cursor: updating ? 'default' : 'pointer',
             border: '1px solid',
-            borderColor: isActive ? 'rgba(231,76,60,0.4)' : 'rgba(29,185,84,0.5)',
-            background: isActive ? 'rgba(231,76,60,0.08)' : 'rgba(29,185,84,0.12)',
-            color: isActive ? '#E74C3C' : '#1DB954',
+            borderColor: isActive ? 'rgba(187,91,91,0.4)' : 'rgba(78,158,122,0.5)',
+            background: isActive ? 'rgba(187,91,91,0.08)' : 'rgba(78,158,122,0.12)',
+            color: isActive ? '#BB5B5B' : '#4E9E7A',
             opacity: updating ? 0.5 : 1,
             whiteSpace: 'nowrap',
           }}

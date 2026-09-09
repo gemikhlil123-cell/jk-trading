@@ -153,8 +153,8 @@
   }
 
   /* ─── PnL colors ─── */
-  .pnl-positive { @apply text-[#1DB954] font-semibold; }
-  .pnl-negative { @apply text-[#E74C3C] font-semibold; }
+  .pnl-positive { @apply text-[#4E9E7A] font-semibold; }
+  .pnl-negative { @apply text-[#BB5B5B] font-semibold; }
 
   /* ─── Tags ─── */
   .tag-keep    { @apply bg-green-500/20 text-green-400 border border-green-500/30 text-xs px-2 py-0.5 rounded-full; }
@@ -209,7 +209,7 @@
   /* category accent gradients for stat tiles */
   .stat-accent-gold { background: linear-gradient(150deg, rgba(194,155,74,0.10), rgba(194,155,74,0.02) 60%), #111d2e; }
   .stat-accent-win  { background: linear-gradient(150deg, rgba(78,158,122,0.12), rgba(78,158,122,0.02) 60%), #111d2e; }
-  .stat-accent-loss { background: linear-gradient(150deg, rgba(231,76,60,0.12), rgba(231,76,60,0.02) 60%), #111d2e; }
+  .stat-accent-loss { background: linear-gradient(150deg, rgba(187,91,91,0.12), rgba(187,91,91,0.02) 60%), #111d2e; }
   .stat-accent-info { background: linear-gradient(150deg, rgba(90,150,190,0.12), rgba(90,150,190,0.02) 60%), #111d2e; }
 
   /* subtle gold glow for emphasis (live session / current PnL) */

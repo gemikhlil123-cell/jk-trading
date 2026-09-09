@@ -124,14 +124,14 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
             <span className={[
               'text-xs font-bold px-3 py-1 rounded-full',
               trade.direction === 'LONG'
-                ? 'bg-[rgba(29,185,84,0.12)] text-[#1DB954]'
-                : 'bg-[rgba(231,76,60,0.12)] text-[#E74C3C]',
+                ? 'bg-[rgba(78,158,122,0.12)] text-[#4E9E7A]'
+                : 'bg-[rgba(187,91,91,0.12)] text-[#BB5B5B]',
             ].join(' ')}>
               {trade.direction === 'LONG' ? '▲ شراء' : '▼ بيع'}
             </span>
           </div>
           {trade.pnl !== null && (
-            <span className={`text-2xl font-black ${isWin ? 'text-[#1DB954]' : isLoss ? 'text-[#E74C3C]' : 'text-[#8899BB]'}`}>
+            <span className={`text-2xl font-black ${isWin ? 'text-[#4E9E7A]' : isLoss ? 'text-[#BB5B5B]' : 'text-[#8899BB]'}`}>
               {isWin ? '+' : ''}{trade.pnl.toFixed(0)} <span className="text-sm">نقطة</span>
             </span>
           )}
@@ -139,15 +139,15 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
 
         <div className="grid grid-cols-2 gap-2 text-xs">
           {trade.rrAchieved !== null && (
-            <div className="bg-[#0D1520] rounded-lg p-2.5 border border-[rgba(212,175,55,0.08)]">
+            <div className="bg-[#0D1520] rounded-lg p-2.5 border border-[rgba(194,155,74,0.08)]">
               <p className="text-[#4A5A7A] text-[10px] mb-0.5">RR المحقق</p>
-              <p className={`font-mono font-bold ${trade.rrAchieved >= 1 ? 'text-[#1DB954]' : 'text-[#E74C3C]'}`}>
+              <p className={`font-mono font-bold ${trade.rrAchieved >= 1 ? 'text-[#4E9E7A]' : 'text-[#BB5B5B]'}`}>
                 {trade.rrAchieved.toFixed(2)}R
               </p>
             </div>
           )}
           {trade.rrPlanned !== null && (
-            <div className="bg-[#0D1520] rounded-lg p-2.5 border border-[rgba(212,175,55,0.08)]">
+            <div className="bg-[#0D1520] rounded-lg p-2.5 border border-[rgba(194,155,74,0.08)]">
               <p className="text-[#4A5A7A] text-[10px] mb-0.5">RR المخطط</p>
               <p className="text-[#C8D8EE] font-mono font-bold">{trade.rrPlanned.toFixed(2)}R</p>
             </div>
@@ -157,7 +157,7 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
 
       {/* Timing */}
       <div className="card-dark p-4">
-        <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">⏱ التوقيت</p>
+        <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-2">⏱ التوقيت</p>
         <div className="space-y-2 text-xs">
           <div className="flex justify-between">
             <span className="text-[#4A5A7A]">الدخول</span>
@@ -176,13 +176,13 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
           {trade.killzone && (
             <div className="flex justify-between">
               <span className="text-[#4A5A7A]">جلسة</span>
-              <span className="text-[#D4AF37] font-bold">{KILLZONE_AR[trade.killzone] ?? trade.killzone}</span>
+              <span className="text-[#C29B4A] font-bold">{KILLZONE_AR[trade.killzone] ?? trade.killzone}</span>
             </div>
           )}
           {trade.cyclePhase && (
             <div className="flex justify-between">
               <span className="text-[#4A5A7A]">السايكل</span>
-              <span className="text-[#D4AF37] font-bold">{trade.cyclePhase}</span>
+              <span className="text-[#C29B4A] font-bold">{trade.cyclePhase}</span>
             </div>
           )}
         </div>
@@ -191,14 +191,14 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
       {/* Chart Images */}
       {chartKeys.length > 0 && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-3">📊 صور الشارت ({chartKeys.length})</p>
+          <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-3">📊 صور الشارت ({chartKeys.length})</p>
           <div className="grid grid-cols-2 gap-2">
             {chartKeys.map((key) => (
               <button
                 key={key}
                 type="button"
                 onClick={() => setZoomImg(charts[key])}
-                className="relative rounded-lg overflow-hidden border border-[rgba(212,175,55,0.2)] hover:border-[#D4AF37] transition-all"
+                className="relative rounded-lg overflow-hidden border border-[rgba(194,155,74,0.2)] hover:border-[#C29B4A] transition-all"
                 style={{ aspectRatio: '16/10' }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -207,7 +207,7 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
                   alt={SLOT_LABELS[key] ?? key}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-0 left-0 right-0 px-2 py-1 text-[10px] font-bold text-[#D4AF37]"
+                <div className="absolute bottom-0 left-0 right-0 px-2 py-1 text-[10px] font-bold text-[#C29B4A]"
                   style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.8))' }}>
                   {SLOT_LABELS[key] ?? key}
                 </div>
@@ -220,11 +220,11 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
       {/* Entry Reasons */}
       {trade.entryReasons.length > 0 && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">🎯 أسباب الدخول</p>
+          <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-2">🎯 أسباب الدخول</p>
           <div className="flex flex-wrap gap-1.5">
             {trade.entryReasons.map((er) => (
               <span key={er.id}
-                className="text-[10px] px-2.5 py-1 rounded-full bg-[#162035] text-[#8899BB] border border-[rgba(212,175,55,0.12)]">
+                className="text-[10px] px-2.5 py-1 rounded-full bg-[#162035] text-[#8899BB] border border-[rgba(194,155,74,0.12)]">
                 {er.name}
               </span>
             ))}
@@ -235,16 +235,16 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
       {/* True Opens & Confirmations from meta */}
       {meta && (meta.trueOpens || (meta.confirmations && meta.confirmations.length > 0)) && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">⚙️ شروط الدخول</p>
+          <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-2">⚙️ شروط الدخول</p>
           {meta.trueOpens && (
             <div className="grid grid-cols-3 gap-2 mb-3">
               {(['TWO', 'TDO', 'Session'] as const).map((k) => {
                 const dir = meta.trueOpens?.[k]
                 return (
-                  <div key={k} className="bg-[#0D1520] rounded-lg p-2 text-center border border-[rgba(212,175,55,0.08)]">
-                    <p className="text-[#D4AF37] text-[9px] font-bold">{k}</p>
+                  <div key={k} className="bg-[#0D1520] rounded-lg p-2 text-center border border-[rgba(194,155,74,0.08)]">
+                    <p className="text-[#C29B4A] text-[9px] font-bold">{k}</p>
                     <p className={`text-xs font-bold mt-0.5 ${
-                      dir === 'above' ? 'text-[#1DB954]' : dir === 'below' ? 'text-[#E74C3C]' : 'text-[#4A5A7A]'
+                      dir === 'above' ? 'text-[#4E9E7A]' : dir === 'below' ? 'text-[#BB5B5B]' : 'text-[#4A5A7A]'
                     }`}>
                       {dir === 'above' ? '▲ Above' : dir === 'below' ? '▼ Below' : '—'}
                     </p>
@@ -256,7 +256,7 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
           {meta.confirmations && meta.confirmations.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {meta.confirmations.map((c) => (
-                <span key={c} className="text-[10px] px-2.5 py-1 rounded-full bg-[rgba(212,175,55,0.1)] text-[#D4AF37] border border-[rgba(212,175,55,0.25)]">
+                <span key={c} className="text-[10px] px-2.5 py-1 rounded-full bg-[rgba(194,155,74,0.1)] text-[#C29B4A] border border-[rgba(194,155,74,0.25)]">
                   ✓ {c.replace(/_/g, ' ')}
                 </span>
               ))}
@@ -265,15 +265,15 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
           {(meta.sl || meta.target) && (
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
               {meta.sl && (
-                <div className="bg-[#0D1520] rounded-lg p-2 border border-[rgba(231,76,60,0.15)]">
+                <div className="bg-[#0D1520] rounded-lg p-2 border border-[rgba(187,91,91,0.15)]">
                   <p className="text-[#4A5A7A] text-[10px]">Stop Loss (نقاط)</p>
-                  <p className="text-[#E74C3C] font-mono font-bold">{meta.sl}</p>
+                  <p className="text-[#BB5B5B] font-mono font-bold">{meta.sl}</p>
                 </div>
               )}
               {meta.target && (
-                <div className="bg-[#0D1520] rounded-lg p-2 border border-[rgba(29,185,84,0.15)]">
+                <div className="bg-[#0D1520] rounded-lg p-2 border border-[rgba(78,158,122,0.15)]">
                   <p className="text-[#4A5A7A] text-[10px]">Target (نقاط)</p>
-                  <p className="text-[#1DB954] font-mono font-bold">{meta.target}</p>
+                  <p className="text-[#4E9E7A] font-mono font-bold">{meta.target}</p>
                 </div>
               )}
             </div>
@@ -284,18 +284,18 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
       {/* Self Rating + Emotion */}
       {(trade.selfRating !== null || trade.emotionalState) && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">💭 التقييم الذاتي</p>
+          <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-2">💭 التقييم الذاتي</p>
           <div className="flex items-center gap-3">
             {trade.selfRating !== null && (
-              <div className="flex-1 bg-[#0D1520] rounded-lg p-2.5 text-center border border-[rgba(212,175,55,0.12)]">
+              <div className="flex-1 bg-[#0D1520] rounded-lg p-2.5 text-center border border-[rgba(194,155,74,0.12)]">
                 <p className="text-[#4A5A7A] text-[10px] mb-1">تقييم الصفقة</p>
-                <p className="text-[#D4AF37] text-xl font-black">{trade.selfRating}<span className="text-xs text-[#4A5A7A]">/10</span></p>
+                <p className="text-[#C29B4A] text-xl font-black">{trade.selfRating}<span className="text-xs text-[#4A5A7A]">/10</span></p>
               </div>
             )}
             {trade.emotionalState && (
-              <div className="flex-1 bg-[#0D1520] rounded-lg p-2.5 text-center border border-[rgba(212,175,55,0.12)]">
+              <div className="flex-1 bg-[#0D1520] rounded-lg p-2.5 text-center border border-[rgba(194,155,74,0.12)]">
                 <p className="text-[#4A5A7A] text-[10px] mb-1">الحالة النفسية</p>
-                <p className="text-[#D4AF37] text-sm font-bold">{EMOTION_AR[trade.emotionalState] ?? trade.emotionalState}</p>
+                <p className="text-[#C29B4A] text-sm font-bold">{EMOTION_AR[trade.emotionalState] ?? trade.emotionalState}</p>
               </div>
             )}
           </div>
@@ -305,10 +305,10 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
       {/* Notes */}
       {cleanNotes && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">📝 الملاحظات</p>
+          <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-2">📝 الملاحظات</p>
           <p className="text-[#C8D8EE] text-xs leading-relaxed whitespace-pre-wrap">{cleanNotes}</p>
           {trade.sentiments && trade.sentiments.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[rgba(212,175,55,0.08)]">
+            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[rgba(194,155,74,0.08)]">
               <span className="text-[10px] text-[#4A5A7A] self-center">مشاعر مكتشفة:</span>
               {trade.sentiments.map((s) => (
                 <span
@@ -317,17 +317,17 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
                   style={{
                     background:
                       s.tone === 'negative'
-                        ? 'rgba(231,76,60,0.12)'
+                        ? 'rgba(187,91,91,0.12)'
                         : s.tone === 'positive'
-                        ? 'rgba(29,185,84,0.12)'
+                        ? 'rgba(78,158,122,0.12)'
                         : 'rgba(136,153,187,0.12)',
                     borderColor:
                       s.tone === 'negative'
-                        ? 'rgba(231,76,60,0.35)'
+                        ? 'rgba(187,91,91,0.35)'
                         : s.tone === 'positive'
-                        ? 'rgba(29,185,84,0.35)'
+                        ? 'rgba(78,158,122,0.35)'
                         : 'rgba(136,153,187,0.35)',
-                    color: s.tone === 'negative' ? '#E74C3C' : s.tone === 'positive' ? '#1DB954' : '#8899BB',
+                    color: s.tone === 'negative' ? '#BB5B5B' : s.tone === 'positive' ? '#4E9E7A' : '#8899BB',
                   }}
                 >
                   {s.label} · {s.count}
@@ -341,12 +341,12 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
       {/* Mentor Comments */}
       {trade.comments.length > 0 && (
         <div className="card-dark p-4">
-          <p className="text-[#D4AF37] text-[11px] font-bold tracking-wide mb-2">💬 تعليقات المدرّب</p>
+          <p className="text-[#C29B4A] text-[11px] font-bold tracking-wide mb-2">💬 تعليقات المدرّب</p>
           <div className="space-y-2">
             {trade.comments.map((c) => (
-              <div key={c.id} className="bg-[#0D1520] rounded-lg p-3 border border-[rgba(212,175,55,0.12)]">
+              <div key={c.id} className="bg-[#0D1520] rounded-lg p-3 border border-[rgba(194,155,74,0.12)]">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[#D4AF37] text-[10px] font-bold">{c.mentorName ?? 'المدرّب'}</span>
+                  <span className="text-[#C29B4A] text-[10px] font-bold">{c.mentorName ?? 'المدرّب'}</span>
                   <span className="text-[#4A5A7A] text-[10px]">
                     {new Date(c.createdAt).toLocaleDateString('en-GB')}
                   </span>
@@ -365,7 +365,7 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
           onClick={() => setEditing(true)}
           className="w-full py-3 rounded-xl text-xs font-black border transition-all"
           style={{
-            background: 'linear-gradient(90deg, #A07D1C, #D4AF37)',
+            background: 'linear-gradient(90deg, #8A6A1F, #C29B4A)',
             borderColor: 'transparent',
             color: '#0A192F',
           }}
@@ -378,9 +378,9 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
           disabled={deleting}
           className="w-full py-3 rounded-xl text-xs font-bold border transition-all disabled:opacity-50"
           style={{
-            background: 'rgba(231,76,60,0.08)',
-            borderColor: 'rgba(231,76,60,0.3)',
-            color: '#E74C3C',
+            background: 'rgba(187,91,91,0.08)',
+            borderColor: 'rgba(187,91,91,0.3)',
+            color: '#BB5B5B',
           }}
         >
           {deleting ? 'جاري الحذف...' : '🗑 حذف'}
@@ -399,13 +399,13 @@ export function TradeDetailView({ trade, locale }: { trade: TradeData; locale: s
             src={zoomImg}
             alt="Chart"
             className="max-w-full max-h-full rounded-lg"
-            style={{ boxShadow: '0 0 40px rgba(212,175,55,0.3)' }}
+            style={{ boxShadow: '0 0 40px rgba(194,155,74,0.3)' }}
           />
           <button
             type="button"
             onClick={() => setZoomImg(null)}
             className="absolute top-5 right-5 w-10 h-10 rounded-full text-white text-xl font-bold flex items-center justify-center"
-            style={{ background: 'rgba(231,76,60,0.85)' }}
+            style={{ background: 'rgba(187,91,91,0.85)' }}
           >
             ×
           </button>

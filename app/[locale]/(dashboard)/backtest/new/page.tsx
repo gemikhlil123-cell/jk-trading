@@ -14,8 +14,8 @@ export default async function NewBacktestPage({
   return (
     <div className="max-w-lg mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#F5F5DC]">جلسة باكتيست جديدة</h1>
-        <p className="text-[#F5F5DC]/50 text-sm mt-1">حدد اسم الجلسة والرمز والفترة الزمنية</p>
+        <h1 className="text-2xl font-bold text-[#EDEBE4]">جلسة باكتيست جديدة</h1>
+        <p className="text-[#EDEBE4]/50 text-sm mt-1">حدد اسم الجلسة والرمز والفترة الزمنية</p>
       </div>
       <div className="card-navy p-6">
         <NewSessionForm locale={locale} />

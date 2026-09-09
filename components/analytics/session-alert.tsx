@@ -22,8 +22,8 @@ export async function SessionAlert({ userId }: Props) {
           padding: '12px 14px',
           margin: '14px 14px 0',
           borderRadius: 14,
-          background: 'rgba(201,168,76,0.08)',
-          border: '1px solid rgba(201,168,76,0.18)',
+          background: 'rgba(194,155,74,0.08)',
+          border: '1px solid rgba(194,155,74,0.18)',
           display: 'flex',
           alignItems: 'center',
           gap: 10,
@@ -31,7 +31,7 @@ export async function SessionAlert({ userId }: Props) {
       >
         <span style={{ fontSize: 18 }}>🕐</span>
         <div>
-          <p style={{ fontSize: 11, color: '#C9A84C', fontWeight: 700 }}>
+          <p style={{ fontSize: 11, color: '#C29B4A', fontWeight: 700 }}>
             الجلسة الحالية: {getKillzoneLabel(currentKillzone)}
           </p>
           <p style={{ fontSize: 10, color: '#8899BB', marginTop: 2 }}>
@@ -47,11 +47,11 @@ export async function SessionAlert({ userId }: Props) {
   const isWeak = analysis.winRate <= 0.4
 
   const bg = isStrong
-    ? 'rgba(29,185,84,0.10)'
+    ? 'rgba(78,158,122,0.10)'
     : isWeak
-    ? 'rgba(231,76,60,0.10)'
-    : 'rgba(201,168,76,0.08)'
-  const border = isStrong ? '#1DB954' : isWeak ? '#E74C3C' : '#C9A84C'
+    ? 'rgba(187,91,91,0.10)'
+    : 'rgba(194,155,74,0.08)'
+  const border = isStrong ? '#4E9E7A' : isWeak ? '#BB5B5B' : '#C29B4A'
   const icon = isStrong ? '🔥' : isWeak ? '⚠️' : '🕐'
 
   const bestReason = analysis.winningReasons[0]
@@ -82,13 +82,13 @@ export async function SessionAlert({ userId }: Props) {
             {analysis.totalPnl.toFixed(0)} نقطة صافي).
           </p>
           {isStrong && bestReason && (
-            <p style={{ fontSize: 10, color: '#1DB954', marginTop: 4 }}>
+            <p style={{ fontSize: 10, color: '#4E9E7A', marginTop: 4 }}>
               ✅ أقوى سبب لك في هذه الجلسة: {bestReason.label} (
               {(bestReason.winRate * 100).toFixed(0)}%)
             </p>
           )}
           {isWeak && (
-            <p style={{ fontSize: 10, color: '#E74C3C', marginTop: 4 }}>
+            <p style={{ fontSize: 10, color: '#BB5B5B', marginTop: 4 }}>
               ⚠️ هذه جلستك الضعيفة — تداول بحذر شديد أو تجنّبها.
             </p>
           )}

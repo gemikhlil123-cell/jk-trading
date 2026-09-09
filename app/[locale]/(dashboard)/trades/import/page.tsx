@@ -69,7 +69,7 @@ export default function ImportTradesPage() {
 
   return (
     <div style={{ padding: '14px 14px 100px', direction: 'rtl', maxWidth: 900, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 22, fontWeight: 800, color: '#D4AF37', marginBottom: 4 }}>
+      <h1 style={{ fontSize: 22, fontWeight: 800, color: '#C29B4A', marginBottom: 4 }}>
         استيراد الصفقات من CSV
       </h1>
       <p style={{ fontSize: 12, color: '#8899BB', marginBottom: 20 }}>
@@ -84,7 +84,7 @@ export default function ImportTradesPage() {
         padding: 18,
         marginBottom: 16,
       }}>
-        <label style={{ fontSize: 13, color: '#D4AF37', fontWeight: 600, marginBottom: 8, display: 'block' }}>
+        <label style={{ fontSize: 13, color: '#C29B4A', fontWeight: 600, marginBottom: 8, display: 'block' }}>
           1. اختر الملف
         </label>
         <input
@@ -111,7 +111,7 @@ export default function ImportTradesPage() {
             disabled={!file || loading}
             style={{
               padding: '10px 18px', borderRadius: 8,
-              background: '#D4AF37', color: '#0A192F',
+              background: '#C29B4A', color: '#0A192F',
               border: 'none', fontWeight: 700, fontSize: 13,
               cursor: file && !loading ? 'pointer' : 'not-allowed',
               opacity: file && !loading ? 1 : 0.4,
@@ -150,25 +150,25 @@ export default function ImportTradesPage() {
           background: '#112240', border: '1px solid #1F2D4A',
           borderRadius: 10, padding: 18, marginBottom: 16,
         }}>
-          <label style={{ fontSize: 13, color: '#D4AF37', fontWeight: 600, marginBottom: 12, display: 'block' }}>
+          <label style={{ fontSize: 13, color: '#C29B4A', fontWeight: 600, marginBottom: 12, display: 'block' }}>
             2. نتيجة المعاينة
           </label>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 14 }}>
             <Stat label="الصفوف الكلية" value={dryRun.totalRows} color="#E6F0FF" />
-            <Stat label="صفوف صالحة" value={dryRun.validRows} color="#10B981" />
-            <Stat label="أخطاء" value={dryRun.errorCount} color={dryRun.errorCount > 0 ? '#F87171' : '#8899BB'} />
+            <Stat label="صفوف صالحة" value={dryRun.validRows} color="#4E9E7A" />
+            <Stat label="أخطاء" value={dryRun.errorCount} color={dryRun.errorCount > 0 ? '#C87676' : '#8899BB'} />
           </div>
 
           {dryRun.errors.length > 0 && (
             <details style={{ marginBottom: 12 }}>
-              <summary style={{ cursor: 'pointer', fontSize: 12, color: '#F87171', marginBottom: 8 }}>
+              <summary style={{ cursor: 'pointer', fontSize: 12, color: '#C87676', marginBottom: 8 }}>
                 عرض {dryRun.errors.length} خطأ
               </summary>
               <div style={{
                 maxHeight: 200, overflowY: 'auto',
                 background: '#0A192F', padding: 10, borderRadius: 6,
-                fontSize: 11, fontFamily: 'monospace', color: '#F87171',
+                fontSize: 11, fontFamily: 'monospace', color: '#C87676',
               }}>
                 {dryRun.errors.map((e, i) => (
                   <div key={i}>سطر {e.line}: {e.msg}</div>
@@ -196,7 +196,7 @@ export default function ImportTradesPage() {
             disabled={!canImport || loading}
             style={{
               padding: '12px 22px', borderRadius: 8,
-              background: canImport ? '#10B981' : '#1F2D4A',
+              background: canImport ? '#4E9E7A' : '#1F2D4A',
               color: canImport ? '#fff' : '#8899BB',
               border: 'none', fontWeight: 700, fontSize: 14,
               cursor: canImport && !loading ? 'pointer' : 'not-allowed',
@@ -211,14 +211,14 @@ export default function ImportTradesPage() {
       {importResult && (
         <div style={{
           background: 'linear-gradient(135deg, #0F2A1A 0%, #112240 100%)',
-          border: '1px solid #10B981',
+          border: '1px solid #4E9E7A',
           borderRadius: 10, padding: 22,
         }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color: '#10B981', marginBottom: 10 }}>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#4E9E7A', marginBottom: 10 }}>
             ✅ تم الاستيراد بنجاح
           </div>
           <div style={{ fontSize: 13, color: '#E6F0FF', lineHeight: 1.8 }}>
-            تم إدخال <b style={{ color: '#D4AF37' }}>{importResult.inserted}</b> صفقة من أصل {importResult.totalRows}.
+            تم إدخال <b style={{ color: '#C29B4A' }}>{importResult.inserted}</b> صفقة من أصل {importResult.totalRows}.
             {importResult.errorCount > 0 && <> ({importResult.errorCount} خطأ تم تجاوزها)</>}
           </div>
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
@@ -226,7 +226,7 @@ export default function ImportTradesPage() {
               onClick={() => router.push('/ar/analytics')}
               style={{
                 padding: '10px 18px', borderRadius: 8,
-                background: '#D4AF37', color: '#0A192F',
+                background: '#C29B4A', color: '#0A192F',
                 border: 'none', fontWeight: 700, fontSize: 13, cursor: 'pointer',
               }}
             >
@@ -258,7 +258,7 @@ export default function ImportTradesPage() {
 
       {/* Format help */}
       <details style={{ marginTop: 20, color: '#8899BB' }}>
-        <summary style={{ cursor: 'pointer', fontSize: 13, fontWeight: 600, color: '#D4AF37' }}>
+        <summary style={{ cursor: 'pointer', fontSize: 13, fontWeight: 600, color: '#C29B4A' }}>
           📋 شكل ملف CSV المطلوب
         </summary>
         <div style={{
@@ -269,18 +269,18 @@ export default function ImportTradesPage() {
         }}>
           <p>السطر الأول يجب أن يكون عناوين الأعمدة. الأعمدة المطلوبة:</p>
           <ul style={{ marginRight: 18, marginTop: 8 }}>
-            <li><code style={{ color: '#D4AF37' }}>symbol</code> — NQ / ES / BTC / XAU / GC / CL / EURUSD / OTHER</li>
-            <li><code style={{ color: '#D4AF37' }}>direction</code> — LONG / SHORT</li>
-            <li><code style={{ color: '#D4AF37' }}>entryPrice</code>, <code style={{ color: '#D4AF37' }}>exitPrice</code></li>
-            <li><code style={{ color: '#D4AF37' }}>entryTime</code>, <code style={{ color: '#D4AF37' }}>exitTime</code> — ISO UTC (مثال: 2026-05-11T14:23:00.000Z)</li>
-            <li>أو بدلاً عنها: <code style={{ color: '#D4AF37' }}>dateLocal</code> (YYYY-MM-DD) + <code style={{ color: '#D4AF37' }}>entryTimeLocal</code> (HH:mm) بتوقيت القدس</li>
-            <li><code style={{ color: '#D4AF37' }}>pnl</code>, <code style={{ color: '#D4AF37' }}>rrPlanned</code>, <code style={{ color: '#D4AF37' }}>rrAchieved</code></li>
-            <li><code style={{ color: '#D4AF37' }}>isBacktest</code> — true / false</li>
-            <li><code style={{ color: '#D4AF37' }}>entryReasons</code> — أسماء أسباب الدخول مفصولة بـ <code>;</code></li>
-            <li><code style={{ color: '#D4AF37' }}>notes</code> — اختياري</li>
+            <li><code style={{ color: '#C29B4A' }}>symbol</code> — NQ / ES / BTC / XAU / GC / CL / EURUSD / OTHER</li>
+            <li><code style={{ color: '#C29B4A' }}>direction</code> — LONG / SHORT</li>
+            <li><code style={{ color: '#C29B4A' }}>entryPrice</code>, <code style={{ color: '#C29B4A' }}>exitPrice</code></li>
+            <li><code style={{ color: '#C29B4A' }}>entryTime</code>, <code style={{ color: '#C29B4A' }}>exitTime</code> — ISO UTC (مثال: 2026-05-11T14:23:00.000Z)</li>
+            <li>أو بدلاً عنها: <code style={{ color: '#C29B4A' }}>dateLocal</code> (YYYY-MM-DD) + <code style={{ color: '#C29B4A' }}>entryTimeLocal</code> (HH:mm) بتوقيت القدس</li>
+            <li><code style={{ color: '#C29B4A' }}>pnl</code>, <code style={{ color: '#C29B4A' }}>rrPlanned</code>, <code style={{ color: '#C29B4A' }}>rrAchieved</code></li>
+            <li><code style={{ color: '#C29B4A' }}>isBacktest</code> — true / false</li>
+            <li><code style={{ color: '#C29B4A' }}>entryReasons</code> — أسماء أسباب الدخول مفصولة بـ <code>;</code></li>
+            <li><code style={{ color: '#C29B4A' }}>notes</code> — اختياري</li>
           </ul>
           <p style={{ marginTop: 10 }}>
-            <b style={{ color: '#D4AF37' }}>ملاحظة:</b> أسماء أسباب الدخول لازم تطابق ما هو موجود في قاعدة البيانات (مثل: SMT Fill 15m، PSP 1h، FVG 5m...).
+            <b style={{ color: '#C29B4A' }}>ملاحظة:</b> أسماء أسباب الدخول لازم تطابق ما هو موجود في قاعدة البيانات (مثل: SMT Fill 15m، PSP 1h، FVG 5m...).
           </p>
         </div>
       </details>

@@ -49,7 +49,7 @@ export default async function MindsetPage({
     <div style={{ padding: '14px 14px 100px', direction: 'rtl' }}>
       <AnalyticsSubnav locale={locale} />
       <div style={{ marginBottom: 12 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#D4AF37' }}>العقلية والمخاطرة</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 800, color: '#C29B4A' }}>العقلية والمخاطرة</h1>
         <p style={{ fontSize: 12, color: '#8899BB', marginTop: 4 }}>
           نصائح ديناميكية تتغير حسب أدائك وملاحظاتك، مع القواعد الذهبية الثابتة.
         </p>
