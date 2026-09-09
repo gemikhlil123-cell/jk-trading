@@ -67,6 +67,90 @@ enum TradovateEnv {
   DEMO
 }
 
+// ─── JK model taxonomy ────────────────────────────────────────────────────────
+// The three levels the entry-reason analysis needs kept apart: one primary setup
+// per trade, many confluences, one trigger. A flat tag list is what made the same
+// reason show up in both the best and worst lists.
+
+enum SetupFamily {
+  LIQUIDITY_SWEEP
+  SMT
+}
+
+enum LiquiditySource {
+  ASIA_HIGH
+  ASIA_LOW
+  LONDON_HIGH
+  LONDON_LOW
+  PDH
+  PDL
+  PWH
+  PWL
+  PMH
+  PML
+  OTHER
+}
+
+enum EntryTrigger {
+  FVG
+  IFVG
+  CISD
+}
+
+enum EntryTimeframe {
+  M1
+  M3
+  M5
+}
+
+enum ContextTimeframe {
+  M5
+  M15
+  H1
+  H4
+  H6
+  D1
+  W1
+}
+
+enum TradeGrade {
+  A
+  B
+  C
+}
+
+// ─── Execution & state ────────────────────────────────────────────────────────
+
+enum ExitTrigger {
+  TARGET
+  STOP
+  MANUAL_EARLY
+  TRAIL
+  TIME_STOP
+  PANIC
+  END_OF_DAY
+}
+
+enum EntryTiming {
+  EARLY
+  ON_TIME
+  LATE
+  CHASED
+}
+
+/// Replaces the free-text `emotionalState`, which could not be aggregated.
+enum EmotionalState {
+  CALM
+  FOCUSED
+  ANXIOUS
+  FOMO
+  REVENGE
+  OVERCONFIDENT
+  BORED
+  TIRED
+  PRESSURED
+}
+
 // ─── Models ───────────────────────────────────────────────────────────────────
 
 model User {
@@ -79,9 +163,9 @@ model User {
   subscriptionTier     SubscriptionTier @default(BASIC)
   stripeCustomerId     String?          @unique
   stripeSubscriptionId String?          @unique
-  isActive           Boolean   @default(true)
-  trialEndsAt        DateTime?
-  subscriptionStatus String    @default("trial")
+  isActive             Boolean          @default(true)
+  trialEndsAt          DateTime?
+  subscriptionStatus   String           @default("trial")
 
   mentorId String?
   mentor   User?   @relation("MentorStudents", fields: [mentorId], references: [id])
@@ -90,8 +174,8 @@ model User {
   accounts         Account[]
   sessions         Session[]
   trades           Trade[]
-  mentorComments   MentorComment[] @relation("MentorComments")
-  studentComments  MentorComment[] @relation("StudentComments")
+  mentorComments   MentorComment[]   @relation("MentorComments")
+  studentComments  MentorComment[]   @relation("StudentComments")
   alerts           Alert[]
   backtestSessions BacktestSession[]
   tradovateAccount TradovateAccount?
@@ -146,36 +230,80 @@ model VerificationToken {
 }
 
 model Trade {
-  id            String         @id @default(cuid())
-  userId        String
-  symbol        Symbol
-  direction     TradeDirection
-  entryPrice    Decimal        @db.Decimal(12, 5)
-  exitPrice     Decimal?       @db.Decimal(12, 5)
-  entryTime     DateTime
-  exitTime      DateTime?
-  pnl           Decimal?       @db.Decimal(12, 2)
-  rrAchieved    Decimal?       @db.Decimal(6, 2)
-  rrPlanned     Decimal?       @db.Decimal(6, 2)
-  isBacktest    Boolean        @default(false)
-  screenshotUrl String?
-  notes         String?        @db.Text
-  chartImages   String?        @db.Text   // JSON: { daily?: string, h4?: string, h1?: string, m15?: string } base64 or URLs
+  id             String         @id @default(cuid())
+  userId         String
+  symbol         Symbol
+  direction      TradeDirection
+  entryPrice     Decimal        @db.Decimal(12, 5)
+  exitPrice      Decimal?       @db.Decimal(12, 5)
+  entryTime      DateTime
+  exitTime       DateTime?
+  pnl            Decimal?       @db.Decimal(12, 2)
+  rrAchieved     Decimal?       @db.Decimal(6, 2)
+  rrPlanned      Decimal?       @db.Decimal(6, 2)
+  isBacktest     Boolean        @default(false)
+  screenshotUrl  String?
+  notes          String?        @db.Text
+  chartImages    String?        @db.Text // JSON: { daily?: string, h4?: string, h1?: string, m15?: string } base64 or URLs
   selfRating     Int?
   emotionalState String?
 
   killzone   Killzone?
   cyclePhase CyclePhase?
 
+  // ─── Risk & sizing ──────────────────────────────────────────────────────────
+  // Without stopPrice there is no true R, no MAE in R and no way to tell a moved
+  // stop from a planned one. Without riskAmount the model's dollar caps and the
+  // risk-consistency metric cannot be evaluated at all.
+  stopPrice   Decimal? @db.Decimal(12, 5)
+  targetPrice Decimal? @db.Decimal(12, 5)
+  quantity    Int?
+  riskAmount  Decimal? @db.Decimal(12, 2) // planned dollar risk at entry
+  fees        Decimal? @db.Decimal(10, 2)
+
+  // ─── Excursion ──────────────────────────────────────────────────────────────
+  // Computed from Tradovate intra-trade price data where available; otherwise
+  // entered by hand. Unlocks exit efficiency, stop width and "left on the table".
+  maeR Decimal? @db.Decimal(6, 2)
+  mfeR Decimal? @db.Decimal(6, 2)
+
+  // ─── JK model taxonomy ──────────────────────────────────────────────────────
+  setupFamily     SetupFamily?
+  liquiditySource LiquiditySource?
+  mssConfirmed    Boolean?
+  entryTrigger    EntryTrigger?
+  entryTimeframe  EntryTimeframe?
+  fvgContextTf    ContextTimeframe?
+  cisdRetested    Boolean? // CISD entries must wait for the retest
+  grade           TradeGrade?
+
+  // ─── Execution ──────────────────────────────────────────────────────────────
+  exitTrigger  ExitTrigger?
+  entryTiming  EntryTiming?
+  movedStop    Boolean?
+  addedToLoser Boolean?
+
+  // ─── Discipline — computed by lib/jk-rules.ts, cached here ──────────────────
+  // `followedPlan` is derived, not self-reported: seven of the model's nine rules
+  // are decided from entry time, risk and target alone.
+  followedPlan   Boolean?
+  ruleViolations String?   @db.Text // JSON: RuleViolation[]
+  rulesCheckedAt DateTime?
+
+  // ─── State ──────────────────────────────────────────────────────────────────
+  // `emotionalState` (String) is kept for existing rows; new entries use `emotion`.
+  emotion     EmotionalState?
+  focusRating Int? // 1-5
+
   // Tradovate integration
-  source          TradeSource @default(MANUAL)
-  externalFillId  String?     @unique
-  needsReview     Boolean     @default(false)
+  source         TradeSource @default(MANUAL)
+  externalFillId String?     @unique
+  needsReview    Boolean     @default(false)
 
   // Claude-based deep notes analysis (structured extraction)
-  notesAnalysis       String?   @db.Text  // JSON: timeframes, confluences, sessions, instruments, summary_ar, ...
-  notesAnalysisAt     DateTime?
-  notesAnalysisModel  String?
+  notesAnalysis      String?   @db.Text // JSON: timeframes, confluences, sessions, instruments, summary_ar, ...
+  notesAnalysisAt    DateTime?
+  notesAnalysisModel String?
 
   backtestSessionId String?
   backtestSession   BacktestSession? @relation(fields: [backtestSessionId], references: [id])
@@ -245,27 +373,27 @@ model Alert {
 }
 
 model TradovateAccount {
-  id                   String       @id @default(cuid())
-  userId               String       @unique
-  env                  TradovateEnv @default(LIVE)
+  id                  String       @id @default(cuid())
+  userId              String       @unique
+  env                 TradovateEnv @default(LIVE)
   // Encrypted credentials (AES-256-GCM, format: iv:tag:ciphertext hex)
-  usernameEnc          String       @db.Text
-  passwordEnc          String       @db.Text
-  cidEnc               String       @db.Text
-  secretEnc            String       @db.Text
-  appId                String?
-  deviceId             String?
+  usernameEnc         String       @db.Text
+  passwordEnc         String       @db.Text
+  cidEnc              String       @db.Text
+  secretEnc           String       @db.Text
+  appId               String?
+  deviceId            String?
   // Session tokens
-  accessToken          String?      @db.Text
-  mdAccessToken        String?      @db.Text
-  tokenExpiresAt       DateTime?
+  accessToken         String?      @db.Text
+  mdAccessToken       String?      @db.Text
+  tokenExpiresAt      DateTime?
   // Sync state
-  isActive             Boolean      @default(true)
-  lastSyncAt           DateTime?
-  lastSyncStatus       String?      // "ok" | "error: ..."
-  lastErrorAt          DateTime?
-  lastErrorMessage     String?      @db.Text
-  importedTradesCount  Int          @default(0)
+  isActive            Boolean      @default(true)
+  lastSyncAt          DateTime?
+  lastSyncStatus      String? // "ok" | "error: ..."
+  lastErrorAt         DateTime?
+  lastErrorMessage    String?      @db.Text
+  importedTradesCount Int          @default(0)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

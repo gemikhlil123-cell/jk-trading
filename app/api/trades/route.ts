@@ -3,6 +3,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { computeKillzone, computeCyclePhase } from '@/lib/autoTag'
 import { analyzeNote, detectProvider } from '@/lib/ai-provider'
+import { checkTradeRules } from '@/lib/jk-rules-server'
 import { z } from 'zod'
 
 const createTradeSchema = z.object({
@@ -22,6 +23,34 @@ const createTradeSchema = z.object({
   selfRating: z.number().int().min(1).max(10).optional(),
   emotionalState: z.string().optional(),
   entryReasonIds: z.array(z.string()).default([]), // optional now — reduces friction
+
+  // ─── JK model fields. All optional: an empty field leaves its rule unchecked
+  // rather than counting as compliant (see lib/jk-rules.ts).
+  stopPrice: z.number().optional(),
+  targetPrice: z.number().optional(),
+  quantity: z.number().int().positive().optional(),
+  riskAmount: z.number().nonnegative().optional(),
+  fees: z.number().nonnegative().optional(),
+  maeR: z.number().optional(),
+  mfeR: z.number().optional(),
+  setupFamily: z.enum(['LIQUIDITY_SWEEP', 'SMT']).optional(),
+  liquiditySource: z
+    .enum(['ASIA_HIGH', 'ASIA_LOW', 'LONDON_HIGH', 'LONDON_LOW', 'PDH', 'PDL', 'PWH', 'PWL', 'PMH', 'PML', 'OTHER'])
+    .optional(),
+  mssConfirmed: z.boolean().optional(),
+  entryTrigger: z.enum(['FVG', 'IFVG', 'CISD']).optional(),
+  entryTimeframe: z.enum(['M1', 'M3', 'M5']).optional(),
+  fvgContextTf: z.enum(['M5', 'M15', 'H1', 'H4', 'H6', 'D1', 'W1']).optional(),
+  cisdRetested: z.boolean().optional(),
+  grade: z.enum(['A', 'B', 'C']).optional(),
+  exitTrigger: z.enum(['TARGET', 'STOP', 'MANUAL_EARLY', 'TRAIL', 'TIME_STOP', 'PANIC', 'END_OF_DAY']).optional(),
+  entryTiming: z.enum(['EARLY', 'ON_TIME', 'LATE', 'CHASED']).optional(),
+  movedStop: z.boolean().optional(),
+  addedToLoser: z.boolean().optional(),
+  emotion: z
+    .enum(['CALM', 'FOCUSED', 'ANXIOUS', 'FOMO', 'REVENGE', 'OVERCONFIDENT', 'BORED', 'TIRED', 'PRESSURED'])
+    .optional(),
+  focusRating: z.number().int().min(1).max(5).optional(),
   backtestSessionId: z.string().optional(),
 }).refine((d) => d.pnl != null || d.rrAchieved != null, {
   message: 'أدخل نتيجة الصفقة — النقاط أو R',
@@ -75,6 +104,24 @@ export async function POST(req: Request) {
   const killzone = computeKillzone(entryDate)
   const cyclePhase = computeCyclePhase(entryDate, killzone)
 
+  // Discipline is derived, not self-reported: seven of the JK model's nine rules
+  // are decided from entry time, planned risk and target alone.
+  const { persist: ruleCheck } = await checkTradeRules({
+    userId: session.user.id,
+    entryTime: entryDate,
+    isBacktest: data.isBacktest,
+    input: {
+      direction: data.direction,
+      entryPrice: data.entryPrice,
+      stopPrice: data.stopPrice,
+      targetPrice: data.targetPrice,
+      riskAmount: data.riskAmount,
+      entryTrigger: data.entryTrigger,
+      cisdRetested: data.cisdRetested,
+      mssConfirmed: data.mssConfirmed,
+    },
+  })
+
   const trade = await prisma.trade.create({
     data: {
       userId: session.user.id,
@@ -95,6 +142,30 @@ export async function POST(req: Request) {
       emotionalState: data.emotionalState,
       killzone,
       cyclePhase,
+      stopPrice: data.stopPrice,
+      targetPrice: data.targetPrice,
+      quantity: data.quantity,
+      riskAmount: data.riskAmount,
+      fees: data.fees,
+      maeR: data.maeR,
+      mfeR: data.mfeR,
+      setupFamily: data.setupFamily,
+      liquiditySource: data.liquiditySource,
+      mssConfirmed: data.mssConfirmed,
+      entryTrigger: data.entryTrigger,
+      entryTimeframe: data.entryTimeframe,
+      fvgContextTf: data.fvgContextTf,
+      cisdRetested: data.cisdRetested,
+      grade: data.grade,
+      exitTrigger: data.exitTrigger,
+      entryTiming: data.entryTiming,
+      movedStop: data.movedStop,
+      addedToLoser: data.addedToLoser,
+      emotion: data.emotion,
+      focusRating: data.focusRating,
+      followedPlan: ruleCheck.followedPlan,
+      ruleViolations: ruleCheck.ruleViolations,
+      rulesCheckedAt: ruleCheck.rulesCheckedAt,
       backtestSessionId: data.backtestSessionId,
       entryReasons: {
         create: data.entryReasonIds.map((id) => ({ entryReasonId: id })),
