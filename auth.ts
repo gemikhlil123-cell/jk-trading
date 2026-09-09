@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
+import { SUPER_MENTOR_EMAIL } from '@/lib/mentor-guard'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -27,12 +28,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         )
         if (!valid) return null
 
+        // Defense in depth: MENTOR role is ONLY allowed for SUPER_MENTOR_EMAIL.
+        // Even if the DB has role=MENTOR for someone else, downgrade at login.
+        const effectiveRole =
+          user.role === 'MENTOR' && user.email !== SUPER_MENTOR_EMAIL
+            ? 'STUDENT'
+            : user.role
+
         return {
           id: user.id,
           email: user.email,
           name: user.name,
           image: user.image,
-          role: user.role,
+          role: effectiveRole,
         }
       },
     }),
@@ -42,13 +50,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id
         token.role = (user as { role?: string }).role
+        token.email = (user as { email?: string }).email ?? token.email
+      }
+      // Extra safety: enforce the invariant on every token refresh.
+      if (token.role === 'MENTOR' && token.email !== SUPER_MENTOR_EMAIL) {
+        token.role = 'STUDENT'
       }
       return token
     },
     session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
-        ;(session.user as { role?: string }).role = token.role as string
+        const role = token.role as string
+        ;(session.user as { role?: string }).role =
+          role === 'MENTOR' && session.user.email !== SUPER_MENTOR_EMAIL
+            ? 'STUDENT'
+            : role
       }
       return session
     },
