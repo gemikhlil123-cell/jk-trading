@@ -2,6 +2,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { TradovateConnectCard } from '@/components/settings/tradovate-connect-card'
+import { isOAuthConfigured } from '@/lib/tradovate/oauth'
 
 export const dynamic = 'force-dynamic'
 
@@ -42,6 +43,7 @@ export default async function SettingsPage({
       </div>
 
       <TradovateConnectCard
+        oauthEnabled={isOAuthConfigured()}
         initialAccount={
           account
             ? {

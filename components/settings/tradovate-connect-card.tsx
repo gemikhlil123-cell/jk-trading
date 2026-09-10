@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface AccountSummary {
   env: string
@@ -13,16 +13,47 @@ interface AccountSummary {
   createdAt: string
 }
 
+/** What the OAuth callback can report back on the URL. */
+const OAUTH_MESSAGES: Record<string, { type: 'ok' | 'err'; text: string }> = {
+  connected: { type: 'ok', text: 'تم ربط حسابك في Tradovate بنجاح.' },
+  denied: { type: 'err', text: 'تم إلغاء الربط من صفحة Tradovate.' },
+  exchange_failed: { type: 'err', text: 'Tradovate رفضت الربط. جرّب مرة ثانية.' },
+  state_expired: { type: 'err', text: 'انتهت مهلة الربط. ابدأ من جديد.' },
+  state_mismatch: { type: 'err', text: 'فشل التحقق من الطلب. ابدأ من جديد.' },
+  missing_code: { type: 'err', text: 'Tradovate ما رجّعت رمز الربط.' },
+  not_configured: { type: 'err', text: 'ربط Tradovate مش مفعّل بعد على الخادم.' },
+  unauthorized: { type: 'err', text: 'لازم تسجّل دخولك أولاً.' },
+}
+
 export function TradovateConnectCard({
   initialAccount,
+  oauthEnabled = false,
 }: {
   initialAccount: AccountSummary | null
+  /** True when the server holds Tradovate client credentials. */
+  oauthEnabled?: boolean
 }) {
   const [account, setAccount] = useState<AccountSummary | null>(initialAccount)
-  const [showForm, setShowForm] = useState(!initialAccount)
+  const [showForm, setShowForm] = useState(!initialAccount && !oauthEnabled)
   const [loading, setLoading] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const [message, setMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
+  const [oauthEnv, setOauthEnv] = useState<'LIVE' | 'DEMO'>('LIVE')
+  const [redirecting, setRedirecting] = useState(false)
+
+  // The callback route sends the trader back here with ?tradovate=<result>.
+  // Read it once, show it, then clear it so a refresh does not repeat the message.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const status = params.get('tradovate')
+    if (!status) return
+    setMessage(OAUTH_MESSAGES[status] ?? { type: 'err', text: 'تعذّر ربط الحساب.' })
+    if (status === 'connected') void refreshStatus()
+    params.delete('tradovate')
+    const qs = params.toString()
+    window.history.replaceState({}, '', window.location.pathname + (qs ? `?${qs}` : ''))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const [form, setForm] = useState({
     env: 'LIVE' as 'LIVE' | 'DEMO',
@@ -232,6 +263,68 @@ export function TradovateConnectCard({
               قطع
             </button>
           </div>
+        </div>
+      )}
+
+      {oauthEnabled && !account && (
+        <div className="space-y-3">
+          <div>
+            <label className="block text-[10px] mb-1.5 font-bold" style={{ color: 'rgba(194,155,74,0.7)' }}>
+              البيئة
+            </label>
+            <div className="flex gap-2">
+              {(['LIVE', 'DEMO'] as const).map((e) => (
+                <button
+                  key={e}
+                  type="button"
+                  onClick={() => setOauthEnv(e)}
+                  className="flex-1 h-9 rounded-lg text-[11px] font-bold"
+                  style={{
+                    background:
+                      oauthEnv === e
+                        ? 'linear-gradient(90deg, #C29B4A, #B38E2A)'
+                        : 'rgba(194,155,74,0.06)',
+                    color: oauthEnv === e ? '#0A0F1A' : '#C29B4A',
+                    border: '1px solid rgba(194,155,74,0.25)',
+                  }}
+                >
+                  {e === 'LIVE' ? 'Live (حقيقي)' : 'Demo (تجريبي)'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            disabled={redirecting}
+            onClick={() => {
+              setRedirecting(true)
+              window.location.href = `/api/tradovate/oauth/start?env=${oauthEnv}`
+            }}
+            className="w-full h-11 rounded-lg text-[13px] font-black disabled:opacity-60"
+            style={{
+              background: 'linear-gradient(90deg, #C29B4A, #B38E2A)',
+              color: '#0A0F1A',
+            }}
+          >
+            {redirecting ? 'جارٍ التحويل…' : 'اربط حسابك عبر Tradovate'}
+          </button>
+
+          <p className="text-[10px] leading-relaxed" style={{ color: 'rgba(194,155,74,0.55)' }}>
+            رح تنفتح صفحة Tradovate وتسجّل دخولك هناك. كلمة السر تبعتك ما بتمرّ من عنا
+            ولا منخزّنها، وفيك تقطع الوصول من حسابك في Tradovate بأي وقت.
+          </p>
+
+          {!showForm && (
+            <button
+              type="button"
+              onClick={() => setShowForm(true)}
+              className="w-full text-[10px] underline"
+              style={{ color: 'rgba(194,155,74,0.45)' }}
+            >
+              أو اربط يدوياً بمفاتيح API
+            </button>
+          )}
         </div>
       )}
 
