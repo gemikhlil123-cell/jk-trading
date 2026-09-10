@@ -245,3 +245,35 @@
   .anim-fade-up, .stat-glow, .progress-fill::after, .pulse-dot { animation: none !important; }
   .card-vibrant, .card-hover-lift { transition: none !important; }
 }
+
+
+/* ─── App shell: right-hand sidebar ─── */
+/* Pinned to the physical right in every language, as requested. Below 1024px the
+   sidebar becomes a drawer; visibility drops it out of the tab order when closed. */
+.app-sidebar {
+  position: fixed; top: 0; bottom: 0; right: 0;
+  width: var(--sb-w, 248px);
+  z-index: 60;
+  transition: width .22s ease, transform .26s ease;
+}
+.app-header { position: fixed; top: 0; left: 0; right: 0; height: 60px; z-index: 50; }
+.app-main { padding-top: 60px; min-height: 100vh; }
+.app-backdrop { position: fixed; inset: 0; z-index: 55; background: rgba(4,6,10,.62); backdrop-filter: blur(2px); }
+
+@media (max-width: 1023.98px) {
+  .app-sidebar { width: 272px; transform: translateX(100%); visibility: hidden;
+    transition: transform .26s ease, visibility 0s linear .26s; }
+  .app-sidebar[data-open="true"] { transform: translateX(0); visibility: visible; transition: transform .26s ease; }
+}
+@media (min-width: 1024px) {
+  .app-header { right: var(--sb-w, 248px); transition: right .22s ease; }
+  .app-main { padding-right: var(--sb-w, 248px); transition: padding-right .22s ease; }
+  .app-backdrop { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-sidebar, .app-header, .app-main { transition: none !important; }
+}
+
+.app-sidebar-scroll { scrollbar-width: thin; scrollbar-color: rgba(194,155,74,.18) transparent; }
+.app-sidebar-scroll::-webkit-scrollbar { width: 6px; }
+.app-sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(194,155,74,.18); border-radius: 3px; }
