@@ -67,6 +67,12 @@ enum TradovateEnv {
   DEMO
 }
 
+/// How a Tradovate account was linked. OAuth never gives us the trader's password.
+enum TradovateAuthMethod {
+  CREDENTIALS
+  OAUTH
+}
+
 // ─── JK model taxonomy ────────────────────────────────────────────────────────
 // The three levels the entry-reason analysis needs kept apart: one primary setup
 // per trade, many confluences, one trigger. A flat tag list is what made the same
@@ -373,27 +379,31 @@ model Alert {
 }
 
 model TradovateAccount {
-  id                  String       @id @default(cuid())
-  userId              String       @unique
-  env                 TradovateEnv @default(LIVE)
-  // Encrypted credentials (AES-256-GCM, format: iv:tag:ciphertext hex)
-  usernameEnc         String       @db.Text
-  passwordEnc         String       @db.Text
-  cidEnc              String       @db.Text
-  secretEnc           String       @db.Text
+  id                  String              @id @default(cuid())
+  userId              String              @unique
+  env                 TradovateEnv        @default(LIVE)
+  /// How this account was linked. OAuth accounts carry a token and nothing else.
+  authMethod          TradovateAuthMethod @default(CREDENTIALS)
+  // Encrypted credentials (AES-256-GCM, format: iv:tag:ciphertext hex).
+  // Null for OAuth accounts — we never receive those secrets at all.
+  usernameEnc         String?             @db.Text
+  passwordEnc         String?             @db.Text
+  cidEnc              String?             @db.Text
+  secretEnc           String?             @db.Text
   appId               String?
   deviceId            String?
   // Session tokens
-  accessToken         String?      @db.Text
-  mdAccessToken       String?      @db.Text
+  accessToken         String?             @db.Text
+  mdAccessToken       String?             @db.Text
+  refreshTokenEnc     String?             @db.Text
   tokenExpiresAt      DateTime?
   // Sync state
-  isActive            Boolean      @default(true)
+  isActive            Boolean             @default(true)
   lastSyncAt          DateTime?
   lastSyncStatus      String? // "ok" | "error: ..."
   lastErrorAt         DateTime?
-  lastErrorMessage    String?      @db.Text
-  importedTradesCount Int          @default(0)
+  lastErrorMessage    String?             @db.Text
+  importedTradesCount Int                 @default(0)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

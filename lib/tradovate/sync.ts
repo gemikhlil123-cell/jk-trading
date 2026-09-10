@@ -79,7 +79,21 @@ async function getContractMeta(
  * or re-authenticate from encrypted credentials if renew fails.
  * Returns the current (possibly refreshed) access token.
  */
-export async function ensureValidToken(account: TradovateAccount): Promise<string> {
+export /**
+ * Access tokens were previously stored in clear text. New ones are encrypted,
+ * so a read tries to decrypt and falls back to treating the value as plain —
+ * that way already-linked accounts keep working through the change.
+ */
+function readToken(stored: string | null | undefined): string | null {
+  if (!stored) return null
+  try {
+    return decrypt(stored)
+  } catch {
+    return stored
+  }
+}
+
+async function ensureValidToken(account: TradovateAccount): Promise<string> {
   const env = account.env as TradovateEnv
   const now = new Date()
   const buffer = 2 * 60 * 1000 // 2-minute buffer before expiry
@@ -93,14 +107,15 @@ export async function ensureValidToken(account: TradovateAccount): Promise<strin
   }
 
   // Try renew first (cheap)
-  if (account.accessToken) {
+  const currentToken = readToken(account.accessToken)
+  if (currentToken) {
     try {
-      const renewed = await renewAccessToken(env, account.accessToken)
+      const renewed = await renewAccessToken(env, currentToken)
       if (renewed?.accessToken) {
         await prisma.tradovateAccount.update({
           where: { id: account.id },
           data: {
-            accessToken: renewed.accessToken,
+            accessToken: encrypt(renewed.accessToken),
             mdAccessToken: renewed.mdAccessToken ?? account.mdAccessToken,
             tokenExpiresAt: renewed.expirationTime ? new Date(renewed.expirationTime) : null,
           },
@@ -110,6 +125,17 @@ export async function ensureValidToken(account: TradovateAccount): Promise<strin
     } catch {
       // fall through to full re-auth
     }
+  }
+
+  // An OAuth link has no stored credentials to fall back on — by design. When
+  // its token can no longer be renewed the trader has to authorise again, which
+  // is the trade-off for us never holding their Tradovate password.
+  if (account.authMethod === 'OAUTH') {
+    throw new Error('tradovate_reauth_required')
+  }
+
+  if (!account.usernameEnc || !account.passwordEnc || !account.cidEnc || !account.secretEnc) {
+    throw new Error('tradovate_credentials_missing')
   }
 
   // Full re-auth with stored credentials
@@ -125,7 +151,7 @@ export async function ensureValidToken(account: TradovateAccount): Promise<strin
   await prisma.tradovateAccount.update({
     where: { id: account.id },
     data: {
-      accessToken: fresh.accessToken,
+      accessToken: encrypt(fresh.accessToken),
       mdAccessToken: fresh.mdAccessToken ?? null,
       tokenExpiresAt: fresh.expirationTime ? new Date(fresh.expirationTime) : null,
     },
