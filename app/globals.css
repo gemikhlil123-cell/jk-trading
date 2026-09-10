@@ -277,3 +277,37 @@
 .app-sidebar-scroll { scrollbar-width: thin; scrollbar-color: rgba(194,155,74,.18) transparent; }
 .app-sidebar-scroll::-webkit-scrollbar { width: 6px; }
 .app-sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(194,155,74,.18); border-radius: 3px; }
+
+
+/* ─── Dashboard ─── */
+/* Flat panels: border and depth say "surface", not "button". Only links lift. */
+.dash-panel {
+  background: linear-gradient(180deg, #0F141D 0%, #0C1017 100%);
+  border: 1px solid rgba(194,155,74,0.10);
+  border-radius: 16px;
+}
+/* Older widgets carry their own top margin for a single-column page; inside the grid it misaligns rows. */
+.dash-cell > * { margin-top: 0 !important; margin-bottom: 0 !important; }
+.dash-summary::-webkit-details-marker { display: none; }
+
+.cal-nav {
+  width: 30px; height: 30px; border-radius: 9px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #C29B4A; background: rgba(194,155,74,0.07); border: 1px solid rgba(194,155,74,0.18);
+  transition: background .15s ease;
+}
+.cal-nav:hover { background: rgba(194,155,74,0.14); }
+.cal-link { font-size: 11px; font-weight: 600; color: #8899BB; padding: 0 6px; border-radius: 6px; }
+.cal-link:hover { color: #C29B4A; }
+
+.btn-brass, .btn-ghost {
+  display: inline-flex; align-items: center; gap: .5rem;
+  height: 40px; padding: 0 18px; border-radius: 12px; font-size: 13px;
+}
+.btn-brass { font-weight: 800; color: #0A0D12; background: linear-gradient(135deg, #D2AE62 0%, #C29B4A 45%, #9C7A34 100%); }
+.btn-brass:hover { filter: brightness(1.08); }
+.btn-ghost { font-weight: 700; color: #DEDAD0; background: rgba(194,155,74,0.06); border: 1px solid rgba(194,155,74,0.2); }
+.btn-ghost:hover { background: rgba(194,155,74,0.12); }
+.cal-nav:focus-visible, .cal-link:focus-visible, .btn-brass:focus-visible, .btn-ghost:focus-visible, .dash-summary:focus-visible {
+  outline: 2px solid #C29B4A; outline-offset: 2px;
+}

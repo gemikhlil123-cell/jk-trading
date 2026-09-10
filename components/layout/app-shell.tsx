@@ -199,7 +199,13 @@ export function AppShell({
   // The drawer always shows labels, whatever the desktop collapse state is.
   const showLabels = !collapsed || mobileOpen
   const shellStyle = { '--sb-w': collapsed ? WIDTH_COLLAPSED : WIDTH_OPEN } as CSSProperties
-  const today = new Date().toLocaleDateString('ar-SA', { weekday: 'short', month: 'short', day: 'numeric' })
+  // Gregorian with Latin digits, matching the calendar and every figure on the page.
+  const today = new Date().toLocaleDateString('ar-SA-u-ca-gregory-nu-latn', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'Asia/Jerusalem',
+  })
 
   return (
     <div className="min-h-screen bg-[#080C14] relative z-[1]" style={shellStyle}>

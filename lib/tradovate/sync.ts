@@ -12,6 +12,7 @@
 
 import { prisma } from '@/lib/prisma'
 import { decrypt, encrypt } from '@/lib/encryption'
+import { pointsFromFills } from './pnl'
 import { computeKillzone, computeCyclePhase } from '@/lib/autoTag'
 import {
   requestAccessToken,
@@ -219,15 +220,17 @@ export async function syncAccount(accountId: string): Promise<SyncResult> {
         const meta = await getContractMeta(env, token, entryFill.contractId)
         const symbol = mapSymbol(meta.root)
 
-        // PnL = points × valuePerPoint × qty × sign
-        const points = isLong
-          ? exitFill.price - entryFill.price
-          : entryFill.price - exitFill.price
+        // P&L is stored in points — the price move per contract — the unit a
+        // student types into the trade form. Dollars are points × valuePerPoint ×
+        // quantity; the commission is kept separately in `fees`.
         const qty = Math.min(buyFill.qty, sellFill.qty) || 1
-        const pnl = points * meta.valuePerPoint * qty
+        const points = pointsFromFills({
+          entryPrice: entryFill.price,
+          exitPrice: exitFill.price,
+          direction,
+        })
         const commission =
           (buyFill.commission?.value ?? 0) + (sellFill.commission?.value ?? 0)
-        const netPnl = pnl - commission
 
         const entryTime = entryFill.timestamp ? new Date(entryFill.timestamp) : new Date()
         const exitTime = exitFill.timestamp ? new Date(exitFill.timestamp) : null
@@ -243,7 +246,9 @@ export async function syncAccount(accountId: string): Promise<SyncResult> {
             exitPrice: exitFill.price.toString(),
             entryTime,
             exitTime,
-            pnl: netPnl.toFixed(2),
+            pnl: points.toFixed(2),
+            quantity: qty,
+            fees: commission.toFixed(2),
             killzone,
             cyclePhase,
             source: 'TRADOVATE',
