@@ -1,6 +1,7 @@
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
+import { ChangePasswordCard } from '@/components/settings/change-password-card'
 import { TradovateConnectCard } from '@/components/settings/tradovate-connect-card'
 
 export const dynamic = 'force-dynamic'
@@ -57,6 +58,10 @@ export default async function SettingsPage({
             : null
         }
       />
+
+      <div className="mt-4">
+        <ChangePasswordCard />
+      </div>
     </div>
   )
 }
