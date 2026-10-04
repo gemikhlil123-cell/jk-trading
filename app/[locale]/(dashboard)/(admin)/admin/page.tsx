@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
+import { ResetPasswordControl } from '@/components/admin/reset-password-control'
 
 interface UserStats {
   totalTrades: number
@@ -302,6 +303,11 @@ export default function AdminPage() {
                   }}>
                     {u.isActive ? '🔒 تعليق' : '🔓 رفع التعليق'}
                   </button>
+
+                  {/* New password for a locked-out student — SUPER ADMIN only */}
+                  {isSuperAdmin && u.email !== SUPER_ADMIN && (
+                    <ResetPasswordControl userId={u.id} userName={u.name ?? u.email} />
+                  )}
 
                   {/* Delete button — SUPER ADMIN only */}
                   {isSuperAdmin && u.email !== SUPER_ADMIN && (

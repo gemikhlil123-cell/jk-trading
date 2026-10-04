@@ -8,6 +8,7 @@ import { formatJerusalemDate, formatJerusalemTime } from '@/lib/timezone'
 import { StudentTradeChartImages } from '@/components/mentor/student-trade-chart-images'
 import { buildCoachReport, type CoachTrade } from '@/lib/coach'
 import { CoachReportView } from '@/components/coach/coach-report'
+import { ResetPasswordControl } from '@/components/admin/reset-password-control'
 
 export const dynamic = 'force-dynamic'
 
@@ -94,6 +95,13 @@ export default async function MentorStudentPage({
         </h1>
         <p style={{ fontSize: 11, color: '#4A5A7A', marginTop: 2 }}>{student.email}</p>
       </div>
+
+      {/* Restores access for a student who forgot their password. */}
+      {studentId !== session.user.id && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+          <ResetPasswordControl userId={studentId} userName={student.name ?? student.email} />
+        </div>
+      )}
 
       {/* Live / Backtest toggle */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
