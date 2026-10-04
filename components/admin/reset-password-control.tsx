@@ -11,7 +11,7 @@
 import { useState } from 'react'
 import { checkPassword, generateTempPassword, PASSWORD_MIN_LENGTH, PASSWORD_PROBLEM_TEXT } from '@/lib/password-policy'
 
-const GOLD = '#C9A84C'
+const GOLD = '#C29B4A'
 
 const smallButton = {
   padding: '9px 14px',
@@ -82,8 +82,8 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
         style={{
           ...smallButton,
           padding: '10px 14px',
-          border: '1px solid rgba(201,168,76,0.35)',
-          background: open ? 'rgba(201,168,76,0.16)' : 'rgba(201,168,76,0.08)',
+          border: '1px solid rgba(194,155,74,0.35)',
+          background: open ? 'rgba(194,155,74,0.16)' : 'rgba(194,155,74,0.08)',
           color: GOLD,
         }}
       >
@@ -100,7 +100,7 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
             padding: '14px',
             borderRadius: '14px',
             background: 'rgba(0,0,0,0.25)',
-            border: '1px solid rgba(201,168,76,0.2)',
+            border: '1px solid rgba(194,155,74,0.2)',
           }}
         >
           {!done ? (
@@ -133,14 +133,14 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
                   fontSize: '15px',
                   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
                   letterSpacing: '0.5px',
-                  color: '#F5F5DC',
+                  color: '#EDEBE4',
                   background: 'rgba(8,12,20,0.7)',
-                  border: '1px solid rgba(201,168,76,0.25)',
+                  border: '1px solid rgba(194,155,74,0.25)',
                   outline: 'none',
                 }}
               />
               {error && (
-                <p role="alert" style={{ color: '#E74C3C', fontSize: '11.5px', margin: '8px 0 0' }}>
+                <p role="alert" style={{ color: '#BB5B5B', fontSize: '11.5px', margin: '8px 0 0' }}>
                   {error}
                 </p>
               )}
@@ -151,7 +151,7 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
                     setPassword(generateTempPassword())
                     setError('')
                   }}
-                  style={{ ...smallButton, border: '1px solid rgba(201,168,76,0.3)', background: 'rgba(201,168,76,0.08)', color: GOLD }}
+                  style={{ ...smallButton, border: '1px solid rgba(194,155,74,0.3)', background: 'rgba(194,155,74,0.08)', color: GOLD }}
                 >
                   توليد كلمة مؤقتة
                 </button>
@@ -161,9 +161,9 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
                   disabled={saving || !password}
                   style={{
                     ...smallButton,
-                    border: '1px solid rgba(29,185,84,0.4)',
-                    background: 'rgba(29,185,84,0.12)',
-                    color: '#1DB954',
+                    border: '1px solid rgba(78,158,122,0.4)',
+                    background: 'rgba(78,158,122,0.12)',
+                    color: '#4E9E7A',
                     opacity: saving || !password ? 0.5 : 1,
                     cursor: saving || !password ? 'not-allowed' : 'pointer',
                   }}
@@ -181,7 +181,7 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
             </>
           ) : (
             <>
-              <p style={{ color: '#1DB954', fontSize: '13px', fontWeight: 800, margin: 0 }}>
+              <p style={{ color: '#4E9E7A', fontSize: '13px', fontWeight: 800, margin: 0 }}>
                 تم تعيين كلمة المرور الجديدة لـ {userName}
               </p>
               <div
@@ -194,13 +194,13 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
                   padding: '10px 14px',
                   borderRadius: '12px',
                   background: 'rgba(8,12,20,0.7)',
-                  border: '1px solid rgba(29,185,84,0.3)',
+                  border: '1px solid rgba(78,158,122,0.3)',
                 }}
               >
                 <span
                   dir="ltr"
                   style={{
-                    color: '#F5F5DC',
+                    color: '#EDEBE4',
                     fontSize: '16px',
                     fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
                     letterSpacing: '0.5px',
@@ -213,7 +213,7 @@ export function ResetPasswordControl({ userId, userName }: { userId: string; use
                 <button
                   type="button"
                   onClick={copy}
-                  style={{ ...smallButton, flexShrink: 0, border: '1px solid rgba(201,168,76,0.3)', background: 'rgba(201,168,76,0.08)', color: GOLD }}
+                  style={{ ...smallButton, flexShrink: 0, border: '1px solid rgba(194,155,74,0.3)', background: 'rgba(194,155,74,0.08)', color: GOLD }}
                 >
                   {copied ? 'تم النسخ' : 'نسخ'}
                 </button>
